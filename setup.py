@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-version = "0.1"
+version = "1.0"
 
 description = """
 
@@ -9,7 +9,7 @@ description = """
 long_description = "" 
     
 
-setup(name='YoubotCampaign',
+setup(name='yc1304',
       author="Andrea Censi",
       author_email="andrea@cds.caltech.edu",
       url='http://github.com/AndreaCensi/boot_servo_demo',
@@ -36,8 +36,8 @@ setup(name='YoubotCampaign',
       },
       version=version,
       # download_url='http://github.com/AndreaCensi/boot_servo_demo/tarball/%s' % version,
-      package_dir={'': '.'},
-      packages=find_packages('.'),
+      package_dir={'': 'src'},
+      packages=find_packages('src'),
       install_requires=[],
       tests_require=['nose']
 )

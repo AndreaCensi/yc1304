@@ -43,7 +43,7 @@ S"--- model join_two\nconfig video1 'video'\nconfig video2 'video'\nconfig out\n
 p20
 sS'filename'
 p21
-S'/data/work/scm/boot12env/src/bvapps/1304-youbot/yc1304/s00_videos/join_two.pg'
+S'/data/work/scm/boot12env/src/yc1304/src/yc1304/s00_videos/join_two.pg'
 p22
 sbsS'desc'
 p23

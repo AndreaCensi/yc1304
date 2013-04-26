@@ -43,7 +43,7 @@ S'--- model join_two_vert\n""" Joins two video files vertically (one below the o
 p20
 sS'filename'
 p21
-S'/data/work/scm/boot12env/src/bvapps/1304-youbot/yc1304/s00_videos/join_two_vert.pg'
+S'/data/work/scm/boot12env/src/yc1304/src/yc1304/s00_videos/join_two_vert.pg'
 p22
 sbsS'desc'
 p23

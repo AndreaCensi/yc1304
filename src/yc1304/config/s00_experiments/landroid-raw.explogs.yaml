@@ -1,0 +1,112 @@
+- id: "logger_${date}"
+  desc: one of them
+  code:
+    - rosstream2boot.ExpLogFromYaml
+    - files:
+        "file:bag":  "~/landroid/logger_${date}.bag"
+      annotations: 
+        robot: &ldr13
+          name: ldr
+          shape: nominal
+        motion: 
+          agent: babbler  
+        environment: &env
+          name: indoor
+          config: none
+        events:
+          disturbances: []
+        notes: | 
+            Landroid log Template
+
+
+
+- id: logger_2011-07-27-10-55-04
+- id: logger_2011-07-27-11-03-04
+- id: logger_2011-07-27-11-05-19
+- id: logger_2011-07-27-11-15-26
+- id: logger_2011-07-27-11-17-39
+- id: logger_2011-07-27-11-18-50
+- id: logger_2011-07-27-11-20-30
+- id: logger_2011-07-27-11-22-05
+- id: logger_2011-07-27-11-27-42
+- id: logger_2011-07-27-11-28-47
+- id: logger_2011-07-27-11-29-33
+- id: logger_2011-07-27-11-31-29
+- id: logger_2011-07-27-11-32-51
+- id: logger_2011-07-27-11-33-57
+- id: logger_2011-07-27-11-35-30
+- id: logger_2011-07-27-11-36-46
+- id: logger_2011-07-27-11-38-35
+- id: logger_2011-07-27-11-39-54
+- id: logger_2011-07-27-11-41-59
+- id: logger_2011-07-27-11-43-50
+- id: logger_2011-07-27-11-49-00
+- id: logger_2011-07-27-11-50-24
+- id: logger_2011-07-27-11-51-56
+- id: logger_2011-07-27-11-53-19
+- id: logger_2011-07-27-13-26-16
+- id: logger_2011-07-27-13-27-14
+# - id: logger_2011-07-27-14-23-05 empty
+- id: logger_2011-07-27-14-24-08
+- id: logger_2011-07-27-14-25-38
+# - id: logger_2011-07-27-14-26-57 empty
+- id: logger_2011-07-27-14-28-59
+- id: logger_2011-07-27-14-44-16
+- id: logger_2011-07-27-14-47-12
+- id: logger_2011-07-27-14-51-49
+- id: logger_2011-07-27-14-52-59
+- id: logger_2011-07-27-14-59-33
+- id: logger_2011-07-27-15-00-20
+- id: logger_2011-07-27-15-02-59
+- id: logger_2011-07-27-15-03-42
+- id: logger_2011-07-27-15-56-57
+- id: logger_2011-07-27-15-58-42
+- id: logger_2011-07-27-16-01-27
+- id: logger_2011-07-27-16-03-34
+- id: logger_2011-07-27-16-05-12
+- id: logger_2011-07-27-16-11-39
+- id: logger_2011-07-27-16-13-47
+- id: logger_2011-07-27-16-17-27
+- id: logger_2011-07-27-16-20-26
+- id: logger_2011-07-27-16-25-18
+- id: logger_2011-07-27-16-30-05
+- id: logger_2011-07-27-16-31-17
+- id: logger_2011-07-27-16-38-55
+- id: logger_2011-07-27-16-42-29
+- id: logger_2011-07-27-16-44-30
+- id: logger_2011-07-27-17-03-33
+- id: logger_2011-07-27-17-05-20
+- id: logger_2011-07-27-17-07-56
+- id: logger_2011-07-27-17-09-49
+- id: logger_2011-07-27-17-15-07
+- id: logger_2011-07-27-17-23-14
+- id: logger_2011-07-27-17-37-24
+- id: logger_2011-07-27-17-38-34
+- id: logger_2011-07-28-11-21-53
+- id: logger_2011-07-28-11-23-15
+- id: logger_2011-07-28-11-24-22
+- id: logger_2011-07-28-11-27-18
+- id: logger_2011-07-28-11-31-04
+- id: logger_2011-07-28-11-34-32
+- id: logger_2011-07-28-11-37-37
+- id: logger_2011-07-28-12-03-20
+- id: logger_2011-07-28-12-05-09
+- id: logger_2011-07-28-12-06-10
+
+##########################################
+# Template:
+# - id:  
+#   desc: 
+#   code:
+#     - rosstream2boot.ExpLogFromYaml
+#     - files:
+#         "file:bag": ~/01-youbot-ros-logs-good/
+#         "file:outside": ~/01-youbot-ros-logs-good/.mp4
+#       annotations:
+#         robot: *unicornA_conf
+#         motion:
+#           agent: babbler  
+#         environment: *env
+#         events:
+#           disturbances: []
+#         notes: | 

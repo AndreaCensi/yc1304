@@ -43,7 +43,7 @@ S'--- model video_hokuyo_variance\nconfig bag    """.bag file to read""" \nconfi
 p20
 sS'filename'
 p21
-S'/data/work/scm/boot12env/src/bvapps/1304-youbot/yc1304/s00_videos/video_hokuyo_variance.pg'
+S'/data/work/scm/boot12env/src/yc1304/src/yc1304/s00_videos/video_hokuyo_variance.pg'
 p22
 sbsS'desc'
 p23

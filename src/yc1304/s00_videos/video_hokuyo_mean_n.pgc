@@ -43,7 +43,7 @@ S'--- model video_hokuyo_mean_n\nconfig bag    """.bag file to read""" \nconfig 
 p20
 sS'filename'
 p21
-S'/data/work/scm/boot12env/src/bvapps/1304-youbot/yc1304/s00_videos/video_hokuyo_mean_n.pg'
+S'/data/work/scm/boot12env/src/yc1304/src/yc1304/s00_videos/video_hokuyo_mean_n.pg'
 p22
 sbsS'desc'
 p23

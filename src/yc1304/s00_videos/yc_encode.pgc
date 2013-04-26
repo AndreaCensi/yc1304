@@ -42,7 +42,7 @@ S'--- model yc_encode\n""" Encodes with a fixed 29.97 frame rate"""\nconfig file
 p20
 sS'filename'
 p21
-S'/data/work/scm/boot12env/src/bvapps/1304-youbot/yc1304/s00_videos/yc_encode.pg'
+S'/data/work/scm/boot12env/src/yc1304/src/yc1304/s00_videos/yc_encode.pg'
 p22
 sbsS'desc'
 p23

@@ -43,7 +43,7 @@ S'--- model video_servo_error\nconfig bag    """.bag file to read""" \nconfig ou
 p20
 sS'filename'
 p21
-S'/data/work/scm/boot12env/src/bvapps/1304-youbot/yc1304/s00_videos/video_servo_error.pg'
+S'/data/work/scm/boot12env/src/yc1304/src/yc1304/s00_videos/video_servo_error.pg'
 p22
 sbsS'desc'
 p23

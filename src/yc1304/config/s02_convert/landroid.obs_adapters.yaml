@@ -1,0 +1,10 @@
+
+- id: landroid_hokuyo
+  desc: Hokuyo
+  code:
+  - rosstream2boot.library.LaserScanAdapter
+  - topic: '/test00/hokuyo/scan'
+    index_from: 0
+    index_to: 681
+    min_range: 0.02
+    max_range: 5.5

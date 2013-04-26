@@ -1,0 +1,8 @@
+- id: landroid_tracks
+  desc: Adapter for Landroid's tracks
+  code:
+  - rosstream2boot.library.TracksAdapter
+  - topic: /test00/track_input
+    max_value: 100.0
+
+    
