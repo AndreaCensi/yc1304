@@ -1,0 +1,87 @@
+
+- id: 'ldr_xt_h_sane'
+  desc: 'Landroid with x,theta commands'
+  code:
+  - bootstrapping_olympics.library.robots.EquivRobot
+  - robot: 
+    - rosstream2boot.library.ROSRobot.from_yaml
+    - adapter: ldr_tt_h
+    cmd_nuisance: 'swap'
+    obs_nuisance: 'landroid_hokuyo_sane'
+
+
+
+- id: 'ldr21'
+  desc: 'Landroid with x,theta commands'
+  code:
+  - bootstrapping_olympics.library.robots.EquivRobot
+  - robot: 
+    - rosstream2boot.library.ROSRobot.from_yaml
+    - adapter: 
+      - rosstream2boot.ROSRobotAdapter.from_yaml
+      - obs_adapter: 
+        - rosstream2boot.library.LaserScanAdapter
+        - topic: '/hokuyod_client_node/scan'
+          index_from: 0
+          index_to: 681
+          min_range: 0.02
+          max_range: 5.5
+        cmd_adapter: 
+        - rosstream2boot.library.TracksAdapter
+        - topic: /track_input
+          max_value: 100.0       
+        sync: {policy: obs-first-topic}
+    cmd_nuisance: 'swap'
+    obs_nuisance: 'landroid_hokuyo_sane'
+
+
+- id: 'ldr21_cmds'
+  desc: 'Landroid with x,theta commands'
+  code:
+  - bootstrapping_olympics.library.robots.EquivRobot
+  - robot: 
+    - rosstream2boot.library.ROSRobot.from_yaml
+    - adapter: 
+      - rosstream2boot.ROSRobotAdapter.from_yaml
+      - obs_adapter: 
+        - rosstream2boot.library.LaserScanAdapter
+        - topic: '/hokuyod_client_node/scan'
+          index_from: 0
+          index_to: 681
+          min_range: 0.02
+          max_range: 5.5
+        cmd_adapter: 
+        - rosstream2boot.library.TracksAdapter
+        - topic: /track_input
+          max_value: 200.0       
+        sync: {policy: obs-first-topic}
+    cmd_nuisance: 
+    - - bootstrapping_olympics.library.nuisances.GLNuisance
+      - A: [[-0.05,+0.5],[+0.05,+0.5]]
+    obs_nuisance: 'landroid_hokuyo_sane'
+
+
+
+
+- id: 'ldr21_fast'
+  desc: 'Landroid with x,theta commands, max_value=300'
+  code:
+  - bootstrapping_olympics.library.robots.EquivRobot
+  - robot: 
+    - rosstream2boot.library.ROSRobot.from_yaml
+    - adapter: 
+      - rosstream2boot.ROSRobotAdapter.from_yaml
+      - obs_adapter: 
+        - rosstream2boot.library.LaserScanAdapter
+        - topic: '/hokuyod_client_node/scan'
+          index_from: 0
+          index_to: 681
+          min_range: 0.02
+          max_range: 5.5
+        cmd_adapter: 
+        - rosstream2boot.library.TracksAdapter
+        - topic: /track_input
+          max_value: 300.0       
+        sync: {policy: obs-first-topic}
+    cmd_nuisance: 'swap'
+    obs_nuisance: 'landroid_hokuyo_sane'

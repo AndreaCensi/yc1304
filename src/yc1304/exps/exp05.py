@@ -30,7 +30,8 @@ class Exp05(CampaignCmd, QuickApp):
                               '--jobs', id_convert_job,
                               ])
  
-        jobs_learn = context.subtask(LearnLog, agent=id_agent, robot=id_robot, interval_publish=5000,
+        jobs_learn = context.subtask(LearnLog, agent=id_agent, robot=id_robot,
+                                     interval_publish=5000,
                                      extra_dep=jobs_convert.all_jobs())
 
         test_episodes = [

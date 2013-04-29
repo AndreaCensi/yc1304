@@ -84,7 +84,9 @@ class LearnLogNoSave(CampaignCmd):
         options = self.get_options()
         data_central = self.get_data_central()
          
-        return context.comp(learn_log, data_central=data_central,
+        return context.comp(learn_log,
+                            reset=True,
+                            data_central=data_central,
                               id_agent=options.agent,
                               id_robot=options.robot,
                               episodes=options.episodes,

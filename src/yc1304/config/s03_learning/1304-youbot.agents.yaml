@@ -148,7 +148,23 @@
 
 
 
-- id: "exp${n}_bdser_s1"
+# - id: "exp${n}_bdser_s1"
+#   desc: "BDSE agent robust, servo original"
+#   code:
+#   - boot_agents.BDSEAgentRobust
+#   - explorer: expsw1
+#     rcond: 0.0001
+#     importance: *importance
+#     servo:
+#     - boot_agents.BDSEServo 
+#     - strategy: S1
+#       gain: 0.1
+#       linpoint: current
+
+
+
+
+- id: "exp18_bdser_s1"
   desc: "BDSE agent robust, servo original"
   code:
   - boot_agents.BDSEAgentRobust
@@ -158,8 +174,9 @@
     servo:
     - boot_agents.BDSEServo 
     - strategy: S1
-      gain: 0.1
+      gain: 0.5
       linpoint: current
+
 
 # - id: "exp${n}_bdser_s3"
 #   desc: "BDSE agent robust, servo long term"

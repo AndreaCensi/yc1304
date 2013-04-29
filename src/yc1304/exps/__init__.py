@@ -34,3 +34,6 @@ from .exp13 import *
 from .exp14 import *
 from .exp15 import *
 from .exp16 import *
+from .exp17 import *
+from .exp18 import *
+from .exp19 import *

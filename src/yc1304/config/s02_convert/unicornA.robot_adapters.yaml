@@ -48,7 +48,7 @@
       policy: obs-first-topic
 
 - id: unicornA_base1_tw_hlhr_sane
-  desc: Only left (?) hokuyo
+  desc: Only sane readings
   code:
   - rosstream2boot.ROSRobotAdapter.from_yaml
   - obs_adapter: unicornA_hlhr_sane
@@ -57,7 +57,7 @@
       policy: obs-first-topic
 
 - id: unicornA_base1_tw_hlhr_sane_s4
-  desc: Only left (?) hokuyo
+  desc: "Only sane readings, downsampled"
   code:
   - rosstream2boot.ROSRobotAdapter.from_yaml
   - obs_adapter: unicornA_hlhr_sane_s4

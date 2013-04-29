@@ -1,27 +1,22 @@
 from . import CampaignCmd, campaign_sub
 from quickapp import QuickApp
-from rosstream2boot.programs import RS2BConvertOne
-from .exp14 import jobs_parallel_learning
-from .exp_utils import (iterate_context_agents_and_episodes,
-    iterate_context_agents)
-from yc1304.s03_learning.log_learn import PublishLearningResult
-from yc1304.s10_servo_field.apps import ServoField
-import warnings
+from yc1304.exps.exp15 import (recipe_convert, recipe_agent_learn,
+    jobs_servo_field, jobs_publish_learning)
 
         
 @campaign_sub
 class Exp16(CampaignCmd, QuickApp):
     
     cmd = 'exp16'
-    short = """ Trying with landroid """
+    short = """ Trying with landroid, only sane """
     comment = """ 
         
     """
     
-    robot2adapter = {'Exp16_ldr_tt_h': 'Exp16_ldr_tt_h',
-                     'Exp16_ldr_tt_h_sane': 'Exp16_ldr_tt_h_sane'}
+    id_robot = 'exp16_ldr_tt_h_sane'
+    id_adapter = 'ldr_tt_h_sane'
 
-    agents = ['Exp16_bdser_s1']
+    agents = ['exp16_bdser_s1']
              
     explogs_learn = ['logger_2011-07-27-11-03-04']
     explogs_test = []

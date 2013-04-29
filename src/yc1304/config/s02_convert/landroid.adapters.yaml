@@ -1,8 +1,0 @@
-- id: ldr_tt_h
-  desc: "Landroid tracks, Hokuyo"
-  code:
-  - rosstream2boot.ROSRobotAdapter.from_yaml
-  - obs_adapter: landroid_hokuyo
-    cmd_adapter: landroid_tracks
-    sync:
-      policy: obs-first-topic

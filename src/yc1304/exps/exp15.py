@@ -7,6 +7,7 @@ from .exp_utils import (iterate_context_agents_and_episodes,
 from yc1304.s03_learning.log_learn import PublishLearningResult
 from yc1304.s10_servo_field.apps import ServoField
 import warnings
+from rosstream2boot.config.rbconfig import get_rs2b_config
 
 
 def recipe_convert(context, boot_root, id_adapter):
@@ -14,9 +15,10 @@ def recipe_convert(context, boot_root, id_adapter):
     
         provides episode-ready
     """
-    
     def rp_convert(c, id_robot, id_episode):
         id_explog = id_episode
+        rs2b_config = get_rs2b_config()
+        rs2b_config.adapters[id_adapter]
         return c.subtask(RS2BConvertOne,
                            boot_root=boot_root,
                            id_explog=id_explog,
@@ -64,7 +66,6 @@ class Exp15(CampaignCmd, QuickApp):
     comment = """ 
         
     """
-    
     id_robot = 'exp15_ldr_tt_h'
     id_adapter = 'ldr_tt_h'
     
@@ -92,7 +93,4 @@ class Exp15(CampaignCmd, QuickApp):
         jobs_servo_field(context, id_robot=Exp15.id_robot,
                          agents=Exp15.agents, episodes=Exp15.explogs_test)
         jobs_publish_learning(context, Exp15.agents, id_robot=Exp15.id_robot)
-        
-            
-     
         

@@ -8,3 +8,12 @@
     index_to: 681
     min_range: 0.02
     max_range: 5.5
+
+
+- id: landroid_hokuyo_sane
+  desc: 'x'
+  code:
+  - rosstream2boot.library.ROSObservationsAdapterNuisance.from_yaml
+  - id_adapter: landroid_hokuyo
+    id_nuisance: landroid_hokuyo_sane
+

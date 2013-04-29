@@ -1,0 +1,20 @@
+
+- id: 'tmp_uA_1D'
+  desc: ''
+  code:
+  - bootstrapping_olympics.library.robots.EquivRobot
+  - robot: 
+    - rosstream2boot.library.ROSRobot.from_yaml
+    - adapter: 
+      - rosstream2boot.library.ROSRobotAdapter.from_yaml
+      - obs_adapter: 
+        - rosstream2boot.library.CameraAdapterGray
+        - topic: '/cam_back/image_raw/compressed'
+          shape: [240, 320]
+        cmd_adapter: twist_1_1
+        sync:
+          policy: obs-first-topic
+    cmd_nuisance: []
+    obs_nuisance: 
+    - - yc1304.library.VertAverageFraction
+      - fraction: 0.3

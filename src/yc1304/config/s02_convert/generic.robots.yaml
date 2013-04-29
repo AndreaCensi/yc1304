@@ -1,0 +1,6 @@
+# - id: 'ros_${adapter}'
+#   desc: 'ROS robot, built from the given adapter.'
+#   code:
+#   - rosstream2boot.library.ROSRobot.from_yaml
+#   - adapter: "${adapter}"
+
