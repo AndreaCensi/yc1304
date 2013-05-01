@@ -8,6 +8,7 @@
       robot: &ldr21
         name: ldr21
         shape: nominal
+        profile: nominal
       motion: 
         agent: servo
       environment: &env
@@ -35,7 +36,7 @@
         disturbances: []
       notes: | 
           Servo experiments with exp18_fast.launch
-
+          
           Works well --- emergent behavior
 
 

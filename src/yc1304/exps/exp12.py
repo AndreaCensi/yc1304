@@ -25,30 +25,7 @@ def save_state(data_central, id_agent, id_robot, agent, id_episodes):
     state.id_episodes = set(id_episodes)
     db = data_central.get_agent_state_db() 
     db.set_state(state=state, id_robot=id_robot, id_agent=id_agent)
-
-
-# def jobs_parallel_convert
-#       agent = None
-#         for c, id_explog in iterate_context_explogs(context, explogs_convert):
-#             episodes = c.subtask(RS2BConvertOne,
-#                                    boot_root=self.get_boot_root(),
-#                                    id_explog=id_explog,
-#                                    id_adapter=id_adapter,
-#                                    id_robot=id_robot)
-#         
-#             if id_explog in explogs_learn:
-#                 agent_i = c.subtask(LearnLogNoSave, agent=id_agent, robot=id_robot,
-#                                     episodes=episodes)
-#                 if agent is None:
-#                     agent = agent_i
-#                 else:
-#                     agent = context.comp(merge_agents, agent, agent_i) 
-#             
-#         id_episodes = explogs_learn
-#         data_central = self.get_data_central()
-#         context.comp(save_state, data_central, id_agent, id_robot, agent, id_episodes)
-#  
-
+ 
 @campaign_sub
 class Exp12(CampaignCmd, QuickApp):
     

@@ -8,6 +8,7 @@
         robot: &ldr13
           name: ldr
           shape: nominal
+          profile: 100
         motion: 
           agent: babbler  
         environment: &env

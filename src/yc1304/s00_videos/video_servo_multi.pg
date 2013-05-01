@@ -11,7 +11,7 @@ import pg_fcpx_servo_markers
 
 |bagread file=$bag| --> |sync| --> y,y_goal,servo_state
 
-bagread.topics='/servo_manager/y,/servo_manager/y_goal,/servo_manager/servo_state'
+bagread.topics='/servo*/y,/servo*/y_goal,/servo*/servo_state'
 #,u,servo_state
 
 servo_state -> |servo_fcpx_project out_base=$out_base|

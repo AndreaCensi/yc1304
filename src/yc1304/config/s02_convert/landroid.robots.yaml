@@ -21,14 +21,14 @@
       - rosstream2boot.ROSRobotAdapter.from_yaml
       - obs_adapter: 
         - rosstream2boot.library.LaserScanAdapter
-        - topic: '/hokuyod_client_node/scan'
+        - topic: '*/scan'
           index_from: 0
           index_to: 681
           min_range: 0.02
           max_range: 5.5
         cmd_adapter: 
         - rosstream2boot.library.TracksAdapter
-        - topic: /track_input
+        - topic: '*/track_input'
           max_value: 100.0       
         sync: {policy: obs-first-topic}
     cmd_nuisance: 'swap'

@@ -39,7 +39,7 @@ p18
 I28
 sS'string'
 p19
-S'--- model video_servo_multi\nconfig bag    """.bag file to read""" \nconfig out_base     "Output file (no extension)" \nconfig container = \'mp4\'\n\nimport procgraph_ros\nimport video_hokuyo_sup\nimport pg_servo_status\nimport pg_fcpx_servo_markers\n\n\n|bagread file=$bag| --> |sync| --> y,y_goal,servo_state\n\nbagread.topics=\'/servo_manager/y,/servo_manager/y_goal,/servo_manager/servo_state\'\n#,u,servo_state\n\nservo_state -> |servo_fcpx_project out_base=$out_base|\n\n servo_state -> |servo_state_indicator| ->  servo_rgb\n\ny, y_goal, servo_state -> |servo_error width=320| -> error_rgb\n\ny, y_goal, servo_state -> |servo_status width=320| -> status_rgb\n\nservo_rgb -> |yc_encode  file="${out_base}.servo_indicator.${container}"|\nerror_rgb -> |yc_encode  file="${out_base}.servo_error.${container}"|\nstatus_rgb -> |yc_encode file="${out_base}.servo_status.${container}"|\n\n'
+S'--- model video_servo_multi\nconfig bag    """.bag file to read""" \nconfig out_base     "Output file (no extension)" \nconfig container = \'mp4\'\n\nimport procgraph_ros\nimport video_hokuyo_sup\nimport pg_servo_status\nimport pg_fcpx_servo_markers\n\n\n|bagread file=$bag| --> |sync| --> y,y_goal,servo_state\n\nbagread.topics=\'/servo*/y,/servo*/y_goal,/servo*/servo_state\'\n#,u,servo_state\n\nservo_state -> |servo_fcpx_project out_base=$out_base|\n\n servo_state -> |servo_state_indicator| ->  servo_rgb\n\ny, y_goal, servo_state -> |servo_error width=320| -> error_rgb\n\ny, y_goal, servo_state -> |servo_status width=320| -> status_rgb\n\nservo_rgb -> |yc_encode  file="${out_base}.servo_indicator.${container}"|\nerror_rgb -> |yc_encode  file="${out_base}.servo_error.${container}"|\nstatus_rgb -> |yc_encode file="${out_base}.servo_status.${container}"|\n\n'
 p20
 sS'filename'
 p21
@@ -412,7 +412,7 @@ sg21
 g22
 sbsS'value'
 p114
-S'/servo_manager/y,/servo_manager/y_goal,/servo_manager/servo_state'
+S'/servo*/y,/servo*/y_goal,/servo*/servo_state'
 p115
 sS'key'
 p116
@@ -450,7 +450,7 @@ I17
 sg17
 I1
 sg18
-I399
+I378
 sg19
 g20
 sg21
@@ -469,7 +469,7 @@ I17
 sg17
 I1
 sg18
-I399
+I378
 sg19
 g20
 sg21
@@ -503,7 +503,7 @@ I17
 sg17
 I16
 sg18
-I414
+I393
 sg19
 g20
 sg21
@@ -520,7 +520,7 @@ I17
 sg17
 I1
 sg18
-I399
+I378
 sg19
 g20
 sg21
@@ -557,7 +557,7 @@ I19
 sg17
 I2
 sg18
-I456
+I435
 sg19
 g20
 sg21
@@ -576,7 +576,7 @@ I19
 sg17
 I2
 sg18
-I456
+I435
 sg19
 g20
 sg21
@@ -600,7 +600,7 @@ I19
 sg17
 I17
 sg18
-I471
+I450
 sg19
 g20
 sg21
@@ -628,7 +628,7 @@ I19
 sg17
 I45
 sg18
-I499
+I478
 sg19
 g20
 sg21
@@ -647,7 +647,7 @@ I19
 sg17
 I45
 sg18
-I499
+I478
 sg19
 g20
 sg21
@@ -663,7 +663,7 @@ I19
 sg17
 I2
 sg18
-I456
+I435
 sg19
 g20
 sg21
@@ -700,7 +700,7 @@ I21
 sg17
 I1
 sg18
-I510
+I489
 sg19
 g20
 sg21
@@ -724,7 +724,7 @@ I21
 sg17
 I4
 sg18
-I513
+I492
 sg19
 g20
 sg21
@@ -749,7 +749,7 @@ I21
 sg17
 I12
 sg18
-I521
+I500
 sg19
 g20
 sg21
@@ -768,7 +768,7 @@ I21
 sg17
 I1
 sg18
-I510
+I489
 sg19
 g20
 sg21
@@ -795,7 +795,7 @@ I21
 sg17
 I27
 sg18
-I536
+I515
 sg19
 g20
 sg21
@@ -823,7 +823,7 @@ I21
 sg17
 I54
 sg18
-I563
+I542
 sg19
 g20
 sg21
@@ -842,7 +842,7 @@ I21
 sg17
 I54
 sg18
-I563
+I542
 sg19
 g20
 sg21
@@ -858,7 +858,7 @@ I21
 sg17
 I1
 sg18
-I510
+I489
 sg19
 g20
 sg21
@@ -895,7 +895,7 @@ I23
 sg17
 I1
 sg18
-I574
+I553
 sg19
 g20
 sg21
@@ -919,7 +919,7 @@ I23
 sg17
 I4
 sg18
-I577
+I556
 sg19
 g20
 sg21
@@ -944,7 +944,7 @@ I23
 sg17
 I12
 sg18
-I585
+I564
 sg19
 g20
 sg21
@@ -963,7 +963,7 @@ I23
 sg17
 I1
 sg18
-I574
+I553
 sg19
 g20
 sg21
@@ -990,7 +990,7 @@ I23
 sg17
 I27
 sg18
-I600
+I579
 sg19
 g20
 sg21
@@ -1018,7 +1018,7 @@ I23
 sg17
 I55
 sg18
-I628
+I607
 sg19
 g20
 sg21
@@ -1037,7 +1037,7 @@ I23
 sg17
 I55
 sg18
-I628
+I607
 sg19
 g20
 sg21
@@ -1053,7 +1053,7 @@ I23
 sg17
 I1
 sg18
-I574
+I553
 sg19
 g20
 sg21
@@ -1090,7 +1090,7 @@ I25
 sg17
 I1
 sg18
-I640
+I619
 sg19
 g20
 sg21
@@ -1109,7 +1109,7 @@ I25
 sg17
 I1
 sg18
-I640
+I619
 sg19
 g20
 sg21
@@ -1137,7 +1137,7 @@ I25
 sg17
 I14
 sg18
-I653
+I632
 sg19
 g20
 sg21
@@ -1154,7 +1154,7 @@ I25
 sg17
 I1
 sg18
-I640
+I619
 sg19
 g20
 sg21
@@ -1191,7 +1191,7 @@ I26
 sg17
 I1
 sg18
-I714
+I693
 sg19
 g20
 sg21
@@ -1210,7 +1210,7 @@ I26
 sg17
 I1
 sg18
-I714
+I693
 sg19
 g20
 sg21
@@ -1238,7 +1238,7 @@ I26
 sg17
 I14
 sg18
-I727
+I706
 sg19
 g20
 sg21
@@ -1255,7 +1255,7 @@ I26
 sg17
 I1
 sg18
-I714
+I693
 sg19
 g20
 sg21
@@ -1292,7 +1292,7 @@ I27
 sg17
 I1
 sg18
-I784
+I763
 sg19
 g20
 sg21
@@ -1311,7 +1311,7 @@ I27
 sg17
 I1
 sg18
-I784
+I763
 sg19
 g20
 sg21
@@ -1339,7 +1339,7 @@ I27
 sg17
 I15
 sg18
-I798
+I777
 sg19
 g20
 sg21
@@ -1356,7 +1356,7 @@ I27
 sg17
 I1
 sg18
-I784
+I763
 sg19
 g20
 sg21

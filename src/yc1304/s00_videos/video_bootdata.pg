@@ -1,0 +1,15 @@
+--- model video_bootdata
+config bag    
+config id_robot  
+config out_base   "Prefix for output files" 
+config container = 'mp4'
+config md = {}
+
+import procgraph_boot
+import procgraph_b2r2b
+
+|rosrobot_read file=$bag id_robot=$id_robot| --> bd
+
+bd -> |extract_sensels| -> |streamels_display_set1 md=$md  container=$container out_base = "${out_base}.y"|
+bd -> |extract_commands| -> |commands_display_set1  md=$md container=$container  out_base = "${out_base}.u"|
+
