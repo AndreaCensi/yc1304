@@ -49,8 +49,10 @@ class CmdForLog(CampaignCmd, QuickApp):
     
 @campaign_sub
 class MakeVideosCams(CmdForLog):
-    
-    short = 'Creates videos for cameras'
+    """
+        Creates videos for cameras.        
+    """
+
     cmd = 'make-videos2-cams'
     
     def define_jobs_video(self, context, id_explog, explog):  # @UnusedVariable
@@ -86,8 +88,9 @@ def job_fcpx_index(context, outdir, id_explog):
     
 @campaign_sub
 class MakeVideosScans(CmdForLog):
-    
-    short = 'Creates videos for scans'
+    """
+        Creates videos for scans.        
+    """
     cmd = 'make-videos2-scans'
     
     def define_jobs_video(self, context, id_explog, explog):  # @UnusedVariable
@@ -108,7 +111,9 @@ class MakeVideosScans(CmdForLog):
 
 @campaign_sub
 class MakeVideos2(CmdForLog):
-    
+    """ 
+        Creates videos cam* and scan* + final cut index
+    """
     cmd = 'make-videos2'
     
     def define_options(self, params):
@@ -134,9 +139,11 @@ class MakeVideos2(CmdForLog):
 
 @campaign_sub
 class MakeVideos2All(CampaignCmd, QuickApp):
+    """
+        Creates a set of videos for all explogs available.
+    """
     
     cmd = 'make-videos2-all'
-    short = 'Creates a set of videos for all explogs available.'
     
     def define_options(self, params):
         pass
@@ -154,11 +161,13 @@ class MakeVideos2All(CampaignCmd, QuickApp):
 
 @campaign_sub
 class MakeVideos(CampaignCmd, QuickApp):
-    
+    """
+        Creates youbot videos (cam_*,scan*) + mean and composite.
+    """
     cmd = 'make-videos-mix'
     
     def define_options(self, params):
-        params.add_string('id_explog', help='Which exp log to use', compulsory=True)
+        params.add_string('id_explog', help='Which exp log to use')
 
     def define_jobs_context(self, context):    
         id_explog = self.get_options().id_explog

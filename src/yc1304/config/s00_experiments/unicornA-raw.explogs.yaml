@@ -5,8 +5,8 @@
   code:
     - rosstream2boot.ExpLogFromYaml
     - files:
-        "file:bag": ~/01-youbot-ros-logs-good/unicornA_base1_2013-04-02-20-37-43.bag
-        "file:outside": ~/01-youbot-ros-logs-good/unicornA_base1_2013-04-02-20-37-43.outside.mp4
+        "file:bag": "${DATASETS}/01-youbot-ros-logs-good/unicornA_base1_2013-04-02-20-37-43.bag"
+        "file:outside": "${DATASETS}/01-youbot-ros-logs-good/unicornA_base1_2013-04-02-20-37-43.outside.mp4"
       annotations:
         robot: &unicornA_base1
           name: unicorn
@@ -22,7 +22,7 @@
         notes: |
           video: 2013-04-02 21_44_16 (id).mov 11.3 GB 37 min
           babbler: --frequency=1 --min_length=3 --max_length=10 --levy=1 
-          status: Finished “active” after crash but ok
+          status: Finished active after crash but ok
         use_for_learning: true
 
   
@@ -31,8 +31,8 @@
   code:
     - rosstream2boot.ExpLogFromYaml
     - files:
-        "file:bag": ~/01-youbot-ros-logs-good/unicornA_base1_2013-04-03-12-58-11.bag
-        "file:outside": ~/01-youbot-ros-logs-good/unicornA_base1_2013-04-03-12-58-11.outside.mp4
+        "file:bag": "${DATASETS}/01-youbot-ros-logs-good/unicornA_base1_2013-04-03-12-58-11.bag"
+        "file:outside": "${DATASETS}/01-youbot-ros-logs-good/unicornA_base1_2013-04-03-12-58-11.outside.mp4"
       annotations:
         robot: *unicornA_base1
         environment: *lab_boxes3
@@ -49,8 +49,8 @@
   code:
     - rosstream2boot.ExpLogFromYaml
     - files:
-        "file:bag": ~/01-youbot-ros-logs-good/unicornA_base1_2013-04-03-13-16-53.bag
-        "file:outside": ~/01-youbot-ros-logs-good/unicornA_base1_2013-04-03-13-16-53.outside.mp4
+        "file:bag": "${DATASETS}/01-youbot-ros-logs-good/unicornA_base1_2013-04-03-13-16-53.bag"
+        "file:outside": "${DATASETS}/01-youbot-ros-logs-good/unicornA_base1_2013-04-03-13-16-53.outside.mp4"
       annotations:
         robot: *unicornA_base1
         environment: *lab_boxes3
@@ -70,8 +70,8 @@
   code:
     - rosstream2boot.ExpLogFromYaml
     - files:
-        "file:bag": ~/01-youbot-ros-logs-good/unicornA_base1_2013-04-03-13-30-28.bag
-        "file:outside": ~/01-youbot-ros-logs-good/unicornA_base1_2013-04-03-13-30-28.outside.mp4
+        "file:bag": "${DATASETS}/01-youbot-ros-logs-good/unicornA_base1_2013-04-03-13-30-28.bag"
+        "file:outside": "${DATASETS}/01-youbot-ros-logs-good/unicornA_base1_2013-04-03-13-30-28.outside.mp4"
       annotations:
         robot: *unicornA_base1
         environment: *lab_boxes3
@@ -89,8 +89,8 @@
   code:
     - rosstream2boot.ExpLogFromYaml
     - files:
-        "file:bag": ~/01-youbot-ros-logs-good/unicornA_base1_2013-04-03-16-36-03.bag
-        "file:outside": ~/01-youbot-ros-logs-good/unicornA_base1_2013-04-03-16-36-03.outside.mp4
+        "file:bag": "${DATASETS}/01-youbot-ros-logs-good/unicornA_base1_2013-04-03-16-36-03.bag"
+        "file:outside": "${DATASETS}/01-youbot-ros-logs-good/unicornA_base1_2013-04-03-16-36-03.outside.mp4"
       annotations:
         robot: *unicornA_base1
         environment: *lab_boxes3
@@ -108,8 +108,8 @@
   code:
     - rosstream2boot.ExpLogFromYaml
     - files:
-        "file:bag": ~/01-youbot-ros-logs-good/unicornA_base1_2013-04-06-15-30-06.bag
-        "file:outside": ~/01-youbot-ros-logs-good/unicornA_base1_2013-04-06-15-30-06.outside.mp4
+        "file:bag": "${DATASETS}/01-youbot-ros-logs-good/unicornA_base1_2013-04-06-15-30-06.bag"
+        "file:outside": "${DATASETS}/01-youbot-ros-logs-good/unicornA_base1_2013-04-06-15-30-06.outside.mp4"
       annotations:
         robot: *unicornA_base1
         environment: *lab_boxes3
@@ -125,7 +125,7 @@
   code:
     - rosstream2boot.ExpLogFromYaml
     - files:
-        "file:bag": ~/01-youbot-ros-logs-good/unicornA_base1_2013-04-06-19-44-59.bag
+        "file:bag": "${DATASETS}/01-youbot-ros-logs-good/unicornA_base1_2013-04-06-19-44-59.bag"
       annotations:
         robot: *unicornA_base1
         environment: *lab_boxes3
@@ -141,7 +141,7 @@
   code:
     - rosstream2boot.ExpLogFromYaml
     - files:
-        "file:bag": ~/01-youbot-ros-logs-good/unicornA_base1_2013-04-08-19-10-12.bag
+        "file:bag": "${DATASETS}/01-youbot-ros-logs-good/unicornA_base1_2013-04-08-19-10-12.bag"
       annotations:
         robot: *unicornA_base1
         motion:
@@ -163,7 +163,7 @@
   code:
     - rosstream2boot.ExpLogFromYaml
     - files:
-        "file:bag": ~/01-youbot-ros-logs-good/unicornA_base1_2013-04-08-16-43-10.bag
+        "file:bag": "${DATASETS}/01-youbot-ros-logs-good/unicornA_base1_2013-04-08-16-43-10.bag"
       annotations:
         robot: *unicornA_base1
         motion:
@@ -184,8 +184,8 @@
   code:
     - rosstream2boot.ExpLogFromYaml
     - files:
-        "file:bag": ~/01-youbot-ros-logs-good/unicornA_tran1_2013-04-09-14-35-11.bag
-        "file:outside": ~/01-youbot-ros-logs-good/unicornA_tran1_2013-04-09-14-35-11.outside.mp4
+        "file:bag": "${DATASETS}/01-youbot-ros-logs-good/unicornA_tran1_2013-04-09-14-35-11.bag"
+        "file:outside": "${DATASETS}/01-youbot-ros-logs-good/unicornA_tran1_2013-04-09-14-35-11.outside.mp4"
       annotations:
         robot: &unicornA_tran1
           name: unicorn
@@ -207,8 +207,8 @@
   code:
     - rosstream2boot.ExpLogFromYaml
     - files:
-        "file:bag": ~/01-youbot-ros-logs-good/unicornA_car1_2013-04-08-21-37-47.bag
-        "file:outside": ~/01-youbot-ros-logs-good/unicornA_car1_2013-04-08-21-37-47.outside.mp4
+        "file:bag": "${DATASETS}/01-youbot-ros-logs-good/unicornA_car1_2013-04-08-21-37-47.bag"
+        "file:outside": "${DATASETS}/01-youbot-ros-logs-good/unicornA_car1_2013-04-08-21-37-47.outside.mp4"
       annotations:
         robot: &unicornA_car1
           name: unicorn
@@ -225,12 +225,12 @@
 
 
 
-# - id:  unicornA_tran1_2013-04-09-18-03-16.bag
+# - id:  unicornA_tran1_2013-04-09-18-03-16.bag"
 #   desc: 
 #   code:
 #     - rosstream2boot.ExpLogFromYaml
 #     - files:
-#         "file:bag": ~/01-youbot-ros-logs-good/unicornA_tran1_2013-04-09-18-03-16.bag
+#         "file:bag": "${DATASETS}/01-youbot-ros-logs-good/unicornA_tran1_2013-04-09-18-03-16.bag"
 #       annotations:
 #         robot: *unicornA_tran1
 #         motion:
@@ -250,8 +250,8 @@
   code:
     - rosstream2boot.ExpLogFromYaml
     - files:
-        "file:bag": ~/01-youbot-ros-logs-good/unicornA_base1_2013-04-11-20-14-27.bag
-        "file:outside": ~/01-youbot-ros-logs-good/unicornA_base1_2013-04-11-20-14-27.outside.mp4
+        "file:bag": "${DATASETS}/01-youbot-ros-logs-good/unicornA_base1_2013-04-11-20-14-27.bag"
+        "file:outside": "${DATASETS}/01-youbot-ros-logs-good/unicornA_base1_2013-04-11-20-14-27.outside.mp4"
       annotations:
         robot: *unicornA_base1
         motion:
@@ -272,7 +272,7 @@
   code:
     - rosstream2boot.ExpLogFromYaml
     - files:
-        "file:bag": ~/01-youbot-ros-logs-good/unicornA_tran1_2013-04-11-23-21-36.bag
+        "file:bag": "${DATASETS}/01-youbot-ros-logs-good/unicornA_tran1_2013-04-11-23-21-36.bag"
       annotations:
         robot: *unicornA_base1
         motion:
@@ -293,8 +293,8 @@
   code:
     - rosstream2boot.ExpLogFromYaml
     - files:
-        "file:bag": ~/01-youbot-ros-logs-good/unicornA_tran1_2013-04-12-22-29-16.bag
-        "file:outside": ~/01-youbot-ros-logs-good/unicornA_tran1_2013-04-12-22-29-16.outside.mp4
+        "file:bag": "${DATASETS}/01-youbot-ros-logs-good/unicornA_tran1_2013-04-12-22-29-16.bag"
+        "file:outside": "${DATASETS}/01-youbot-ros-logs-good/unicornA_tran1_2013-04-12-22-29-16.outside.mp4"
       annotations:
         robot: *unicornA_tran1
         motion:
@@ -311,7 +311,7 @@
   code:
     - rosstream2boot.ExpLogFromYaml
     - files:
-        "file:bag": ~/01-youbot-ros-logs-good/unicornA_tran1_2013-04-12-22-40-02.bag
+        "file:bag": "${DATASETS}/01-youbot-ros-logs-good/unicornA_tran1_2013-04-12-22-40-02.bag"
       annotations:
         robot: *unicornA_tran1
         motion:
@@ -328,8 +328,8 @@
   code:
     - rosstream2boot.ExpLogFromYaml
     - files:
-        "file:bag": ~/01-youbot-ros-logs-good/unicornA_tran1_2013-04-12-23-34-08.bag
-        "file:outside": ~/01-youbot-ros-logs-good/unicornA_tran1_2013-04-12-23-34-08.outside.mp4
+        "file:bag": "${DATASETS}/01-youbot-ros-logs-good/unicornA_tran1_2013-04-12-23-34-08.bag"
+        "file:outside": "${DATASETS}/01-youbot-ros-logs-good/unicornA_tran1_2013-04-12-23-34-08.outside.mp4"
       annotations:
         robot: *unicornA_tran1
         motion:
@@ -346,8 +346,8 @@
   code:
     - rosstream2boot.ExpLogFromYaml
     - files:
-        "file:bag": ~/01-youbot-ros-logs-good/unicornA_servocorner_2013-04-16-22-46-46.bag
-        "file:outside": ~/01-youbot-ros-logs-good/unicornA_servocorner_2013-04-16-22-46-46.outside.mp4
+        "file:bag": "${DATASETS}/01-youbot-ros-logs-good/unicornA_servocorner_2013-04-16-22-46-46.bag"
+        "file:outside": "${DATASETS}/01-youbot-ros-logs-good/unicornA_servocorner_2013-04-16-22-46-46.outside.mp4"
       annotations:
         robot: *unicornA_base1
         motion:
@@ -374,7 +374,7 @@
           <param name='K' value='[1,1,0.5]'/>
 
 
-# unicornA_servocorner_laseronly_2013-04-17-18-05-07.bag  exp08 but forgot camera
+# unicornA_servocorner_laseronly_2013-04-17-18-05-07.bag"  exp08 but forgot camera
 
 
 
@@ -383,8 +383,8 @@
   code:
     - rosstream2boot.ExpLogFromYaml
     - files:
-        "file:bag": ~/01-youbot-ros-logs-good/unicornA_servocorner_laseronly_2013-04-17-18-14-07.groovy.bag
-        "file:outside": ~/01-youbot-ros-logs-good/unicornA_servocorner_laseronly_2013-04-17-18-14-07.outside.mp4
+        "file:bag": "${DATASETS}/01-youbot-ros-logs-good/unicornA_servocorner_laseronly_2013-04-17-18-14-07.groovy.bag"
+        "file:outside": "${DATASETS}/01-youbot-ros-logs-good/unicornA_servocorner_laseronly_2013-04-17-18-14-07.outside.mp4"
       annotations:
         robot: *unicornA_tran1
         motion:
@@ -400,7 +400,7 @@
           - The bag file is somehow corrupted; I can read y, y_goal, state
             but not u
 
-# unicornA_servocorner_laseronly_2013-04-17-23-30-55.bag  servo xyth  camera did not record
+# unicornA_servocorner_laseronly_2013-04-17-23-30-55.bag"  servo xyth  camera did not record
 
 
 
@@ -410,8 +410,8 @@
   code:
     - rosstream2boot.ExpLogFromYaml
     - files:
-        "file:bag": ~/01-youbot-ros-logs-good/unicornA_servocorner_laseronly_2013-04-18-15-33-19.bag
-        "file:outside": ~/01-youbot-ros-logs-good/unicornA_servocorner_laseronly_2013-04-18-15-33-19.outside.mp4
+        "file:bag": "${DATASETS}/01-youbot-ros-logs-good/unicornA_servocorner_laseronly_2013-04-18-15-33-19.bag"
+        "file:outside": "${DATASETS}/01-youbot-ros-logs-good/unicornA_servocorner_laseronly_2013-04-18-15-33-19.outside.mp4"
       annotations:
         robot: *unicornA_base1
         motion:
@@ -430,8 +430,8 @@
   code:
     - rosstream2boot.ExpLogFromYaml
     - files:
-        "file:bag": ~/01-youbot-ros-logs-good/unicornA_servocorner_laseronly_2013-04-23-21-40-22.bag
-        "file:outside": ~/01-youbot-ros-logs-good/unicornA_servocorner_laseronly_2013-04-23-21-40-22.outside.mp4
+        "file:bag": "${DATASETS}/01-youbot-ros-logs-good/unicornA_servocorner_laseronly_2013-04-23-21-40-22.bag"
+        "file:outside": "${DATASETS}/01-youbot-ros-logs-good/unicornA_servocorner_laseronly_2013-04-23-21-40-22.outside.mp4"
       annotations:
         robot: *unicornA_base1
         motion:
@@ -449,8 +449,8 @@
 #   code:
 #     - rosstream2boot.ExpLogFromYaml
 #     - files:
-#         "file:bag": ~/01-youbot-ros-logs-good/.bag
-#         "file:outside": ~/01-youbot-ros-logs-good/.mp4
+#         "file:bag": "${DATASETS}/01-youbot-ros-logs-good/.bag"
+#         "file:outside": "${DATASETS}/01-youbot-ros-logs-good/.mp4"
 #       annotations:
 #         robot: *unicornA_conf
 #         motion:

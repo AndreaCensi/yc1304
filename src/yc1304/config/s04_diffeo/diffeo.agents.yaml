@@ -1,0 +1,21 @@
+
+
+- id: "dp_tmp1"
+  desc: ""
+  code:
+  - diffeoplan_agent.DiffeoPlanAgent.from_yaml
+  - discdds: iu-youbot-b3-05-80-fast10s-15-r
+    servo:
+    - diffeoplan_agent.DiffeoPlanServoSimple 
+    - plans_generator:
+      - diffeoplan_agent.AllMaxLengthMult2
+      - nsteps: 2
+        mult: [1,2,3,5,7,10,12]
+      reduce_tolerance: 0.4
+      distance: L1w
+      # - diffeoplan.library.DistanceNormWeighted
+      # - order: 1
+
+
+
+

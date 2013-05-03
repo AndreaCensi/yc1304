@@ -7,6 +7,7 @@ from quickapp.library.app_commands.app_with_commands import (QuickMultiCmdApp,
 from rosstream2boot import get_rs2b_config
 import os
 from rosstream2boot.interfaces.ros_log import ExpLogFromYaml
+from conf_tools.master import GlobalConfig
 
 
 class Campaign(QuickMultiCmdApp):
@@ -39,13 +40,11 @@ class Campaign(QuickMultiCmdApp):
 
     def initial_setup(self):
         config_dirs = self.get_config_dirs()
-            
+        GlobalConfig.global_load_dirs(config_dirs)
+        
         self.rs2b_config = get_rs2b_config()
-        self.rs2b_config.load_dirs(config_dirs)
-        
         self.boot_config = get_boot_config()
-        self.boot_config.load_dirs(config_dirs)
-        
+
         boot_root = self.get_boot_root()
         if not os.path.exists(boot_root):
             os.makedirs(boot_root)

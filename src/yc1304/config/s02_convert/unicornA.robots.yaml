@@ -18,3 +18,37 @@
     obs_nuisance: 
     - - yc1304.library.VertAverageFraction
       - fraction: 0.3
+
+
+- id: 'dp_unicornA'
+  desc: ''
+  code:
+  - bootstrapping_olympics.library.robots.EquivRobot
+  - robot: 
+    - rosstream2boot.library.ROSRobot.from_yaml
+    - adapter: 
+      - rosstream2boot.library.ROSRobotAdapter.from_yaml
+      - obs_adapter: unicornA_cr_col160
+        cmd_adapter: twist_1_1
+        sync:
+          policy: obs-first-topic
+    cmd_nuisance: []
+    obs_nuisance: []
+
+
+- id: 'dp_unicornB'
+  desc: ''
+  code:
+  - bootstrapping_olympics.library.robots.EquivRobot
+  - robot: 
+    - rosstream2boot.library.ROSRobot.from_yaml
+    - adapter: 
+      - rosstream2boot.library.ROSRobotAdapter.from_yaml
+      - obs_adapter: unicornA_cr_col160
+        cmd_adapter: youbot_b3_back
+        sync:
+          policy: obs-first-topic
+    cmd_nuisance: []
+    obs_nuisance: []
+
+
