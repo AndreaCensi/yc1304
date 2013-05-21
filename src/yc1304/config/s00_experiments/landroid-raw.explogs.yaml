@@ -3,7 +3,7 @@
   code:
     - rosstream2boot.ExpLogFromYaml
     - files:
-        "file:bag":  "~/landroid/logger_${date}.bag"
+        "file:bag":  "$DATASETS/bag_landroid_new_format/logger_${date}.bag"
       annotations: 
         robot: &ldr13
           name: ldr

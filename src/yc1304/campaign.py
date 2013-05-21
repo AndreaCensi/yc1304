@@ -52,7 +52,7 @@ class Campaign(QuickMultiCmdApp):
                   
         
                              
-class CampaignCmd(QuickMultiCmd):
+class CampaignCmd(Campaign.sub):
     
     def get_config_dirs(self):
         return self.get_parent().get_config_dirs()

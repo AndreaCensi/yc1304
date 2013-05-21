@@ -58,7 +58,7 @@ class Exp17(CampaignCmd, QuickApp):
         rs2b_config = self.get_rs2b_config()
         
         all_logs = rs2b_config.explogs.keys()
-        explogs_landroid = [x for x in all_logs if 'logger' in x]
+        explogs_landroid = [x for x in all_logs if 'unicornA' in x]
         
         boot_root = self.get_boot_root()
         data_central = self.get_data_central()

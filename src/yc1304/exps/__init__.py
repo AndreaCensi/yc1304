@@ -37,3 +37,4 @@ from .exp16 import *
 from .exp17 import *
 from .exp18 import *
 from .exp19 import *
+from .exp20diffeo import *

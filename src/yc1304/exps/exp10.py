@@ -32,11 +32,7 @@ class Exp10(CampaignCmd, QuickApp):
                               '--boot_root', self.get_boot_root(),
                               '--jobs', id_convert_job,
                               ])
-        
-#         context.checkpoint('conversion')
-#         
-#         context.subtask(LearnLog, agent=id_agent, robot=id_robot, interval_publish=5000)
-
+       
         context.checkpoint('learning')
         
         context.subtask(PublishLearningResult, agent=id_agent, robot=id_robot)

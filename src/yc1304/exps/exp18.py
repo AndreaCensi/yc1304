@@ -1,16 +1,15 @@
 from . import CampaignCmd, campaign_sub
-from quickapp import QuickApp
-from yc1304.exps.exp15 import (recipe_agent_learn,
-                               jobs_servo_field, jobs_publish_learning)
-from rosstream2boot.programs import RS2BConvert2
-from quickapp import ResourceManager
 from bootstrapping_olympics import get_boot_config
+from quickapp import QuickApp, ResourceManager
+from rosstream2boot.programs import RS2BConvert2
+from yc1304.exps.exp15 import (recipe_agent_learn, jobs_servo_field,
+    jobs_publish_learning)
 
 
 def recipe_convert3(context, boot_root, id_robot):
     """
     
-        provides episode-ready
+        Provides episode-ready.
     """
     my_id_robot = id_robot
     

@@ -3,6 +3,7 @@
 from yc1304.campaign import campaign_sub, CampaignCmd
 from bootstrapping_olympics.programs.manager.meat.log_learn import learn_log
 from bootstrapping_olympics.programs.manager.meat.publish_output import publish_once
+from quickapp.library.app.quickapp_imp import QuickApp
 
 
 @campaign_sub
@@ -60,8 +61,7 @@ class LearnLog(CampaignCmd):
                       live_plugins=options.plugin)
 
 
-@campaign_sub
-class LearnLogNoSave(CampaignCmd):
+class LearnLogNoSave(CampaignCmd, QuickApp):
     cmd = 'learn-log-nosave'
      
     '''
@@ -74,10 +74,11 @@ class LearnLogNoSave(CampaignCmd):
         params.add_required_string("agent", help="Agent ID")
         params.add_required_string("robot", help="Robot ID")
         
-        params.add_int("interval_print", default=5,
-                          help="Interval for printing stats (seconds)")
-        params.add_string_list("episodes",
-                                help="List of episodes to learn, or None to mean all episodes.")
+        params.add_int("interval_print", default=5, help="Interval for "
+                       "printing stats (seconds)")
+        
+        params.add_string_list("episodes", help="List of episodes to learn, "
+                               "or None to mean all episodes.")
  
  
     def define_jobs_context(self, context):
@@ -96,7 +97,7 @@ class LearnLogNoSave(CampaignCmd):
                 
 
 @campaign_sub
-class PublishLearningResult(CampaignCmd):
+class PublishLearningResult(CampaignCmd, QuickApp):
     cmd = 'learn-publish'
     usage = 'learn-publish --agent <AGENT> --robot <ROBOT>  '
      

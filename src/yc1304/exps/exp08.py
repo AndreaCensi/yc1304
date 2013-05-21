@@ -24,7 +24,7 @@ class Exp08(CampaignCmd, QuickApp):
     def define_jobs_context(self, context):    
         id_agent = 'exp08_bdser1'
         
-        id_robot = 'exp05_uA_xy'
+        id_robot = 'exp20_unicornA_ceil'
         id_convert_job = 'exp05_uA_xy'
           
         self.call_recursive(context, 'convert',
