@@ -4,6 +4,7 @@ from yc1304.s10_servo_field.report_long_term import report_long_term
 from yc1304.s10_servo_field.reports import (report_distances, report_servo1, report_servo_details)
 from yc1304.s10_servo_field.show_field import (compute_servo_action,
     remove_discontinuities, process_compute_distances)
+from conf_tools.master import GlobalConfig
 
 
 @campaign_sub
@@ -70,7 +71,7 @@ class ServoField(CampaignCmd):
         all_data = context.comp(read_pose_observations, data_central, id_robot, id_episode)
         _processed = context.comp(process, all_data, min_dist)
         _processed = context.comp(remove_discontinuities, _processed, threshold=0.2)
-        _processed = context.comp(compute_servo_action, _processed, data_central,
+        _processed = context.comp(compute_servo_action, GlobalConfig.get_state(), _processed, data_central,
                                   id_agent, id_robot, variation)
         processed = context.comp(process_compute_distances, _processed)
         

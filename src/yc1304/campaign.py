@@ -2,8 +2,7 @@ from bootstrapping_olympics.configuration.master import get_boot_config
 from bootstrapping_olympics.programs.manager.meat.data_central import (
     DataCentral)
 from quickapp.library.app.quickapp_imp import quickapp_main
-from quickapp.library.app_commands.app_with_commands import (QuickMultiCmdApp,
-    QuickMultiCmd, add_subcommand)
+from quickapp.library.app_commands.app_with_commands import (QuickMultiCmdApp, add_subcommand)
 from rosstream2boot import get_rs2b_config
 import os
 from rosstream2boot.interfaces.ros_log import ExpLogFromYaml

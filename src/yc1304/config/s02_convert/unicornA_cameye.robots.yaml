@@ -21,4 +21,6 @@
           sync:
             policy: obs-first-topic
       cmd_nuisance: []
-      obs_nuisance: []
+      obs_nuisance: 
+      - - bootstrapping_olympics.library.nuisances.Resample
+        - shape: [64, 64]

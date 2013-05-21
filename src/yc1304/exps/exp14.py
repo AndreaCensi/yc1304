@@ -1,6 +1,5 @@
 from . import CampaignCmd, campaign_sub
-from quickapp.library.app.quickapp_imp import QuickApp
-from rosstream2boot.programs.rs2b_convert import RS2BConvertOne
+from quickapp import QuickApp
 from yc1304.exps import good_logs_cf
 from yc1304.exps.exp12 import merge_agents, save_state
 from yc1304.exps.exp_utils import (iterate_context_episodes,

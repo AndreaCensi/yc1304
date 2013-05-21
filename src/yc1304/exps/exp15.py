@@ -1,6 +1,5 @@
 from . import CampaignCmd, campaign_sub
 from quickapp import QuickApp
-from rosstream2boot.programs import RS2BConvertOne
 from .exp14 import jobs_parallel_learning
 from .exp_utils import (iterate_context_agents_and_episodes,
     iterate_context_agents)

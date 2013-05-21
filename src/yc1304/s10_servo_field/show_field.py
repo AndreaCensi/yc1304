@@ -1,5 +1,4 @@
 from boot_agents.bdse import BDSEServo, BDSEmodel
-from bootstrapping_olympics.configuration.master import set_boot_config
 from bootstrapping_olympics.extra.reprep.reprep_publisher import ReprepPublisher
 from bootstrapping_olympics.programs.manager.meat import load_agent_state
 from contracts import contract
@@ -7,6 +6,7 @@ from geometry import (PointSet, R2, translation_from_SE3, angle_from_SE2,
     SE2_from_SE3)
 import numpy as np
 import warnings
+from conf_tools.master import GlobalConfig
 
 
 def read_pose_observations(data_central, id_robot, id_episode):
@@ -149,8 +149,8 @@ def remove_discontinuities(processed, threshold=0.2):
             y[too_far] = y_goal[too_far]
     return processed
 
-def compute_servo_action(processed, data_central, id_agent, id_robot, variation):
-    set_boot_config(data_central.get_bo_config())
+def compute_servo_action(config_state, processed, data_central, id_agent, id_robot, variation):
+    GlobalConfig.set_state(config_state)
     agent, _ = load_agent_state(data_central, id_agent, id_robot,
                                 reset_state=False, raise_if_no_state=True)
     

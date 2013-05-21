@@ -1,13 +1,11 @@
-from bootstrapping_olympics.configuration.master import (set_boot_config,
-    get_boot_config)
+from conf_tools.master import GlobalConfig
 from procgraph import pg
 from quickapp import QuickApp
-from rosstream2boot.config.rbconfig import get_rs2b_config
-from rosstream2boot.interfaces import ExpLogFromYaml
+from rosstream2boot import ExpLogFromYaml, get_rs2b_config
 from yc1304.campaign import CampaignCmd, campaign_sub
+from yc1304.exps import good_logs_cf
 from yc1304.exps.exp_utils import iterate_context_explogs_and_robots
 import os
-from yc1304.exps import good_logs_cf
 
 @campaign_sub
 class MakeVideosBootDataYC(CampaignCmd, QuickApp):
@@ -111,12 +109,13 @@ class MakeVideosBootData(CampaignCmd, QuickApp):
         
         boot_config.robots.instance(id_robot)
         
-        context.comp(create_video_bootdata, boot_config, bag, id_robot, out_base, md,
+        context.comp(create_video_bootdata, GlobalConfig.get_state(),
+                     bag, id_robot, out_base, md,
                      job_id='video_bootdata')
          
 
-def create_video_bootdata(boot_config, bag, id_robot, out_base, md):
-    set_boot_config(boot_config)
+def create_video_bootdata(config_state, bag, id_robot, out_base, md):
+    GlobalConfig.set_state(config_state)
 #     
 #     if os.path.exists(out_base + '.fcpxml'):  # FIXME
 #         print('Already exists: %s' % out_base)

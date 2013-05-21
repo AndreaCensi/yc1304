@@ -1,7 +1,6 @@
 from . import CampaignCmd, campaign_sub
 from bootstrapping_olympics.agent_states.learning_state import LearningState
 from quickapp.library.app.quickapp_imp import QuickApp
-from rosstream2boot.programs.rs2b_convert import RS2BConvertOne
 from yc1304.exps import good_logs_cf
 from yc1304.exps.exp_utils import (iterate_context_episodes,
     iterate_context_explogs)

@@ -1,7 +1,7 @@
 
 
 - id: "dp_tmp1"
-  desc: ""
+  desc: "temporary hack"
   code:
   - diffeoplan_agent.DiffeoPlanAgent.from_yaml
   - discdds: iu-youbot-b3-05-80-fast10s-15-r
@@ -15,7 +15,3 @@
       distance: L1w
       # - diffeoplan.library.DistanceNormWeighted
       # - order: 1
-
-
-
-
