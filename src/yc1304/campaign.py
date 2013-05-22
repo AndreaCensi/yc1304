@@ -1,12 +1,9 @@
-from bootstrapping_olympics.configuration.master import get_boot_config
-from bootstrapping_olympics.programs.manager.meat.data_central import (
-    DataCentral)
-from quickapp.library.app.quickapp_imp import quickapp_main
-from quickapp.library.app_commands.app_with_commands import (QuickMultiCmdApp, add_subcommand)
-from rosstream2boot import get_rs2b_config
+from bootstrapping_olympics import get_boot_config
+from bootstrapping_olympics.programs.manager import DataCentral
+from conf_tools import GlobalConfig
+from quickapp import QuickMultiCmdApp
+from rosstream2boot import ExpLogFromYaml, get_rs2b_config
 import os
-from rosstream2boot.interfaces.ros_log import ExpLogFromYaml
-from conf_tools.master import GlobalConfig
 
 
 class Campaign(QuickMultiCmdApp):
@@ -25,12 +22,6 @@ class Campaign(QuickMultiCmdApp):
         config_dir = resource_filename("yc1304", "config")
         return [config_dir]
 
-    def get_rs2b_config(self):
-        return self.rs2b_config
-
-    def get_boot_config(self):
-        return self.boot_config
-
     def get_data_central(self):
         return self.data_central
     
@@ -48,25 +39,28 @@ class Campaign(QuickMultiCmdApp):
         if not os.path.exists(boot_root):
             os.makedirs(boot_root)
         self.data_central = DataCentral(boot_root)
-                  
-        
+                    
                              
 class CampaignCmd(Campaign.sub):
     
+    def use_private_dirs(self):
+        return False
+    
     def get_config_dirs(self):
         return self.get_parent().get_config_dirs()
-    
-    def get_rs2b_config(self):
-        return self.get_parent().get_rs2b_config()
-
-    def get_boot_config(self):
-        return self.get_parent().get_boot_config()
 
     def get_boot_root(self):
-        return self.get_parent().get_boot_root()
+        if self.use_private_dirs():
+            outdir = self.context.get_output_dir()
+            return outdir
+        else:
+            return self.get_parent().get_boot_root()
     
     def get_data_central(self):
-        return self.get_parent().get_data_central()
+        if self.use_private_dirs():
+            return DataCentral(self.get_boot_root())
+        else:
+            return self.get_parent().get_data_central()
 
     def get_log_index(self):
         return self.get_data_central().get_log_index()
@@ -81,12 +75,9 @@ class CampaignCmd(Campaign.sub):
             return
         return log 
     
-def campaign_sub(x):
-    add_subcommand(Campaign, x)
-    return x
+    
+    
+main = Campaign.get_sys_main()
 
-
-def main():
-    quickapp_main(Campaign)
     
 

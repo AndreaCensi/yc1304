@@ -1,13 +1,13 @@
-from procgraph import pg
-from quickapp import QuickApp
-from rosstream2boot.interfaces import ExpLogFromYaml
-from yc1304.campaign import CampaignCmd, campaign_sub
-import os
-from procgraph_mplayer import MPlayer
-from yc1304.exps.exp_utils import iterate_context_explogs
 from abc import abstractmethod
+from procgraph import pg
+from procgraph_mplayer import MPlayer
+from quickapp import QuickApp
+from rosstream2boot import ExpLogFromYaml
+from yc1304.campaign import CampaignCmd
+from yc1304.exps import iterate_context_explogs
 from yc1304.s00_videos.fcpx_index_dir import create_event_for_fcpx
 from yc1304.s00_videos.fcpx_project import create_project_for_fcpx
+import os
 
 scan1 = '/scan_hokuyo_H1204906'
 scan2 = '/scan_hokuyo_H1205005'
@@ -47,7 +47,6 @@ class CmdForLog(CampaignCmd, QuickApp):
         return md
         
     
-@campaign_sub
 class MakeVideosCams(CmdForLog):
     """
         Creates videos for cameras.        
@@ -86,7 +85,6 @@ def job_fcpx_index(context, outdir, id_explog):
                  project_name=project_name, event_name=event_name)
     
     
-@campaign_sub
 class MakeVideosScans(CmdForLog):
     """
         Creates videos for scans.        
@@ -109,7 +107,7 @@ class MakeVideosScans(CmdForLog):
         job_fcpx_index(context, self.context.get_output_dir(), id_explog) 
 
 
-@campaign_sub
+
 class MakeVideos2(CmdForLog):
     """ 
         Creates videos cam* and scan* + final cut index
@@ -137,7 +135,6 @@ class MakeVideos2(CmdForLog):
         job_fcpx_index(context, self.context.get_output_dir(), id_explog) 
 
 
-@campaign_sub
 class MakeVideos2All(CampaignCmd, QuickApp):
     """
         Creates a set of videos for all explogs available.
@@ -159,7 +156,6 @@ class MakeVideos2All(CampaignCmd, QuickApp):
 
 
 
-@campaign_sub
 class MakeVideos(CampaignCmd, QuickApp):
     """
         Creates youbot videos (cam_*,scan*) + mean and composite.
@@ -244,9 +240,8 @@ class MakeVideos(CampaignCmd, QuickApp):
         else:
             self.info('No outside found.')
 
-    
-@campaign_sub
-class campaign_sub(CampaignCmd, QuickApp):
+
+class MakeVideosAll(CampaignCmd, QuickApp):
     
     cmd = 'make-videos-all'
     short = 'Creates a set of videos for all explogs available.'

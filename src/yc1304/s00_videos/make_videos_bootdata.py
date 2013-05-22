@@ -2,12 +2,11 @@ from conf_tools.master import GlobalConfig
 from procgraph import pg
 from quickapp import QuickApp
 from rosstream2boot import ExpLogFromYaml, get_rs2b_config
-from yc1304.campaign import CampaignCmd, campaign_sub
+from yc1304.campaign import CampaignCmd
 from yc1304.exps import good_logs_cf
 from yc1304.exps.exp_utils import iterate_context_explogs_and_robots
 import os
 
-@campaign_sub
 class MakeVideosBootDataYC(CampaignCmd, QuickApp):
     """ Creates all the bootdata videos that I need. """
     
@@ -42,7 +41,6 @@ class MakeVideosBootDataYC(CampaignCmd, QuickApp):
                             add_job_prefix=part, add_outdir=part)
 
 
-@campaign_sub
 class MakeVideosBootDataMany(CampaignCmd, QuickApp):
     """ Creates video for servo experiments """
     
@@ -70,7 +68,6 @@ class MakeVideosBootDataMany(CampaignCmd, QuickApp):
                       add_job_prefix='', add_outdir='')
     
 
-@campaign_sub
 class MakeVideosBootData(CampaignCmd, QuickApp):
     """ Creates low-level visualization """
     

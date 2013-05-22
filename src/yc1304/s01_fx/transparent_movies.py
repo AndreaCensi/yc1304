@@ -1,11 +1,11 @@
 from procgraph import pg
-from quickapp import QuickApp
-from rosstream2boot.interfaces.ros_log import ExpLogFromYaml
-from yc1304.campaign import CampaignCmd, campaign_sub
-import os
 from procgraph_mplayer.scripts.find_background import find_background
-from procgraph_pil.imwrite import imwrite
+from procgraph_pil import imwrite
+from quickapp import QuickApp
+from rosstream2boot import ExpLogFromYaml
+from yc1304.campaign import CampaignCmd
 from yc1304.exps.exp_utils import iterate_context_explogs
+import os
 
 
 param_hints = {
@@ -19,7 +19,6 @@ param_hints = {
 
 
 
-@campaign_sub
 class MakeVideoSFX(CampaignCmd, QuickApp):
     
     cmd = 'video-sfx'
@@ -81,7 +80,6 @@ def pg_video_bg_depth(video, background, perc, every, out):
      
      
     
-@campaign_sub
 class MakeVideoSFXAll(CampaignCmd, QuickApp):
     
     cmd = 'video-sfx-all'

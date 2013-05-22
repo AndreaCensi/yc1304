@@ -36,6 +36,27 @@
     obs_nuisance: []
 
 
+
+- id: exp05_uA_xy
+  desc: "also used by exp08"
+  code:
+  - rosstream2boot.library.ROSRobot.from_yaml
+  - adapter: exp05_uA_xy
+
+- id: exp10_uA_b1_tw_hlhr_s4
+  desc: "used by exp10"
+  code:
+  - rosstream2boot.library.ROSRobot.from_yaml
+  - adapter: unicornA_base1_tw_hlhr_sane_s4
+
+- id: exp14_uA_b1_xy_cf_strip
+  desc: "used by exp14"
+  code:
+  - rosstream2boot.library.ROSRobot.from_yaml
+  - adapter: uA_b1_xy_cf_strip
+
+
+
 - id: 'dp_unicornB'
   desc: ''
   code:

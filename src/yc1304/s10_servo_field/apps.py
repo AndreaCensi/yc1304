@@ -1,14 +1,18 @@
 from . import process, read_pose_observations, report_raw_display
-from yc1304.campaign import CampaignCmd, campaign_sub
+from yc1304.campaign import CampaignCmd
 from yc1304.s10_servo_field.report_long_term import report_long_term
 from yc1304.s10_servo_field.reports import (report_distances, report_servo1, report_servo_details)
 from yc1304.s10_servo_field.show_field import (compute_servo_action,
     remove_discontinuities, process_compute_distances)
 from conf_tools.master import GlobalConfig
+from quickapp import QuickApp
+from quickapp_boot import iterate_context_agents_and_episodes
 
 
-@campaign_sub
-class CreateField(CampaignCmd):
+__all__ = ['CreateField', 'ServoField', 'jobs_servo_field', 'jobs_servo_field_agents']
+
+
+class CreateField(CampaignCmd, QuickApp):
     cmd = 'create_field'
  
     def define_options(self, params):
@@ -43,9 +47,7 @@ class CreateField(CampaignCmd):
             context.add_report(context.comp(v, processed), k, **keys)
     
 
-
-@campaign_sub
-class ServoField(CampaignCmd):
+class ServoField(CampaignCmd, QuickApp):
     cmd = 'servo_field'
  
     def define_options(self, params):
@@ -89,4 +91,15 @@ class ServoField(CampaignCmd):
     
 
 
-
+def jobs_servo_field(context, id_agent, id_robot, id_episode):
+    context.needs('agent-learn', id_agent=id_agent, id_robot=id_robot)
+    context.needs('episode-ready', id_robot=id_robot, id_episode=id_episode)
+    # TODO: episode ready?
+    context.subtask(ServoField, id_robot=id_robot, id_agent=id_agent,
+                          variation='default', id_episode=id_episode)
+       
+def jobs_servo_field_agents(context, id_robot, agents, episodes):
+    cases = iterate_context_agents_and_episodes(context, agents, episodes)
+    for c, id_agent, id_episode in cases:
+        jobs_servo_field(c, id_agent, id_robot, id_episode)
+        

@@ -1,10 +1,9 @@
-from . import CampaignCmd, campaign_sub
+from . import CampaignCmd
 from quickapp import QuickApp
-from yc1304.exps.exp15 import (recipe_agent_learn,
-                               jobs_servo_field, jobs_publish_learning)
-from yc1304.exps.exp18 import recipe_convert3
+
+__all__ = ['Exp19']
+
  
-@campaign_sub
 class Exp19(CampaignCmd, QuickApp):
     
     cmd = 'exp19'

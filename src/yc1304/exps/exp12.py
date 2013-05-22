@@ -1,31 +1,13 @@
-from . import CampaignCmd, campaign_sub
-from bootstrapping_olympics.agent_states.learning_state import LearningState
-from quickapp.library.app.quickapp_imp import QuickApp
+from . import CampaignCmd
+from quickapp import QuickApp
+
 from yc1304.exps import good_logs_cf
 from yc1304.exps.exp_utils import (iterate_context_episodes,
     iterate_context_explogs)
-from yc1304.s03_learning.log_learn import PublishLearningResult, LearnLogNoSave
 from yc1304.s10_servo_field.apps import ServoField
-from bootstrapping_olympics.interfaces.agent import AgentInterface
-from contracts import contract
-from bootstrapping_olympics.programs.manager.meat.data_central import DataCentral
 
 
-def merge_agents(agent1, agent2):
-    print('merging')
-    agent1.merge(agent2)
-    return agent1
 
-@contract(data_central=DataCentral, id_agent='str', id_robot='str', agent=AgentInterface,
-          id_episodes='list(str)')
-def save_state(data_central, id_agent, id_robot, agent, id_episodes):
-    state = LearningState(id_robot=id_robot, id_agent=id_agent)
-    state.agent_state = agent.get_state()
-    state.id_episodes = set(id_episodes)
-    db = data_central.get_agent_state_db() 
-    db.set_state(state=state, id_robot=id_robot, id_agent=id_agent)
- 
-@campaign_sub
 class Exp12(CampaignCmd, QuickApp):
     
     cmd = 'exp12'

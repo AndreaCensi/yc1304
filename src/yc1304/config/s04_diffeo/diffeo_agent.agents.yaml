@@ -1,25 +1,42 @@
-- id: exp20_diffeo
-  desc: using new engine
-  code:
-  - diffeo_agents.library.Diffeo2Agent
-  - estimator: 
-    - diffeo2dds_learn.library.DiffeoSystemEstimator
-    - diffeo2d_estimator: 
-      - diffeo2d_learn.library.DiffeomorphismEstimatorSimple
-      - max_displ: [0.1, 0.1]
-        match_method: "continuous" # continuous, binary
-    explorer: expsw1
-    servo: none
+# - id: exp20_diffeo
+#   desc: using new engine
+#   code:
+#   - diffeo_agents.library.Diffeo2Agent
+#   - estimator: 
+#     - diffeo2dds_learn.library.DiffeoSystemEstimator
+#     - diffeo2d_estimator: 
+#       - diffeo2d_learn.library.DiffeomorphismEstimatorSimple
+#       - max_displ: [0.1, 0.1]
+#         match_method: "continuous" # continuous, binary
+#     explorer: expsw1
+#     servo: none
 
-- id: exp20_diffeof
+# - id: exp20_diffeof
+#   desc: using new engine
+#   code:
+#   - diffeo_agents.library.Diffeo2Agent
+#   - estimator: 
+#     - diffeo2dds_learn.library.DiffeoSystemEstimator
+#     - diffeo2d_estimator: 
+#       - diffeo2d_learn.library.DiffeomorphismEstimatorFaster
+#       - max_displ: [0.1, 0.1]
+#         inference_method: "order" 
+#     explorer: expsw1
+#     servo: none
+
+
+- id: exp21_diffeof
   desc: using new engine
   code:
   - diffeo_agents.library.Diffeo2Agent
-  - estimator: 
-    - diffeo2dds_learn.library.DiffeoSystemEstimator
-    - diffeo2d_estimator: 
-      - diffeo2d_learn.library.DiffeomorphismEstimatorFaster
-      - max_displ: [0.1, 0.1]
-        inference_method: "order" 
+  - shape: [64, 64]
+    estimator: 
+    - diffeo2dds_learn.library.DiffeoSystemEstimatorFlexible
+    - diffeo_action_estimator:
+      - diffeo2dds_learn.library.DiffeoActionEstimatorSimple
+      - diffeo2d_estimator: 
+        - diffeo2d_learn.library.DiffeomorphismEstimatorFaster
+        - max_displ: [0.1, 0.1]
+          inference_method: "order" 
     explorer: expsw1
     servo: none

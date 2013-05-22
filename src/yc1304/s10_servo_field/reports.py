@@ -1,9 +1,9 @@
-import numpy as np
+from geometry import SE2_from_SE3, translation_angle_from_SE2
 from reprep import Report
 from yc1304.s10_servo_field.plots import (plot_reference_points_poses,
-    plot_reference_points, plot_scalar_field_sign,
-    plot_style_sensels, plot_style_sensels_deriv)
-from geometry.poses import SE2_from_SE3, translation_angle_from_SE2
+    plot_reference_points, plot_scalar_field_sign, plot_style_sensels,
+    plot_style_sensels_deriv)
+import numpy as np
 import warnings
  
 def report_raw_display(processed):

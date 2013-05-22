@@ -1,11 +1,9 @@
 from quickapp import QuickApp
 from rosstream2boot.interfaces import ExpLogFromYaml
-from yc1304.campaign import CampaignCmd, campaign_sub
+from yc1304.campaign import CampaignCmd
 import os
 from procgraph import pg
 
-
-@campaign_sub
 class MakeVideosServo(CampaignCmd, QuickApp):
     
     cmd = 'make-videos-servo'

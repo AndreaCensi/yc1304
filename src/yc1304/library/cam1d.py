@@ -1,11 +1,9 @@
-from bootstrapping_olympics.interfaces import (
-    RepresentationNuisance)
-from bootstrapping_olympics.interfaces.streamels import make_streamels_1D_float
-from bootstrapping_olympics.library.nuisances.commons import (check_streamels_2D,
-    check_streamels_range)
-import numpy as np
-from bootstrapping_olympics.interfaces.rep_nuisance import NuisanceNotInvertible
+from bootstrapping_olympics import (RepresentationNuisance, check_streamels_2D,
+    check_streamels_range, NuisanceNotInvertible, make_streamels_1D_float)
 from contracts import contract
+import numpy as np
+
+__all__ = ['VertAverage', 'VertAverageFraction']
 
 
 class VertAverage(RepresentationNuisance):

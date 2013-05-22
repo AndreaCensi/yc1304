@@ -1,13 +1,11 @@
-from . import CampaignCmd, campaign_sub
-from quickapp.library.app.quickapp_imp import QuickApp
-from rosstream2boot.programs.rs2b import RS2B
-from yc1304.exps.exp_utils import (iterate_context_episodes,
-    iterate_context_agents)
-from yc1304.s03_learning.log_learn import LearnLog, PublishLearningResult
+from . import CampaignCmd
+from quickapp import QuickApp
+from rosstream2boot import RS2B
+from yc1304.exps.exp_utils import (iterate_context_episodes)
+# from yc1304.s03_learning.log_learn import LearnLog, PublishLearningResult
 from yc1304.s10_servo_field.apps import ServoField
 
 
-@campaign_sub
 class Exp09(CampaignCmd, QuickApp):
     
     cmd = 'exp09'

@@ -1,19 +1,17 @@
-from . import CampaignCmd, campaign_sub
+from . import CampaignCmd
 from boot_agents.bdse.agent.servo import myexp, BDSEServoLongTerm
-from bootstrapping_olympics.programs.manager.meat.load_agent_state import (
-    load_agent_state)
+from bootstrapping_olympics.programs.manager import load_agent_state
 from quickapp import QuickApp
 from reprep import Report
 from yc1304.exps import good_logs_cf
 from yc1304.exps.exp_utils import (iterate_context_episodes,
     iterate_context_explogs)
-from yc1304.s03_learning.log_learn import PublishLearningResult, LearnLog
 from yc1304.s10_servo_field.apps import ServoField
 import itertools
 import numpy as np
 import warnings
 
-@campaign_sub
+
 class Exp13(CampaignCmd, QuickApp):
     
     cmd = 'exp13'

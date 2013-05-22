@@ -1,4 +1,4 @@
-from yc1304.campaign import CampaignCmd, campaign_sub
+from yc1304.campaign import CampaignCmd
 from quickapp import QuickApp
 
 # Good logs for learning frontal camera
@@ -38,3 +38,4 @@ from .exp17 import *
 from .exp18 import *
 from .exp19 import *
 from .exp20diffeo import *
+from .exp21 import *

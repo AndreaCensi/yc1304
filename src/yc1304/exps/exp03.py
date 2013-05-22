@@ -1,15 +1,12 @@
-from quickapp.library.app.quickapp_imp import QuickApp
+from quickapp import QuickApp
 from rosstream2boot.programs.rs2b import RS2B
-from . import CampaignCmd, campaign_sub
-from yc1304.s03_learning.log_learn import LearnLog
+from . import CampaignCmd
 from yc1304.s10_servo_field.apps import ServoField
 from yc1304.exps.exp_utils import iterate_context_episodes
 
-@campaign_sub
 class Exp03(CampaignCmd, QuickApp):
-    
+    """  Testing with the good logs with clean laser data """
     cmd = 'exp03'
-    short = 'Testing with the good logs with clean laser data'
     
     comment = 'Strangely, I get 90deg error....'
 

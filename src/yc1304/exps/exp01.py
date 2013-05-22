@@ -1,10 +1,9 @@
-from quickapp.library.app.quickapp_imp import QuickApp
+from . import CampaignCmd
+from quickapp import QuickApp
 from rosstream2boot.programs.rs2b import RS2B
-from . import CampaignCmd, campaign_sub
-from yc1304.s10_servo_field import CreateField
 from yc1304.exps.exp_utils import iterate_context_episodes
+from yc1304.s10_servo_field import CreateField
 
-@campaign_sub
 class Exp01(CampaignCmd, QuickApp):
     
     cmd = 'exp01'

@@ -1,12 +1,13 @@
 from boot_agents.bdse import BDSEServo, BDSEmodel
-from bootstrapping_olympics.extra.reprep.reprep_publisher import ReprepPublisher
-from bootstrapping_olympics.programs.manager.meat import load_agent_state
+from bootstrapping_olympics.programs.manager import load_agent_state
+from conf_tools import GlobalConfig
 from contracts import contract
 from geometry import (PointSet, R2, translation_from_SE3, angle_from_SE2,
     SE2_from_SE3)
+from reprep import Report
 import numpy as np
 import warnings
-from conf_tools.master import GlobalConfig
+
 
 
 def read_pose_observations(data_central, id_robot, id_episode):
@@ -210,9 +211,8 @@ def compute_servo_action(config_state, processed, data_central, id_agent, id_rob
         
         
             print('creating report for modified model')
-            publisher = ReprepPublisher('servo_model')
-            model.publish(publisher)
-            report = publisher.r
+            report = Report('servo_model')
+            model.publish(report)
             filename = 'servo_model.html'
             print('writing on %r' % filename)
             report.to_html(filename)
