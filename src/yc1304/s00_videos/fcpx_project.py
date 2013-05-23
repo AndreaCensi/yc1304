@@ -1,10 +1,8 @@
 
-from conf_tools.utils.friendly_paths import friendly_path
-from conf_tools.utils.indent_string import indent
+from conf_tools.utils import friendly_path, indent, locate_files
 from yc1304.s00_videos.fcpx_index_dir import fcpx_frac_time, get_info_for_file
 import datetime
 import os
-from conf_tools.utils.locate_files import locate_files
 
 # <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 # <!DOCTYPE fcpxml>

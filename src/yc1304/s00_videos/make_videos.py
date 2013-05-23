@@ -22,7 +22,7 @@ class CmdForLog(CampaignCmd, QuickApp):
     """ Commands that make something for one explog """
      
     def define_options(self, params):
-        params.add_required_string('id_explog', help='Which exp log to use')        
+        params.add_string('id_explog', help='Which exp log to use')        
     
     def define_jobs_context(self, context):
         self.context = context
@@ -115,7 +115,7 @@ class MakeVideos2(CmdForLog):
     cmd = 'make-videos2'
     
     def define_options(self, params):
-        params.add_required_string('id_explog', help='Which exp log to use')            
+        params.add_string('id_explog', help='Which exp log to use')            
 
     def define_jobs_video(self, context, id_explog, explog):  # @UnusedVariable
         context.subtask(MakeVideosCams, id_explog=id_explog, add_job_prefix='cams', add_outdir='')

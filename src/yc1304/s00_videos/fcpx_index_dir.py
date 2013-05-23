@@ -1,10 +1,9 @@
-from conf_tools.utils.locate_files import locate_files
+from conf_tools.utils import locate_files
 from procgraph.utils.calling_ext_program import system_cmd_result, CmdException
 from procgraph.utils.friendly_paths import friendly_path
 from procgraph.utils.strings import indent
-from procgraph_mplayer.conversions import pg_video_info
+from procgraph_mplayer.conversions import pg_video_convert, pg_video_info
 import os
-from procgraph_mplayer.conversions.video_convert import pg_video_convert
 
 
 def create_event_for_fcpx(dirname, pattern, event_filename=None, event_name=None):

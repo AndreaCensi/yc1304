@@ -24,7 +24,7 @@ class MakeVideoSFX(CampaignCmd, QuickApp):
     cmd = 'video-sfx'
     
     def define_options(self, params):
-        params.add_string('id_explog', help='Which exp log to use', compulsory=True)
+        params.add_string('id_explog', help='Which exp log to use')
 
     def define_jobs_context(self, context):    
         id_explog = self.get_options().id_explog

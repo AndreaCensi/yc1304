@@ -3,6 +3,7 @@ from rosstream2boot.interfaces import ExpLogFromYaml
 from yc1304.campaign import CampaignCmd
 import os
 from procgraph import pg
+from rosstream2boot.config.rbconfig import get_rs2b_config
 
 class MakeVideosServo(CampaignCmd, QuickApp):
     
@@ -12,12 +13,12 @@ class MakeVideosServo(CampaignCmd, QuickApp):
     usage = """ Creates video for servo experiments """
     
     def define_options(self, params):
-        params.add_string('id_explog', help='Which exp log to use', compulsory=True)
+        params.add_string('id_explog', help='Which exp log to use')
 
     def define_jobs_context(self, context):     
 
         id_explog = self.get_options().id_explog
-        rs2b_config = self.get_rs2b_config()
+        rs2b_config = get_rs2b_config()
         log = rs2b_config.explogs.instance(id_explog)
         if not isinstance(log, ExpLogFromYaml):
             self.info('Skipping log %r because not raw log.' % id_explog)

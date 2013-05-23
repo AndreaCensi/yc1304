@@ -16,8 +16,8 @@ class CreateField(CampaignCmd, QuickApp):
     cmd = 'create_field'
  
     def define_options(self, params):
-        params.add_string('id_robot', help='', compulsory=True)
-        params.add_string('id_episode', help='', compulsory=True)
+        params.add_string('id_robot', help='')
+        params.add_string('id_episode', help='')
         params.add_float('min_dist', help='Minimum distance for fake grid',
                          default=0.07)
 
@@ -51,9 +51,9 @@ class ServoField(CampaignCmd, QuickApp):
     cmd = 'servo_field'
  
     def define_options(self, params):
-        params.add_string('id_robot', help='', compulsory=True)
-        params.add_string('id_episode', help='', compulsory=True)
-        params.add_string('id_agent', help='', compulsory=True)
+        params.add_string('id_robot', help='')
+        params.add_string('id_episode', help='')
+        params.add_string('id_agent', help='')
         params.add_string('variation', help='')
         params.add_float('min_dist', help='Minimum distance for fake grid',
                          default=0.07)
