@@ -106,13 +106,12 @@ class MakeVideosBootData(CampaignCmd, QuickApp):
         
         boot_config.robots.instance(id_robot)
         
-        context.comp(create_video_bootdata, GlobalConfig.get_state(),
+        context.comp_config(create_video_bootdata,
                      bag, id_robot, out_base, md,
                      job_id='video_bootdata')
          
 
-def create_video_bootdata(config_state, bag, id_robot, out_base, md):
-    GlobalConfig.set_state(config_state)
+def create_video_bootdata(bag, id_robot, out_base, md):
 #     
 #     if os.path.exists(out_base + '.fcpxml'):  # FIXME
 #         print('Already exists: %s' % out_base)

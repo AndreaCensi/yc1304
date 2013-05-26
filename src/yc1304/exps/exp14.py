@@ -27,54 +27,7 @@ class Exp14(CampaignCmd, QuickApp):
     
     def define_options(self, params):
         pass
-    
-#     def setup_rp_convert(self, rm):
-#         boot_root = self.get_boot_root()
-#         
-#         def rp_convert(context, id_robot, id_episode):
-#             id_explog = id_episode
-#             return context.subtask(RS2BConvertOne,
-#                                    boot_root=boot_root,
-#                                    id_explog=id_explog,
-#                                    id_adapter=Exp14.id_adapter,
-#                                    id_robot=id_robot,
-#                                    add_job_prefix='')
-#             
-#         rm.set_resource_provider('episode-ready', rp_convert)
-#         
-#     def setup_rp_learn(self, rm):
-#         data_central = self.get_data_central()
-#         
-#         def rp_learn(context, id_agent):
-#             return jobs_parallel_learning(context, data_central,
-#                                           id_agent, Exp14.id_robot,
-#                                           Exp14.explogs_learn)
-#         rm.set_resource_provider('agent-learn', rp_learn)
-#         
-# 
-#     def setup_rp(self, context):
-#         rm = context.get_resource_manager()
-#         self.setup_rp_convert(rm)
-#         self.setup_rp_learn(rm)
-#     
-#     def define_jobs_context_old(self, context):
-#         self.setup_rp(context)
-#              
-#         for c, id_agent in iterate_context_agents(context, Exp14.agents):
-#             c.needs('agent-learn', id_agent=id_agent)        
-#             c.subtask(PublishLearningResult, agent=id_agent, robot=Exp14.id_robot)
-#         
-#         cases = iterate_context_agents_and_episodes(context, Exp14.agents, Exp14.explogs_test)
-#         for c, id_agent, id_episode in cases:
-#             c.needs('agent-learn', id_agent=id_agent)
-#             c.needs('episode-ready', id_robot=Exp14.id_robot, id_episode=id_episode)
-#             c.subtask(ServoField, id_robot=Exp14.id_robot,
-#                       id_agent=id_agent, id_episode=id_episode)
- 
-
-    def use_private_dirs(self):
-        return True
-
+     
     def define_jobs_context(self, context):
         boot_root = self.get_boot_root()   
         data_central = self.get_data_central()

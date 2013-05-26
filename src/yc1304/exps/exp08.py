@@ -32,9 +32,6 @@ class Exp08(CampaignCmd, QuickApp):
     def define_options(self, params):
         pass
     
-    def use_private_dirs(self):
-        return True
-    
     def define_jobs_context(self, context):
         boot_root = self.get_boot_root()   
         data_central = self.get_data_central()

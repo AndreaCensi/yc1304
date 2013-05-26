@@ -17,6 +17,7 @@
   - rosstream2boot.ROSRobotAdapter.from_yaml
   - obs_adapter: unicornA_cf_320
     cmd_adapter: twist_1_1
+    use_odom_topic: True
     sync:
       policy: obs-first-topic
 
@@ -26,6 +27,7 @@
   - rosstream2boot.ROSRobotAdapter.from_yaml
   - obs_adapter: unicornA_hr
     cmd_adapter: twist_1_1
+    use_odom_topic: True
     sync:
       policy: obs-first-topic
 
@@ -35,6 +37,7 @@
   - rosstream2boot.ROSRobotAdapter.from_yaml
   - obs_adapter: unicornA_hl
     cmd_adapter: twist_1_1
+    use_odom_topic: True
     sync:
       policy: obs-first-topic
 
@@ -44,6 +47,7 @@
   - rosstream2boot.ROSRobotAdapter.from_yaml
   - obs_adapter: unicornA_hlhr
     cmd_adapter: twist_1_1
+    use_odom_topic: True
     sync:
       policy: obs-first-topic
 
@@ -53,6 +57,7 @@
   - rosstream2boot.ROSRobotAdapter.from_yaml
   - obs_adapter: unicornA_hlhr_sane
     cmd_adapter: twist_1_1
+    use_odom_topic: True
     sync:
       policy: obs-first-topic
 
@@ -62,6 +67,7 @@
   - rosstream2boot.ROSRobotAdapter.from_yaml
   - obs_adapter: unicornA_hlhr_sane_s4
     cmd_adapter: twist_1_1
+    use_odom_topic: True
     sync:
       policy: obs-first-topic
 
@@ -71,6 +77,7 @@
   - rosstream2boot.ROSRobotAdapter.from_yaml
   - obs_adapter: unicornA_hlhr_sane_s4
     cmd_adapter: twist_xy_1
+    use_odom_topic: True
     sync:
       policy: obs-first-topic
 
@@ -81,6 +88,7 @@
   - rosstream2boot.ROSRobotAdapter.from_yaml
   - obs_adapter: unicornA_cf_320_1D
     cmd_adapter: twist_1_1
+    use_odom_topic: True
     sync:
       policy: obs-first-topic
 
@@ -91,6 +99,7 @@
   - rosstream2boot.ROSRobotAdapter.from_yaml
   - obs_adapter: unicornA_cf_320_1D_strip
     cmd_adapter: twist_1_1
+    use_odom_topic: True
     sync:
       policy: obs-first-topic
 
@@ -100,6 +109,7 @@
   - rosstream2boot.ROSRobotAdapter.from_yaml
   - obs_adapter: unicornA_cf_320_1D_strip
     cmd_adapter: twist_xy_1
+    use_odom_topic: True
     sync:
       policy: obs-first-topic
 

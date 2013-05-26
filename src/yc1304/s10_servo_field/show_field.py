@@ -1,6 +1,5 @@
 from boot_agents.bdse import BDSEServo, BDSEmodel
 from bootstrapping_olympics.programs.manager import load_agent_state
-from conf_tools import GlobalConfig
 from contracts import contract
 from geometry import (PointSet, R2, translation_from_SE3, angle_from_SE2,
     SE2_from_SE3)
@@ -19,6 +18,9 @@ def read_pose_observations(data_central, id_robot, id_episode):
     source = log_index.read_robot_episode(id_robot, id_episode, read_extra=True)
     for bd in source:
         extra = bd['extra'].item()
+        if not 'odom' in extra:
+            msg = 'Could not find pose "odom" in extra.'
+            raise Exception(msg)
         extra['odom'] = np.array(extra['odom'])
         extra['odom_th'] = angle_from_SE2(SE2_from_SE3(extra['odom']))
         extra['odom_xy'] = translation_from_SE3(extra['odom'])[:2]
@@ -150,8 +152,7 @@ def remove_discontinuities(processed, threshold=0.2):
             y[too_far] = y_goal[too_far]
     return processed
 
-def compute_servo_action(config_state, processed, data_central, id_agent, id_robot, variation):
-    GlobalConfig.set_state(config_state)
+def compute_servo_action(processed, data_central, id_agent, id_robot, variation):
     agent, _ = load_agent_state(data_central, id_agent, id_robot,
                                 reset_state=False, raise_if_no_state=True)
     

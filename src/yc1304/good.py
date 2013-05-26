@@ -11,8 +11,8 @@ class Good(CampaignCmd, QuickApp):  # @UndefinedVariable
     
     def define_jobs_context(self, context):
         # these were the ones with defined launch files
-        context.subtask(Exp08)
-        context.subtask(Exp10)
-        context.subtask(Exp14)
-        context.subtask(Exp18)
+        context.subtask(Exp08, separate_resource_manager=True)
+        context.subtask(Exp10, separate_resource_manager=True)
+        context.subtask(Exp14, separate_resource_manager=True)
+        context.subtask(Exp18, separate_resource_manager=True)
         

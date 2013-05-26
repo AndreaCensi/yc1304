@@ -75,6 +75,11 @@
           max_gy: 0.1
           min_y: 0
           max_y: 1
+        servo:
+        - boot_agents.BDSEServo 
+        - strategy: S1
+          gain: 0.1
+          linpoint: current
 
 
 - id: "exp09_bdser_${num}"
@@ -97,6 +102,11 @@
   - explorer: expsw1
     rcond: 0.0001
     importance: *importance
+    servo:
+    - boot_agents.BDSEServo 
+    - strategy: S1
+      gain: 0.1
+      linpoint: current
 
 - id: exp13_bdser1
   desc: "BDSE agent robust"

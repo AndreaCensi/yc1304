@@ -36,36 +36,7 @@ class Exp10(CampaignCmd, QuickApp):
     
     def define_options(self, params):
         pass
-#     
-#     def define_jobs_context(self, context):    
-#         id_convert_job = 'uA_b1_tw_hlhr_s4_nominal'
-#           
-#         self.call_recursive(context, 'convert',
-#                        RS2B, ['--config', self.get_config_dirs()[0],  # XXX
-#                               '--dummy',
-#                               
-#                               'convert',
-#                               '--boot_root', self.get_boot_root(),
-#                               '--jobs', id_convert_job,
-#                               ])
-#        
-#         context.checkpoint('learning')
-#         
-#         context.subtask(PublishLearningResult, agent=id_agent, robot=id_robot)
-# 
-#         
-#         test_episodes = [
-#             
-#         ]
-#         
-#         for c, id_episode in iterate_context_episodes(context, test_episodes):
-#             c.subtask(ServoField, id_robot=id_robot, id_agent=id_agent,
-#                                   variation='default', id_episode=id_episode)
  
- 
-    def use_private_dirs(self):
-        return True
-
     def define_jobs_context(self, context):
         boot_root = self.get_boot_root()   
         data_central = self.get_data_central()
@@ -83,7 +54,7 @@ class Exp10(CampaignCmd, QuickApp):
         context.checkpoint('learning')
         
         jobs_publish_learning(context, boot_root=boot_root,
-                                  id_agent=id_agent, id_robot=id_robot)
+                              id_agent=id_agent, id_robot=id_robot)
 
         for c, id_episode in iterate_context_episodes(context, Exp10.explogs_test):
             jobs_servo_field(context=c, id_agent=id_agent, id_robot=id_robot,

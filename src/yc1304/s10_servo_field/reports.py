@@ -179,6 +179,10 @@ def report_servo_details_one(name, processed, bd):
     u = extra['u']
     
     bdse_model = processed['servo_agent'].bdse_model
+    if bdse_model is None:
+        r.text('na', 'not sure if this was necessary, but bdse_model is none here')
+        return r
+    
     y_dot_pred = bdse_model.get_y_dot(y0, u)
     y_dot_pred = y_dot_pred / np.max(np.abs(y_dot_pred)) * 0.05
     r.data('u', u)

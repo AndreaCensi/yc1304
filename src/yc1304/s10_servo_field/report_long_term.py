@@ -11,6 +11,7 @@ def report_long_term(processed, nsamples=6):
     slt = processed['servo_agent']
     if not isinstance(slt, BDSEServoLongTerm):
         r.text('warn', 'The report servo_details is only done for BDSEServoLongTerm.')
+        return r
 #     bdse_model = processed['servo_agent'].bdse_model
 #     slt = BDSEServoLongTerm()
 #     slt.set_model(bdse_model)
