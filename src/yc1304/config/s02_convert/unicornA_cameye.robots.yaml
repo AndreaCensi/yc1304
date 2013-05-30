@@ -94,3 +94,51 @@
       cmd_nuisance: []
 
 
+
+
+- id: 'exp22_unicornA_ceil'
+  desc: 'Camera looking up, differential drive, delta = 3.'
+  code:
+  - bootstrapping_olympics.library.robots.EquivRobotCausal.from_yaml
+  - nuisance: 
+    - bootstrapping_olympics.library.nuisances_causal.PureCommandsNuisance
+    - delta: 3.0
+      n: 10
+    robot:
+    - bootstrapping_olympics.library.robots.EquivRobot
+    - robot: 
+      - rosstream2boot.library.ROSRobot.from_yaml
+      - adapter: 
+        - rosstream2boot.library.ROSRobotAdapter.from_yaml
+        - obs_adapter: unicornA_cr_320_rgb
+          cmd_adapter: twist_1_1
+          sync:
+            policy: obs-first-topic
+      cmd_nuisance: []
+      obs_nuisance: []
+
+
+
+- id: 'exp23_unicornA_hlhr_sane_3'
+  desc: 'Population code for the two range-finders'
+  code:
+  - bootstrapping_olympics.library.robots.EquivRobotCausal.from_yaml
+  - nuisance: 
+    - bootstrapping_olympics.library.nuisances_causal.PureCommandsNuisance
+    - delta: 3.0
+      n: 10
+    robot:
+    - bootstrapping_olympics.library.robots.EquivRobot
+    - robot: 
+      - rosstream2boot.library.ROSRobot.from_yaml
+      - adapter: 
+        - rosstream2boot.library.ROSRobotAdapter.from_yaml
+        - obs_adapter: unicornA_hlhr_sane_s4
+          cmd_adapter: twist_1_1
+          sync:
+            policy: obs-first-topic
+      obs_nuisance: 
+      - - bootstrapping_olympics.library.nuisances.PopCode
+        - resolution: 128
+      cmd_nuisance: []
+

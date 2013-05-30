@@ -285,6 +285,12 @@
         notes: | 
           no video
           moved using only translations
+          5 (0.0, 0.1, 0.0)
+          32 (0.1, 0.0, 0.0)
+          35 (-0.1, 0.0, 0.0)
+           2 (0.0, 0.0, 0.0)
+           4 (0.0, -0.1, 0.0)
+
 
 
 
@@ -340,6 +346,11 @@
         notes: | 
           Manually driven in a grid
           Note that at the end  I rotate a bit by mistake
+                 23 (0.0, 0.1, 0.0)
+           1 (0.1, 0.0, 0.0)
+          22 (0.0, -0.1, 0.0)
+           2 (-0.1, 0.0, 0.0)
+           8 (0.0, 0.0, 0.0)
 
 - id: unicornA_servocorner_2013-04-16-22-46-46
   desc: Experiments with rotation

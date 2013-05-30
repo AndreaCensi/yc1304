@@ -5,7 +5,7 @@ from yc1304.exps import iterate_context_episodes, CampaignCmd
 from yc1304.s10_servo_field import jobs_servo_field
 
 class Exp08(CampaignCmd, QuickApp):
-    """ Let's try BDSE robustified """
+    """ Let's try BDSE robustified with range finder """
 
     cmd = 'exp08'
     

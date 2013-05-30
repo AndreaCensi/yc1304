@@ -16,6 +16,32 @@ good_logs_cf = [
 'unicornA_base1_2013-04-03-16-36-03'  # 17m, nominal, ends for under-voltage
 ]
 
+good_logs_cam_eye = [
+'unicornA_base1_2013-04-03-13-30-28',  # 38m, nominal, ok
+'unicornA_car1_2013-04-08-21-37-47',  # ??m, nominal
+    # - unicornA_base1_2013-04-06-19-44-59',  people standing around; don't use for learning
+'unicornA_tran1_2013-04-09-14-35-11',  # ??min, nominal
+    # - unicornA_base1_2013-04-03-13-16-53',  7m, Crashes into curtains after 7 minutes; don't use for learning.
+'unicornA_base1_2013-04-02-20-37-43',  # 37m, nominal, boxes
+'unicornA_base1_2013-04-08-19-10-12',  # 15m, has occlusions for camera
+'unicornA_base1_2013-04-03-12-58-11',  # :  17m, nominal, boxes
+# 'unicornA_base1_2013-04-08-16-43-10',  #  25m, gripper not properly placed
+'unicornA_base1_2013-04-06-15-30-06',  # 6m, nominal
+'unicornA_base1_2013-04-03-16-36-03'  # 17m, nominal, ends for under-voltage
+]
+
+
+# good logs for hokuyo
+good_logs_hokuyos = [
+    'unicornA_base1_2013-04-11-20-14-27',
+    # 'unicornA_tran1_2013-04-11-23-21-36', this is with 0.1 commands
+    'unicornA_tran1_2013-04-12-22-29-16',
+    'unicornA_tran1_2013-04-12-22-40-02',
+    # 'unicornA_tran1_2013-04-12-23-34-08'  this is for testing (grid1)
+]
+
+grid1 = ['unicornA_tran1_2013-04-12-23-34-08']
+
 
 
 from .exp01 import *
@@ -39,3 +65,10 @@ from .exp18 import *
 from .exp19 import *
 from .exp20diffeo import *
 from .exp21 import *
+from .exp22 import *
+from .exp23 import *
+from .exp24 import *
+from .exp25 import *
+from .exp26 import *
+from .exp27 import *
+

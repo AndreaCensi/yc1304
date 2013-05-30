@@ -36,7 +36,59 @@
       - diffeo2dds_learn.library.DiffeoActionEstimatorSimple
       - diffeo2d_estimator: 
         - diffeo2d_learn.library.DiffeomorphismEstimatorFaster
-        - max_displ: [0.1, 0.1]
-          inference_method: "order" 
+        - inference_method: "order" 
     explorer: expsw1
     servo: none
+
+- id: exp22_diffeof
+  desc: using new engine
+  code:
+  - diffeo_agents.library.Diffeo2Agent
+  - shape: [128, 128]
+    estimator: test_ddsest_unc_refine0
+    max_displ: 0.3 # minimum for ceil
+    explorer: expsw1
+    servo: none
+
+- id: exp23_diffeof
+  desc: using new engine
+  code:
+  - diffeo_agents.library.Diffeo2Agent
+  - estimator: test_ddsest_unc_refine3
+    max_displ: 0.15
+    explorer: expsw1
+    servo: none
+
+- id: exp23_diffeo_fast
+  desc: using new engine
+  code:
+  - diffeo_agents.library.Diffeo2Agent
+  - estimator: test_ddsest_unc_fast_order
+    max_displ: 0.1
+    explorer: expsw1
+    servo: none
+
+- id: exp26_diffeof
+  desc: using new engine
+  code:
+  - diffeo_agents.library.Diffeo2Agent
+  - estimator: test_ddsest_unc_refine_exp26
+    max_displ: 0.15
+    explorer: expsw1
+    servo: none
+
+- id: cmdstats
+  desc: "Commands stats"
+  code:
+      - boot_agents.CmdStats
+      - beta: 3
+
+# - id: exp22_diffeo2
+#   desc: using old estimator
+#   code:
+#   - diffeo_agents.library.Diffeo2Agent
+#   - shape: [128, 128]
+#     estimator: test_ddsest_unc_fast_order
+#     max_displ: 0.2
+#     explorer: expsw1
+#     servo: none

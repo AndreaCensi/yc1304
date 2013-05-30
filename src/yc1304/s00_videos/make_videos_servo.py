@@ -1,9 +1,9 @@
+from procgraph import pg
 from quickapp import QuickApp
-from rosstream2boot.interfaces import ExpLogFromYaml
+from rosstream2boot import ExpLogFromYaml, get_rs2b_config
 from yc1304.campaign import CampaignCmd
 import os
-from procgraph import pg
-from rosstream2boot.config.rbconfig import get_rs2b_config
+
 
 class MakeVideosServo(CampaignCmd, QuickApp):
     
