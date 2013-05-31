@@ -92,3 +92,15 @@
 #     max_displ: 0.2
 #     explorer: expsw1
 #     servo: none
+
+
+- id: exp28_diffeo
+  desc: using new engine
+  code:
+  - diffeo_agents.library.Diffeo2Agent
+  - estimator: test_ddsest_unc_refine_exp28
+    max_displ: 0.25
+    explorer: expsw1
+    servo: none
+
+

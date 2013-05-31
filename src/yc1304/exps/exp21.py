@@ -1,5 +1,6 @@
 from quickapp import QuickApp
-from quickapp_boot import (recipe_agentlearn_by_parallel, jobs_publish_learning_agents_robots)
+from quickapp_boot import (recipe_agentlearn_by_parallel,
+    jobs_publish_learning_agents_robots)
 from rosstream2boot import recipe_episodeready_by_convert2
 from yc1304.campaign import CampaignCmd
 from yc1304.exps import good_logs_cf

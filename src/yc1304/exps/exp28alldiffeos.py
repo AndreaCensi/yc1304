@@ -6,22 +6,26 @@ from rosstream2boot import recipe_episodeready_by_convert2
 from yc1304.campaign import CampaignCmd
 from yc1304.exps import good_logs_hokuyos, good_logs_cf
  
-__all__ = ['Exp25']
+__all__ = ['Exp28']
 
-class Exp25(CampaignCmd, QuickApp):  # @UndefinedVariable
-    """ using the good hokuyo logs  """
+class Exp28(CampaignCmd, QuickApp):  # @UndefinedVariable
+    """ Runs all of the diffeo learning at once  """
      
-    cmd = 'exp25'
+    cmd = 'exp28'
     
     robots = [
-        'exp23_unicornA_hlhr_sane_3'
+        # 'pc3-unicornA_tw1_cf_320_rgb',
+        'pc2-unicornA_tw1_cf_320_rgb',
+        'pc3-unicornA_tw1_cr_320_rgb',
+        'pc3-unicornA_tw1_hlhr_sanes4_pc128'
     ]
               
     explogs_learn = list(set(good_logs_hokuyos + good_logs_cf))
     explogs_convert = explogs_learn
        
     agents = [
-      'exp23_diffeof',
+      'exp28_diffeo',
+      'cmdstats',
     ]
     
     def define_options(self, params):
@@ -34,19 +38,19 @@ class Exp25(CampaignCmd, QuickApp):  # @UndefinedVariable
         GlobalConfig.global_load_dir('default')
 
         recipe_agentlearn_by_parallel_concurrent_reps(context, data_central,
-            Exp25.explogs_learn, n=8, max_reps=20,
-            only_agents=['exp23_diffeof', 'exp23_diffeo_fast'])
+            Exp28.explogs_learn, n=8, max_reps=10,
+            only_agents=['exp28_diffeo']
+            )
         
         recipe_agentlearn_by_parallel(context, data_central,
-                                                Exp25.explogs_learn,
-                                                only_agents=['stats2'])
+                                                Exp28.explogs_learn,
+                                                only_agents=['stats2', 'cmdstats'])
         
-        
-        for id_robot in Exp25.robots:
+        for id_robot in Exp28.robots:
             recipe_episodeready_by_convert2(context, boot_root, id_robot)
 
         jobs_publish_learning_agents_robots(context, boot_root,
-                                            Exp25.agents, Exp25.robots)
+                                            Exp28.agents, Exp28.robots)
         
             
     
