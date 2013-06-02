@@ -8,7 +8,6 @@ import numpy as np
 import warnings
 
 
-
 def read_pose_observations(data_central, id_robot, id_episode):
     """ Returns a list of (timestamp, pose, observations) """
     data = []
@@ -21,9 +20,12 @@ def read_pose_observations(data_central, id_robot, id_episode):
         if not 'odom' in extra:
             msg = 'Could not find pose "odom" in extra.'
             raise Exception(msg)
-        extra['odom'] = np.array(extra['odom'])
-        extra['odom_th'] = angle_from_SE2(SE2_from_SE3(extra['odom']))
-        extra['odom_xy'] = translation_from_SE3(extra['odom'])[:2]
+        
+        pose = np.array(extra['robot_pose'])
+        
+        extra['odom'] = pose
+        extra['odom_th'] = angle_from_SE2(SE2_from_SE3(pose))
+        extra['odom_xy'] = translation_from_SE3(pose)[:2]
         
         data.append(bd)
 
@@ -65,38 +67,38 @@ def process_compute_distances(processed):
 def get_y_goal(processed):
     return processed['bd_goal']['observations'].copy()
 
-
-@contract(y='array[N]', max_diff='float,>0', returns='array[N]')
-def remove_array_discontinuity(y, max_diff):
-    """ Removes discontinuities from an array """
-    
-    changed = True
-    
-    while changed:
-        y, changed = change_far(y, max_diff)
-        # print('changed: %s' % changed)
-    
-    return y
-    
-def change_far(y, max_diff):
-    y = y.copy()
-#     y_ok = find_ok(y, max_diff)
-    ok = np.logical_and(y > 0.04, y < .9) 
-    
-    changed = []
-    for i in range(y.size):
-        val = y[i]
-        
-        if not ok[i]:
-            for j in range(i, y.size):
-                if ok[j]:
-                    repl = y[j]
-                    y[i] = repl
-                    assert repl > 0
-                    changed.append((i, j, val, repl))
-                    break
-            else:
-                continue
+# 
+# @contract(y='array[N]', max_diff='float,>0', returns='array[N]')
+# def remove_array_discontinuity(y, max_diff):
+#     """ Removes discontinuities from an array """
+#     
+#     changed = True
+#     
+#     while changed:
+#         y, changed = change_far(y, max_diff)
+#         # print('changed: %s' % changed)
+#     
+#     return y
+#     
+# def change_far(y, max_diff):
+#     y = y.copy()
+# #     y_ok = find_ok(y, max_diff)
+#     ok = np.logical_and(y > 0.04, y < .9) 
+#     
+#     changed = []
+#     for i in range(y.size):
+#         val = y[i]
+#         
+#         if not ok[i]:
+#             for j in range(i, y.size):
+#                 if ok[j]:
+#                     repl = y[j]
+#                     y[i] = repl
+#                     assert repl > 0
+#                     changed.append((i, j, val, repl))
+#                     break
+#             else:
+#                 continue
 
 #     for i in range(1, y.size - 1):
 #         val = y[i]
@@ -120,37 +122,37 @@ def change_far(y, max_diff):
 #             y[i] = repl
 #             changed.append((i, val, repl))
 #             
-    return y, changed
-    
-def find_ok(y, max_diff):
-    ok = np.zeros(y.size, 'bool')
-    close_enough = lambda a, b: np.abs(a - b) < max_diff
-    for i in range(y.size):
-        left_ok = (i > 0) and close_enough(y[i], y[i - 1]) 
-        right_ok = (i < y.size - 1) and close_enough(y[i], y[i + 1])
-        ok[i] = left_ok and right_ok
-    return ok    
+#     return y, changed
+#     
+# def find_ok(y, max_diff):
+#     ok = np.zeros(y.size, 'bool')
+#     close_enough = lambda a, b: np.abs(a - b) < max_diff
+#     for i in range(y.size):
+#         left_ok = (i > 0) and close_enough(y[i], y[i - 1]) 
+#         right_ok = (i < y.size - 1) and close_enough(y[i], y[i + 1])
+#         ok[i] = left_ok and right_ok
+#     return ok    
 
-
-
-
-def remove_discontinuities(processed, threshold=0.2):
-    warnings.warn('Trimming discontinuities, using error threshold = %f' % threshold)
-    max_diff = 0.1
-    bd = processed['bd_goal'] 
-    bd['observations'] = remove_array_discontinuity(bd['observations'], max_diff)
-    
-    for bd in processed['sparse']: 
-        bd['observations'] = remove_array_discontinuity(bd['observations'], max_diff)
-     
-    if False:        
-        y_goal = get_y_goal(processed) 
-        for bd in processed['sparse']: 
-            y = bd['observations']
-            e = np.abs(y - y_goal)
-            too_far = e > threshold
-            y[too_far] = y_goal[too_far]
-    return processed
+# 
+# 
+# 
+# def remove_discontinuities(processed, threshold=0.2):
+#     warnings.warn('Trimming discontinuities, using error threshold = %f' % threshold)
+#     max_diff = 0.1
+#     bd = processed['bd_goal'] 
+#     bd['observations'] = remove_array_discontinuity(bd['observations'], max_diff)
+#      
+#     for bd in processed['sparse']: 
+#         bd['observations'] = remove_array_discontinuity(bd['observations'], max_diff)
+#      
+#     if False:        
+#         y_goal = get_y_goal(processed) 
+#         for bd in processed['sparse']: 
+#             y = bd['observations']
+#             e = np.abs(y - y_goal)
+#             too_far = e > threshold
+#             y[too_far] = y_goal[too_far]
+#     return processed
 
 def compute_servo_action(processed, data_central, id_agent, id_robot, variation):
     agent, _ = load_agent_state(data_central, id_agent, id_robot,

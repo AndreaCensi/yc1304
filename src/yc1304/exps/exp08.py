@@ -4,6 +4,8 @@ from rosstream2boot import recipe_episodeready_by_convert2
 from yc1304.exps import iterate_context_episodes, CampaignCmd
 from yc1304.s10_servo_field import jobs_servo_field
 
+__all__ = ['Exp08']
+
 class Exp08(CampaignCmd, QuickApp):
     """ Let's try BDSE robustified with range finder """
 

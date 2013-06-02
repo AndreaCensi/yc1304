@@ -155,25 +155,7 @@
         mode: uniform
         grid_max: 10.0
         grid_n: 20
-
-
-
-# - id: "exp${n}_bdser_s1"
-#   desc: "BDSE agent robust, servo original"
-#   code:
-#   - boot_agents.BDSEAgentRobust
-#   - explorer: expsw1
-#     rcond: 0.0001
-#     importance: *importance
-#     servo:
-#     - boot_agents.BDSEServo 
-#     - strategy: S1
-#       gain: 0.1
-#       linpoint: current
-
-
-
-
+ 
 - id: "exp18_bdser_s1"
   desc: "BDSE agent robust, servo original"
   code:
@@ -186,22 +168,52 @@
     - strategy: S1
       gain: 0.5
       linpoint: current
+ 
 
+- id: "exp30_bdser_so"
+  desc: "BDSE agent robust, servo original"
+  code:
+  - boot_agents.BDSEAgentRobust
+  - explorer: expsw1
+    rcond: 0.0001
+    importance: *importance
+    servo:
+    - boot_agents.BDSEServo 
+    - strategy: S1
+      gain: 0.5
+      linpoint: current
+ 
+- id: "exp30_bdser_ss"
+  desc: "BDSE agent robust, servosimple"
+  code:
+  - boot_agents.BDSEAgentRobust
+  - explorer: expsw1
+    rcond: 0.0001
+    importance: *importance
+    servo:
+    - boot_agents.BDSEServoSimple
+    - gain: 0.1
 
-# - id: "exp${n}_bdser_s3"
-#   desc: "BDSE agent robust, servo long term"
-#   code:
-#   - boot_agents.BDSEAgentRobust
-#   - explorer: expsw1
-#     rcond: 0.0001
-#     importance: *importance
-#     servo:
-#     - boot_agents.BDSEServoLongTerm
-#     - grid:
-#         mode: uniform
-#         grid_max: 10.0
-#         grid_n: 20
+- id: "exp30_bdser_sn"
+  desc: "BDSE agent robust, new"
+  code:
+  - boot_agents.BDSEAgentRobust
+  - explorer: expsw1
+    rcond: 0.0001
+    importance: *importance
+    servo:
+    - boot_agents.BDSEServoRobust # XXX
+    - gain: 0.1
+ 
 
-
-
-
+- id: "exp30_bdser_sn1"
+  desc: "BDSE agent robust, new, L1"
+  code:
+  - boot_agents.BDSEAgentRobust
+  - explorer: expsw1
+    rcond: 0.0001
+    importance: *importance
+    servo:
+    - boot_agents.BDSEServoRobustL1 # XXX
+    - gain: 0.1
+    

@@ -1,10 +1,8 @@
-from geometry import SE2_from_SE3, translation_angle_from_SE2
 from reprep import Report
 from yc1304.s10_servo_field.plots import (plot_reference_points_poses,
     plot_reference_points, plot_scalar_field_sign, plot_style_sensels,
-    plot_style_sensels_deriv)
+    plot_style_sensels_deriv, plot_poses_commands, plot_odom_commands)
 import numpy as np
-import warnings
  
 def report_raw_display(processed):
     r = Report('raw_display')
@@ -18,7 +16,6 @@ def report_raw_display(processed):
         pylab.plot(xy[:, 0], xy[:, 1], '-')
         plot_odom_commands(pylab, processed['raw'][::20])
         pylab.axis('equal')
-
     
     caption = "Raw trajectory and selected points"
     with f.plot('sparse_xy', caption=caption) as pylab:
@@ -39,41 +36,10 @@ def report_raw_display(processed):
         
         plot_odom_commands(pylab, processed['sparse'])
         pylab.axis('equal')
-
+        
     return r
 
-def plot_odom_commands(pylab, bds):
-    poses = [bd['extra'].item()['odom'] for bd in bds]    
-    commands = [bd['commands'] for bd in  bds]
-    plot_poses_commands(pylab, poses, commands)
 
-def plot_poses_commands(pylab, poses, commands,
-                        pose_arrow_length=0.03,
-                        cmd_arrow_length=0.05):
-
-    pose_style = dict(head_width=0.01, head_length=0.01,
-                      edgecolor=[0.8, 0.8, 0.8])
-
-    # scale to given arrow_length
-    us = np.array(commands)[:, :2]
-    u_max = np.max(np.hypot(us[:, 0], us[:, 1]))
-    us = us / u_max * cmd_arrow_length
-    
-    cmd_style = dict(head_width=0.01, head_length=0.01, edgecolor='blue')
-    
-    for pose, u in zip(poses, us):        
-        p, th = translation_angle_from_SE2(SE2_from_SE3(pose))
-        
-        a = np.cos(th) * pose_arrow_length        
-        b = np.sin(th) * pose_arrow_length
-        #  pylab.arrow(p[0], p[1], a, b, **pose_style)
-        
-        # u_w = np.dot(pose, [u[0], u[1], 0, 0])[:2]
-        warnings.warn('This is probably only correct with this dataset')
-        u_w = u[1], -u[0]
-        
-        pylab.arrow(p[0], p[1], u_w[0], u_w[1], **cmd_style)
-        
 
 def report_distances(processed):
     r = Report('distances')
@@ -96,62 +62,44 @@ def report_distances(processed):
 
 def get_extra_item(bds, field):
     return [bd['extra'].item()[field] for bd in bds]
- 
-def repsec_servo1_u(r, processed):
+
+
+
+def repsec_servo1_generic_cmd_field(r, processed, fname, normalize=True):
     f = r.figure()
     
     bds = processed['sparse']
-    u = np.array(get_extra_item(bds, 'u'))
+    u = np.array(get_extra_item(bds, fname))
     xy = processed['sparse_xy']
     
     poses = get_extra_item(bds, 'odom')
     has_theta = u.shape[1] == 3
 
-    caption = 'First two components of "u".'
+    caption = 'First two components of "%s".' % fname
     with f.plot('u01_arrows', caption=caption) as pylab:
         plot_reference_points(pylab, processed)
-        plot_poses_commands(pylab, poses, u)
+        plot_poses_commands(pylab, poses, u, normalize=normalize)
         pylab.axis('equal')
 
     if has_theta:
         u_th = u[:, 2]
-        caption = 'Third component of "u".'
-        with f.plot('u_th_sign', caption=caption) as pylab:
-            plot_reference_points(pylab, processed)
-            plot_scalar_field_sign(pylab, xy, u_th)
-
-
-def repsec_servo1_u_raw(r, processed):
-    f = r.figure()
-    
-    bds = processed['sparse']
-    u = np.array(get_extra_item(bds, 'u_raw'))
-    xy = processed['sparse_xy']
-    
-    poses = get_extra_item(bds, 'odom')
-    has_theta = u.shape[1] == 3
-
-    caption = 'First two components of "u".'
-    with f.plot('u01_arrows', caption=caption) as pylab:
-        plot_reference_points(pylab, processed)
-        plot_poses_commands(pylab, poses, u)
-        pylab.axis('equal')
-
-    if has_theta:
-        u_th = u[:, 2]
-        caption = 'Third component of "u".'
+        caption = 'Third component of "%s".' % fname
         with f.plot('u_th_sign', caption=caption) as pylab:
             plot_reference_points(pylab, processed)
             plot_scalar_field_sign(pylab, xy, u_th)
     
+
 def report_servo1(processed):
     r = Report('servo1')
 
     with r.subsection('u', robust=True) as s:
-        repsec_servo1_u(s, processed)
+        repsec_servo1_generic_cmd_field(s, processed, 'u')
     
     with r.subsection('u_raw', robust=True) as s:
-        repsec_servo1_u_raw(s, processed)
+        repsec_servo1_generic_cmd_field(s, processed, 'u_raw')
+
+    with r.subsection('descent', robust=True) as s:
+        repsec_servo1_generic_cmd_field(s, processed, 'descent', normalize=False)
      
     return r
 

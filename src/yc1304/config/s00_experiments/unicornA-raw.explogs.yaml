@@ -453,6 +453,98 @@
         notes: | 
           "laseronly" in the name is wrong
  
+
+# /ros-logs/unicornA_teleop_nmap_2013-05-31-18-55-06.bag. env1 going diagonal
+# /ros-logs/unicornA_teleop_nmap_2013-05-31-18-56-01.bag. env2 going back, but forgot logging on
+
+# /ros-logs/unicornA_teleop_nmap_2013-05-31-19-51-24.bag  env2 good, figure 8 translation only
+# /ros-logs/unicornA_teleop_nmap_2013-05-31-19-54-07.bag  env2 good, with rotation
+
+- id:  unicornA_teleop_nmap_2013-05-31-19-51-24
+  desc: figure 8 translation only
+  code:
+  - rosstream2boot.ExpLogFromYaml
+  - files:
+      "file:bag": "${DATASETS}/01-youbot-ros-logs-good/unicornA_teleop_nmap_2013-05-31-19-51-24.bag"
+    annotations:
+      robot: *unicornA_tran1
+      motion:
+        agent: andrea  
+      environment: &lab_boxes4
+        name: vehicles_lab
+        config: other boxes
+      events:
+        disturbances: []
+      notes: | 
+        no video
+
+- id:  unicornA_teleop_nmap_2013-05-31-19-54-07
+  desc: figure 8 with rotation
+  code:
+  - rosstream2boot.ExpLogFromYaml
+  - files:
+      "file:bag": "${DATASETS}/01-youbot-ros-logs-good/unicornA_teleop_nmap_2013-05-31-19-54-07.bag"
+    annotations:
+      robot: *unicornA_base1
+      motion:
+        agent: andrea  
+      environment: *lab_boxes4
+      events:
+        disturbances: []
+      notes: | 
+        no video
+
+
+- id:  unicornA_lab_grid_2013-06-01-21-00-47
+  desc: grid collected in lab_boxes4
+  code:
+  - rosstream2boot.ExpLogFromYaml
+  - files:
+      "file:bag": "${DATASETS}/01-youbot-ros-logs-good/unicornA_lab_grid_2013-06-01-21-00-47.bag"
+    annotations:
+      robot: *unicornA_base1
+      motion:
+        agent: andrea  
+      environment: *lab_boxes4
+      events:
+        disturbances: []
+      notes: | 
+        no video
+
+- id:  unicornA_lab_grid_2013-06-01-21-04-51
+  desc: another grid collected in lab_boxes4
+  code:
+  - rosstream2boot.ExpLogFromYaml
+  - files:
+      "file:bag": "${DATASETS}/01-youbot-ros-logs-good/unicornA_lab_grid_2013-06-01-21-04-51.bag"
+    annotations:
+      robot: *unicornA_base1
+      motion:
+        agent: andrea  
+      environment: *lab_boxes4
+      events:
+        disturbances: []
+      notes: | 
+        no video
+
+
+- id: unicornA_lab_gridth_2013-06-01-21-11-15
+  desc: pure rotation on theta
+  code:
+  - rosstream2boot.ExpLogFromYaml
+  - files:
+      "file:bag": "${DATASETS}/01-youbot-ros-logs-good/unicornA_lab_gridth_2013-06-01-21-11-15.bag"
+    annotations:
+      robot: *unicornA_base1
+      motion:
+        agent: andrea  
+      environment: *lab_boxes4
+      events:
+        disturbances: []
+      notes: | 
+        no video
+
+
 ##########################################
 # Template:
 # - id:  
@@ -471,5 +563,4 @@
 #           disturbances: []
 #         notes: | 
 ##########################################
-
 

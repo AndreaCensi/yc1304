@@ -7,7 +7,6 @@
     max_lin_vel: 1.0
     max_ang_vel: 1.0
 
-
 - id: twist_xy_1
   desc: '2D Twist'
   code:

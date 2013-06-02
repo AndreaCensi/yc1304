@@ -41,7 +41,7 @@
     sync:
       policy: obs-first-topic
 
-- id: unicornA_base1_tw_hlhr
+- id: unicornA_tw1_hlhr
   desc: Only left (?) hokuyo
   code:
   - rosstream2boot.ROSRobotAdapter.from_yaml
@@ -51,7 +51,7 @@
     sync:
       policy: obs-first-topic
 
-- id: unicornA_base1_tw_hlhr_sane
+- id: unicornA_tw1_hlhr_sane
   desc: Only sane readings
   code:
   - rosstream2boot.ROSRobotAdapter.from_yaml
@@ -61,7 +61,7 @@
     sync:
       policy: obs-first-topic
 
-- id: unicornA_base1_tw_hlhr_sane_s4
+- id: unicornA_tw1_hlhr_sane_s4
   desc: "Only sane readings, downsampled"
   code:
   - rosstream2boot.ROSRobotAdapter.from_yaml
@@ -80,7 +80,6 @@
     use_odom_topic: True
     sync:
       policy: obs-first-topic
-
 
 - id: uA_b1_tw_cf
   desc: "Grayscale 1D frontal camera, base1"

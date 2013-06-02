@@ -73,3 +73,4 @@ from .exp26 import *
 from .exp27 import *
 from .exp28alldiffeos import *
 from .exp29 import *
+from .exp30 import *

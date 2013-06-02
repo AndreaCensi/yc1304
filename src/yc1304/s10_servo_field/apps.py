@@ -1,12 +1,13 @@
 from . import process, read_pose_observations, report_raw_display
 from quickapp import QuickApp
-from quickapp_boot import iterate_context_agents_and_episodes
+from quickapp_boot import (iterate_context_agents_and_episodes, RM_EPISODE_READY,
+    RM_AGENT_LEARN)
 from yc1304.campaign import CampaignCmd
 from yc1304.s10_servo_field.report_long_term import report_long_term
 from yc1304.s10_servo_field.reports import (report_distances, report_servo1,
     report_servo_details)
 from yc1304.s10_servo_field.show_field import (compute_servo_action,
-    remove_discontinuities, process_compute_distances)
+    process_compute_distances)
 
 
 __all__ = ['CreateField', 'ServoField', 'jobs_servo_field', 'jobs_servo_field_agents']
@@ -51,7 +52,6 @@ class ServoField(CampaignCmd, QuickApp):
     cmd = 'servo_field'
  
     def define_options(self, params):
-#         params.add_string('boot_root', help='')
         params.add_string('id_robot', help='')
         params.add_string('id_episode', help='')
         params.add_string('id_agent', help='')
@@ -71,7 +71,7 @@ class ServoField(CampaignCmd, QuickApp):
 
         all_data = context.comp(read_pose_observations, data_central, id_robot, id_episode)
         _processed = context.comp(process, all_data, min_dist)
-        _processed = context.comp(remove_discontinuities, _processed, threshold=0.2)
+#         _processed = context.comp(remove_discontinuities, _processed, threshold=0.2)
         _processed = context.comp(compute_servo_action, _processed, data_central,
                                   id_agent, id_robot, variation)
         processed = context.comp(process_compute_distances, _processed)
@@ -91,11 +91,10 @@ class ServoField(CampaignCmd, QuickApp):
 
 
 def jobs_servo_field(context, id_agent, id_robot, id_episode):
-    context.needs('agent-learn', id_agent=id_agent, id_robot=id_robot)
-    context.needs('episode-ready', id_robot=id_robot, id_episode=id_episode)
-    # TODO: episode ready?
+    context.needs(RM_AGENT_LEARN, id_agent=id_agent, id_robot=id_robot)
+    context.needs(RM_EPISODE_READY, id_robot=id_robot, id_episode=id_episode)
     context.subtask(ServoField, id_robot=id_robot, id_agent=id_agent,
-                          variation='default', id_episode=id_episode)
+                    variation='default', id_episode=id_episode)
        
 def jobs_servo_field_agents(context, id_robot, agents, episodes):
     cases = iterate_context_agents_and_episodes(context, agents, episodes)

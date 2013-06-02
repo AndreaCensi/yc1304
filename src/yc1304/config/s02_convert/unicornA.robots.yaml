@@ -56,7 +56,6 @@
   - adapter: uA_b1_xy_cf_strip
 
 
-
 - id: 'dp_unicornB'
   desc: ''
   code:
@@ -71,5 +70,4 @@
           policy: obs-first-topic
     cmd_nuisance: []
     obs_nuisance: []
-
 

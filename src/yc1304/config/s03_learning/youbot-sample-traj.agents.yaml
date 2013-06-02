@@ -1,0 +1,9 @@
+- id: square1
+  desc: An agent that makes the robot sample a square
+  code:
+  - bootstrapping_olympics.library.agents.FixedTrajectoryAgent
+  - plan:
+    - [1, [0,0,0]]
+    - [1, [0.1,0,0]]
+    - [1, [0,0.1,0]]
+    - [1, [0,0,0]]
