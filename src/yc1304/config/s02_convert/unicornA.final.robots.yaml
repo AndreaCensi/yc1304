@@ -51,8 +51,38 @@
 - id: unicornA_tw1_hlhr_sane_s4
   desc: ""
 
+
+- id: unicornA_tw1_hlhr_s4
+  desc: "twist, hokuyos not censored, sampled 4x"
+  code:
+  - bootstrapping_olympics.library.robots.EquivRobot
+  - robot: unicornA_tw1_hlhr
+    obs_nuisance: 
+    - subsample4
+    cmd_nuisance: []
+
+
+- id: unicornA_tw1_hl_s4
+  desc: "twist, left hokuyo, sampled 4x"
+  code:
+  - bootstrapping_olympics.library.robots.EquivRobot
+  - robot: unicornA_tw1_hl
+    obs_nuisance: 
+    - subsample4
+    cmd_nuisance: []
+
+- id: unicornA_tw1_hl_sane_s4
+  desc: "twist, left hokuyo, sane, sampled 4x"
+  code:
+  - bootstrapping_olympics.library.robots.EquivRobot
+  - robot: unicornA_tw1_hl
+    obs_nuisance: 
+    - unicornA_hl_sane_s4
+    cmd_nuisance: []
+
+
 - id: unicornA_tw1_hlhr_sanes4_pc128
-  desc: "twist, hokuyos, sampled 4x"
+  desc: "twist, hokuyos censored, sampled 4x"
   code:
   - bootstrapping_olympics.library.robots.EquivRobot
   - robot: unicornA_tw1_hlhr_sane_s4

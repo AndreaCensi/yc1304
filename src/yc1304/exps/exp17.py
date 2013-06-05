@@ -3,9 +3,10 @@ from quickapp import QuickApp
  
 
 class Exp17(CampaignCmd, QuickApp):
+    """ New interface landroid"""
     
     cmd = 'exp17'
-    short = """ New interface landroid"""
+    
     comment = """ 
         
     """

@@ -7,9 +7,9 @@ from yc1304.s10_servo_field.apps import ServoField
 
 
 class Exp02(CampaignCmd, QuickApp):
+    """ Testing with servo agent """
     
     cmd = 'exp02'
-    short = 'Testing with servo agent'
     
     comment = """ This shows that there was something wrong with learning. """
     

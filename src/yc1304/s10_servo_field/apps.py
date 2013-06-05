@@ -14,6 +14,7 @@ __all__ = ['CreateField', 'ServoField', 'jobs_servo_field', 'jobs_servo_field_ag
 
 
 class CreateField(CampaignCmd, QuickApp):
+     
     cmd = 'create_field'
  
     def define_options(self, params):
@@ -55,13 +56,11 @@ class ServoField(CampaignCmd, QuickApp):
         params.add_string('id_robot', help='')
         params.add_string('id_episode', help='')
         params.add_string('id_agent', help='')
-        params.add_string('variation', help='')
         params.add_float('min_dist', help='Minimum distance for fake grid',
                          default=0.07)
 
     def define_jobs_context(self, context):
         id_agent = self.options.id_agent
-        variation = self.options.variation
         id_robot = self.options.id_robot
         
         id_episode = self.options.id_episode
@@ -73,11 +72,11 @@ class ServoField(CampaignCmd, QuickApp):
         _processed = context.comp(process, all_data, min_dist)
 #         _processed = context.comp(remove_discontinuities, _processed, threshold=0.2)
         _processed = context.comp(compute_servo_action, _processed, data_central,
-                                  id_agent, id_robot, variation)
+                                  id_agent, id_robot)
         processed = context.comp(process_compute_distances, _processed)
         
         
-        keys = dict(id_robot=id_robot, id_episode=id_episode, id_agent=id_agent, variation=variation)
+        keys = dict(id_robot=id_robot, id_episode=id_episode, id_agent=id_agent)
         
         reports = {'distances': report_distances,
                    'servo1': report_servo1,

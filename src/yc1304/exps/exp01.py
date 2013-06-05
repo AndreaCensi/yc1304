@@ -5,9 +5,10 @@ from yc1304.exps.exp_utils import iterate_context_episodes
 from yc1304.s10_servo_field import CreateField
 
 class Exp01(CampaignCmd, QuickApp):
+    """ Test create_field """
     
     cmd = 'exp01'
-    short = 'Test create_field'
+    
     
     def define_options(self, params):
         pass

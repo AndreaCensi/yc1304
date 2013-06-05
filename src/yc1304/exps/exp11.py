@@ -6,9 +6,10 @@ from yc1304.exps.exp_utils import (iterate_context_episodes,
 from yc1304.s10_servo_field.apps import ServoField
 
 class Exp11(CampaignCmd, QuickApp):
+    """ Let's try with luminance  """
     
     cmd = 'exp11'
-    short = """ Let's try with luminance  """
+    
     comment = """ 
         kind of works for learning
     """

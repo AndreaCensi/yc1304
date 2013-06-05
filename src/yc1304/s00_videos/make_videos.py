@@ -157,9 +157,7 @@ class MakeVideos2All(CampaignCmd, QuickApp):
 
 
 class MakeVideos(CampaignCmd, QuickApp):
-    """
-        Creates youbot videos (cam_*,scan*) + mean and composite.
-    """
+    """ Creates youbot videos (cam_*,scan*) + mean and composite. """
     cmd = 'make-videos-mix'
     
     def define_options(self, params):
@@ -242,9 +240,9 @@ class MakeVideos(CampaignCmd, QuickApp):
 
 
 class MakeVideosAll(CampaignCmd, QuickApp):
+    """ Creates a set of videos for all explogs available. """
     
     cmd = 'make-videos-all'
-    short = 'Creates a set of videos for all explogs available.'
     
     def define_options(self, params):
         pass

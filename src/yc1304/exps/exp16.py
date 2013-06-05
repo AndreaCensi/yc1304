@@ -4,9 +4,10 @@ from quickapp import QuickApp
 __all__ = ['Exp16']
 
 class Exp16(CampaignCmd, QuickApp):
+    """ Trying with landroid, only sane """
     
     cmd = 'exp16'
-    short = """ Trying with landroid, only sane """
+    
     comment = """ 
         
     """

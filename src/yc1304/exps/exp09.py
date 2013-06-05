@@ -6,9 +6,9 @@ from yc1304.s10_servo_field import ServoField
 
 
 class Exp09(CampaignCmd, QuickApp):
-    
+    """ Let's try the convergence ratio of the lyapunov function """
     cmd = 'exp09'
-    short = """ Let's try the convergence ratio of the lyapunov function """
+    
     comment = """ 
 
     """

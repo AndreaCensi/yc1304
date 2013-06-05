@@ -6,9 +6,10 @@ import warnings
 
         
 class Exp15(CampaignCmd, QuickApp):
+    """ Trying with landroid """
     
     cmd = 'exp15'
-    short = """ Trying with landroid """
+    
     comment = """ 
         
     """

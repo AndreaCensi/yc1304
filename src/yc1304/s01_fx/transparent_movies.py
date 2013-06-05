@@ -20,6 +20,7 @@ param_hints = {
 
 
 class MakeVideoSFX(CampaignCmd, QuickApp):
+    """ Creates special effects videos """
     
     cmd = 'video-sfx'
     
@@ -81,9 +82,9 @@ def pg_video_bg_depth(video, background, perc, every, out):
      
     
 class MakeVideoSFXAll(CampaignCmd, QuickApp):
+    """ Creates SFX videos for all explogs available. """
     
     cmd = 'video-sfx-all'
-    short = 'Creates SFX videos for all explogs available.'
     
     def define_options(self, params):
         pass

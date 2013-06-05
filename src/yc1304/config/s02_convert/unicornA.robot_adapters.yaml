@@ -42,7 +42,7 @@
       policy: obs-first-topic
 
 - id: unicornA_tw1_hlhr
-  desc: Only left (?) hokuyo
+  desc: Two hokuyos hokuyo
   code:
   - rosstream2boot.ROSRobotAdapter.from_yaml
   - obs_adapter: unicornA_hlhr
@@ -50,6 +50,17 @@
     use_odom_topic: True
     sync:
       policy: obs-first-topic
+
+- id: unicornA_tw1_hl
+  desc: Only left (?) hokuyo
+  code:
+  - rosstream2boot.ROSRobotAdapter.from_yaml
+  - obs_adapter: unicornA_hl
+    cmd_adapter: twist_1_1
+    use_odom_topic: True
+    sync:
+      policy: obs-first-topic
+
 
 - id: unicornA_tw1_hlhr_sane
   desc: Only sane readings
@@ -80,6 +91,17 @@
     use_odom_topic: True
     sync:
       policy: obs-first-topic
+
+- id: unicornA_tr1_hlhr_sane_s4
+  desc: "Two Hokuyos, xy translation"
+  code:
+  - rosstream2boot.ROSRobotAdapter.from_yaml
+  - obs_adapter: unicornA_hlhr_sane_s4
+    cmd_adapter: twist_xy_1
+    use_odom_topic: True
+    sync:
+      policy: obs-first-topic
+
 
 - id: uA_b1_tw_cf
   desc: "Grayscale 1D frontal camera, base1"

@@ -7,54 +7,32 @@ from yc1304.exps import good_logs_hokuyos
 from yc1304.s10_servo_field import jobs_servo_field_agents
 
 
-__all__ = ['Exp30']
+__all__ = ['Exp31']
 
 
-class Exp30(CampaignCmd, QuickApp):
-    """ Checking whether servo really works """
+class Exp31(CampaignCmd, QuickApp):
+    """ Now checking without removing the bad ones """
     
-    cmd = 'exp30'
+    cmd = 'exp31'
     
     comment = """ 
         
     """
     
     robots = [
-        'unicornA_tw1_hlhr_sane_s4',
-        'unicornA_tw1_hl_sane_s4',
-        'unicornA_tr1_hlhr_sane_s4'
+        'unicornA_tw1_hlhr_s4',
+        'unicornA_tw1_hl_s4'
     ]
 
     agents = [
-#         'exp30_bdser_so',
-#         'exp30_bdser_ss',
-#         'exp30_bdser_sn',  # robust, L2
-#         'exp30_bdser_sn1',  # robust, L1
-#         'exp30_bdser_nograd',  # does not penalize gradients
-#                 
-        "bdser_er1_i1_ss",
-        "bdser_er1_i1_sr",
-        "bdser_er1_i1_srl",
-        "bdser_er1_i2_ss",
-        "bdser_er1_i2_sr",
-        "bdser_er1_i2_srl",
-        "bdser_er2_i1_sr",
-        "bdser_er2_i1_srl",
-#         "bdser_er3_i2_ss",
-        "bdser_er2_i2_sr",
-        "bdser_er2_i2_srl",
-        "bdser_er3_i1_sr",
-        "bdser_er3_i1_srl",
-        "bdser_er3_i2_ss",
-        "bdser_er3_i2_sr",
-        "bdser_er3_i2_srl",
+        'exp30_bdser_nograd',  # does not penalize gradients
     ]
              
     explogs_test = [
         'unicornA_tran1_2013-04-12-23-34-08',  # convex environment
         'unicornA_lab_grid_2013-06-01-21-00-47',  # non-convex environment 1
         'unicornA_lab_grid_2013-06-01-21-04-51',  # non-convex environment 2
-        # 'unicornA_lab_gridth_2013-06-01-21-11-15'  # pure rotation on theta
+        'unicornA_lab_gridth_2013-06-01-21-11-15'  # pure rotation on theta
     ]
 
     logs_exp10 = [
@@ -81,10 +59,10 @@ class Exp30(CampaignCmd, QuickApp):
         boot_root = self.get_boot_root()
         data_central = self.get_data_central()
 
-        agents = Exp30.agents
-        robots = Exp30.robots
-        explogs_learn = Exp30.explogs_learn
-        explogs_test = Exp30.explogs_test
+        agents = Exp31.agents
+        robots = Exp31.robots
+        explogs_learn = Exp31.explogs_learn
+        explogs_test = Exp31.explogs_test
         
         recipe_agentlearn_by_parallel(context, data_central, explogs_learn)
 

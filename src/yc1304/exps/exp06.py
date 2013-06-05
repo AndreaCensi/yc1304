@@ -5,9 +5,9 @@ from yc1304.s10_servo_field.apps import ServoField
 from yc1304.exps.exp_utils import iterate_context_episodes
 
 class Exp06(CampaignCmd, QuickApp):
-    
+    """ Let's try BGDS """
     cmd = 'exp06'
-    short = """ Let's try BGDS """
+    
     comment = """ Still need to implement servo """
 
     def define_options(self, params):

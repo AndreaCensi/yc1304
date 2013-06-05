@@ -5,9 +5,10 @@ __all__ = ['Exp19']
 
  
 class Exp19(CampaignCmd, QuickApp):
+    """ Trying to convert new ldr logs """
     
     cmd = 'exp19'
-    short = """ Trying to convert new ldr logs """
+    
     comment = """ 
         
     """

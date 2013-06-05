@@ -60,7 +60,7 @@ def plot_odom_commands(pylab, bds):
     plot_poses_commands(pylab, poses, commands)
 
 
-def plot_poses_commands(pylab, poses, commands, normalize,
+def plot_poses_commands(pylab, poses, commands, normalize=True,
                         cmd_arrow_length=0.05):
 
     # scale to given arrow_length

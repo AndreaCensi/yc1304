@@ -6,9 +6,9 @@ from yc1304.exps.exp_utils import iterate_context_episodes
 
 
 class Exp07(CampaignCmd, QuickApp):
-    
+    """ Let's try robustified """
     cmd = 'exp07'
-    short = """ Let's try robustified """
+    
     comment = """  Works much better. Now let's try BDS. """
 
     #  bom -d out/boot-root -c yc1304  predict -r exp05_uA_xy -a exp07_bgdsr1

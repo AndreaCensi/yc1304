@@ -6,11 +6,9 @@ import os
 
 
 class MakeVideosServo(CampaignCmd, QuickApp):
+    """ Creates video for servo experiments """
     
     cmd = 'make-videos-servo'
-    short = 'make-videos-servo --id_explog <log>'
-    
-    usage = """ Creates video for servo experiments """
     
     def define_options(self, params):
         params.add_string('id_explog', help='Which exp log to use')

@@ -6,9 +6,9 @@ from yc1304.s10_servo_field.apps import ServoField
 
 
 class Exp05(CampaignCmd, QuickApp):
-    
+    """ Let's see what happens when there is only translation """
     cmd = 'exp05'
-    short = """ Let's see what happens when there is only translation """
+    
     
 
     def define_options(self, params):

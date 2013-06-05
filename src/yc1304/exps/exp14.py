@@ -9,9 +9,9 @@ import warnings
 
 
 class Exp14(CampaignCmd, QuickApp):
-    
+    """ Cleaning up servo interface """
     cmd = 'exp14'
-    short = """ Cleaning up servo interface """
+    
     comment = """ 
         
     """

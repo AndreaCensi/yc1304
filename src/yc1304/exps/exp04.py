@@ -6,9 +6,10 @@ from yc1304.s10_servo_field.apps import ServoField
 
 
 class Exp04(CampaignCmd, QuickApp):
+    """ Let's see what happens with changing rcond """
     
     cmd = 'exp04'
-    short = """ Let's see what happens with changing rcond """
+    
     
     comment = """ The problem was that we were looking at the xy plane only. """
     

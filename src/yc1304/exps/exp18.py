@@ -8,9 +8,10 @@ from quickapp_boot.jobs import jobs_publish_learning_agents
 __all__ = ['Exp18']
 
 class Exp18(CampaignCmd, QuickApp):
+    """ Trying ROSRobot """
     
     cmd = 'exp18'
-    short = """ Trying ROSRobot """
+    
     comment = """ 
         
     """

@@ -13,9 +13,9 @@ import warnings
 
 
 class Exp13(CampaignCmd, QuickApp):
-    
+    """ Let's try with luminance strip"""
     cmd = 'exp13'
-    short = """ Let's try with luminance strip"""
+    
     comment = """ 
         kind of works for learning
     """

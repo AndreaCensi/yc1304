@@ -4,9 +4,10 @@ from quickapp import QuickMultiCmdApp
 from rosstream2boot import ExpLogFromYaml 
 
 class Campaign(QuickMultiCmdApp):
+    """ Main campaign program """
+    
     cmd = 'yc'
-    short = 'Main campaign program'
-
+    
     def define_multicmd_options(self, params):
         pass
     
@@ -35,7 +36,7 @@ class CampaignCmd(Campaign.get_sub()):
             self.boot_root = parent.boot_root
         else:
             self.boot_root = self.context.get_output_dir()
-        print('Now: %s' % self.boot_root) 
+        # print('Now: %s' % self.boot_root) 
         return self.boot_root
 
     def get_data_central(self):

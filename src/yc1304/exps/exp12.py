@@ -9,9 +9,10 @@ from yc1304.s10_servo_field.apps import ServoField
 
 
 class Exp12(CampaignCmd, QuickApp):
+    """ Parallel learning """
     
     cmd = 'exp12'
-    short = """ Parallel learning """
+    
     comment = """ 
 
     """

@@ -66,20 +66,22 @@
 - id: exp08_bdser1
   desc: "BDSE agent robust"
   code:
-      - boot_agents.BDSEAgentRobust
-      - explorer: expsw1
-        rcond: 0.0001
-        importance:
-        - boot_agents.Importance
-        - max_y_dot: 0.1
-          max_gy: 0.1
-          min_y: 0
-          max_y: 1
-        servo:
-        - boot_agents.BDSEServo 
-        - strategy: S1
-          gain: 0.1
-          linpoint: current
+  - boot_agents.BDSEAgentRobust
+  - explorer: expsw1
+    estimator:
+    - boot_agents.BDSEEstimatorRobust
+    - rcond: 0.0001
+    importance:
+    - boot_agents.Importance
+    - max_y_dot: 0.1
+      max_gy: 0.1
+      min_y: 0
+      max_y: 1
+    servo:
+    - boot_agents.BDSEServo 
+    - strategy: S1
+      gain: 0.1
+      linpoint: current
 
 
 - id: "exp09_bdser_${num}"
@@ -87,7 +89,9 @@
   code:
   - boot_agents.BDSEAgentRobust
   - explorer: expsw1
-    rcond: 0.0001
+    estimator:
+    - boot_agents.BDSEEstimatorRobust
+    - rcond: 0.0001
     importance: &importance
     - boot_agents.Importance
     - max_y_dot: 0.1
@@ -100,7 +104,9 @@
   code:
   - boot_agents.BDSEAgentRobust
   - explorer: expsw1
-    rcond: 0.0001
+    estimator:
+    - boot_agents.BDSEEstimatorRobust
+    - rcond: 0.0001
     importance: *importance
     servo:
     - boot_agents.BDSEServo 
@@ -113,17 +119,19 @@
   code:
   - boot_agents.BDSEAgentRobust
   - explorer: expsw1
-    rcond: 0.0001
+    estimator:
+    - boot_agents.BDSEEstimatorRobust
+    - rcond: 0.0001
     importance: *importance
-
-
 
 - id: exp14_bdser_s1
   desc: "BDSE agent robust, servo original"
   code:
   - boot_agents.BDSEAgentRobust
   - explorer: expsw1
-    rcond: 0.0001
+    estimator:
+    - boot_agents.BDSEEstimatorRobust
+    - rcond: 0.0001
     importance: *importance
     servo:
     - boot_agents.BDSEServo 
@@ -136,7 +144,9 @@
   code:
   - boot_agents.BDSEAgentRobust
   - explorer: expsw1
-    rcond: 0.0001
+    estimator:
+    - boot_agents.BDSEEstimatorRobust
+    - rcond: 0.0001
     importance: *importance
     servo:
     - boot_agents.BDSEServoSimple
@@ -147,7 +157,9 @@
   code:
   - boot_agents.BDSEAgentRobust
   - explorer: expsw1
-    rcond: 0.0001
+    estimator:
+    - boot_agents.BDSEEstimatorRobust
+    - rcond: 0.0001
     importance: *importance
     servo:
     - boot_agents.BDSEServoLongTerm
@@ -161,7 +173,9 @@
   code:
   - boot_agents.BDSEAgentRobust
   - explorer: expsw1
-    rcond: 0.0001
+    estimator:
+    - boot_agents.BDSEEstimatorRobust
+    - rcond: 0.0001
     importance: *importance
     servo:
     - boot_agents.BDSEServo 
@@ -169,51 +183,218 @@
       gain: 0.5
       linpoint: current
  
+##################### exp 30
+# estimator:
+#  er1  BDSEEstimatorRobust robust, rcond=0.0001
+# importance: 
+#  i0 no filtering at all 
+#  i1 does not penalize gradients
+#  i2 penalizes differences in gradients
+# servo:
+#  ss   BDSEServoSimple   gain 0.1
+#  sr   BDSEServoRobust   gain 0.1
+#  srl   BDSEServoRobustL1 gain 0.1
 
-- id: "exp30_bdser_so"
-  desc: "BDSE agent robust, servo original"
+- id: "bdser_er1_i2_ss"
+  desc: "BDSE agent robust, servo simple"
   code:
   - boot_agents.BDSEAgentRobust
   - explorer: expsw1
-    rcond: 0.0001
-    importance: *importance
-    servo:
-    - boot_agents.BDSEServo 
-    - strategy: S1
-      gain: 0.5
-      linpoint: current
- 
-- id: "exp30_bdser_ss"
-  desc: "BDSE agent robust, servosimple"
-  code:
-  - boot_agents.BDSEAgentRobust
-  - explorer: expsw1
-    rcond: 0.0001
-    importance: *importance
-    servo:
+    estimator: &er1
+    - boot_agents.BDSEEstimatorRobust
+    - rcond: 0.0001
+    importance: &i2
+    - boot_agents.Importance
+    - max_y_dot: 0.1
+      max_gy: 0.1
+      min_y: 0
+      max_y: 1
+    servo: &ss
     - boot_agents.BDSEServoSimple
     - gain: 0.1
-
-- id: "exp30_bdser_sn"
-  desc: "BDSE agent robust, new"
+ 
+- id: "bdser_er1_i2_sr"
+  desc: "BDSE agent robust, servo robust"
   code:
   - boot_agents.BDSEAgentRobust
   - explorer: expsw1
-    rcond: 0.0001
-    importance: *importance
-    servo:
+    estimator: *er1
+    importance: *i2
+    servo: &sr
     - boot_agents.BDSEServoRobust # XXX
     - gain: 0.1
- 
 
-- id: "exp30_bdser_sn1"
-  desc: "BDSE agent robust, new, L1"
+- id: "bdser_er1_i2_srl"
+  desc: "BDSE agent robust, servo robust L1"
   code:
   - boot_agents.BDSEAgentRobust
   - explorer: expsw1
-    rcond: 0.0001
-    importance: *importance
-    servo:
+    estimator: *er1
+    importance: *i2
+    servo: &srl
     - boot_agents.BDSEServoRobustL1 # XXX
     - gain: 0.1
-    
+
+
+- id: "bdser_er1_i1_ss"
+  desc: "BDSE agent robust, servo robust L1"
+  code:
+  - boot_agents.BDSEAgentRobust
+  - explorer: expsw1
+    estimator: *er1
+    importance: &i1
+    - boot_agents.Importance
+    - max_y_dot: 0.1
+      max_gy: 1000 # this does not penalizes gradients
+      min_y: 0
+      max_y: 1
+    servo: *ss
+ 
+- id: "bdser_er1_i1_sr"
+  desc: "BDSE agent robust, servo robust L1"
+  code:
+  - boot_agents.BDSEAgentRobust
+  - explorer: expsw1
+    estimator: *er1
+    importance: *i1
+    servo: *sr
+
+- id: "bdser_er1_i1_srl"
+  desc: "BDSE agent robust, servo robust L1"
+  code:
+  - boot_agents.BDSEAgentRobust
+  - explorer: expsw1
+    estimator: *er1
+    importance: *i1
+    servo: *srl
+ 
+
+- id: "bdser_er2_i1_sr"
+  desc: "BDSE agent robust, antisym, servo robust L1"
+  code:
+  - boot_agents.BDSEAgentRobust
+  - explorer: expsw1
+    estimator: &er2
+    - boot_agents.BDSEEstimatorRobust
+    - rcond: 0.0001
+      antisym_T: true    
+      antisym_M: false
+    importance: *i1
+    servo: *sr
+
+- id: "bdser_er2_i1_srl"
+  desc: "BDSE agent robust, servo robust L1"
+  code:
+  - boot_agents.BDSEAgentRobust
+  - explorer: expsw1
+    estimator: *er2
+    importance: *i1
+    servo: *srl
+
+- id: "bdser_er2_i2_srl"
+  desc: "BDSE agent robust, servo robust L1"
+  code:
+  - boot_agents.BDSEAgentRobust
+  - explorer: expsw1
+    estimator: *er2
+    importance: *i2
+    servo: *srl
+
+
+- id: "bdser_er2_i2_sr"
+  desc: "BDSE agent robust, servo robust L1"
+  code:
+  - boot_agents.BDSEAgentRobust
+  - explorer: expsw1
+    estimator: *er2
+    importance: *i2
+    servo: *sr
+
+- id: "bdser_er3_i1_sr"
+  desc: "BDSE agent robust, antisym T and M, servo robust L1"
+  code:
+  - boot_agents.BDSEAgentRobust
+  - explorer: expsw1
+    estimator: &er3 
+    - boot_agents.BDSEEstimatorRobust
+    - rcond: 0.0001
+      antisym_T: true  
+      antisym_M: true      
+    importance: *i1
+    servo: *sr
+
+- id: "bdser_er3_i1_srl"
+  desc: "BDSE agent robust, antisym T and M, servo robust L1"
+  code:
+  - boot_agents.BDSEAgentRobust
+  - explorer: expsw1
+    estimator: *er2
+    importance: *i1
+    servo: *srl
+
+- id: "bdser_er3_i2_srl"
+  desc: "BDSE agent robust, antisym T and M, servo robust L1"
+  code:
+  - boot_agents.BDSEAgentRobust
+  - explorer: expsw1
+    estimator: *er2
+    importance: *i2
+    servo: *srl
+
+- id: "bdser_er3_i2_sr"
+  desc: "BDSE agent robust, antisym T and M, servo robust L1"
+  code:
+  - boot_agents.BDSEAgentRobust
+  - explorer: expsw1
+    estimator: *er2
+    importance: *i2
+    servo: *sr
+
+- id: "bdser_er3_i2_ss"
+  desc: "BDSE agent robust, antisym T and M, servo robust L1"
+  code:
+  - boot_agents.BDSEAgentRobust
+  - explorer: expsw1
+    estimator: *er2
+    importance: *i2
+    servo: *ss
+
+# - id: "exp30_bdser_sn"
+#   desc: "BDSE agent robust, new"
+#   code:
+#   - boot_agents.BDSEAgentRobust
+#   - explorer: expsw1
+#     estimator: *estimator0
+#     importance: *importance
+#     servo:
+#     - boot_agents.BDSEServoRobust # XXX
+#     - gain: 0.1
+
+# - id: "exp30_bdser_nograd"
+#   desc: "BDSE agent (not robust)"
+#   code:
+#   - boot_agents.BDSEAgentRobust
+#   - explorer: expsw1
+#     estimator: *estimator0
+#     importance:
+#     - boot_agents.Importance
+#     - max_y_dot: 0.1
+#       max_gy: 1000 # this does not penalizes gradients
+#       min_y: 0
+#       max_y: 1
+#     servo:
+#     - boot_agents.BDSEServoRobust # XXX
+#     - gain: 0.1
+
+
+# - id: "exp30_bdser_sn1"
+#   desc: "BDSE agent robust, new, L1"
+#   code:
+#   - boot_agents.BDSEAgentRobust
+#   - explorer: expsw1
+#     estimator: *estimator0
+#     importance: *importance
+#     servo:
+#     - boot_agents.BDSEServoRobustL1 # XXX
+#     - gain: 0.1
+#     

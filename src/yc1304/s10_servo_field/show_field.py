@@ -154,7 +154,7 @@ def get_y_goal(processed):
 #             y[too_far] = y_goal[too_far]
 #     return processed
 
-def compute_servo_action(processed, data_central, id_agent, id_robot, variation):
+def compute_servo_action(processed, data_central, id_agent, id_robot):
     agent, _ = load_agent_state(data_central, id_agent, id_robot,
                                 reset_state=False, raise_if_no_state=True)
     
