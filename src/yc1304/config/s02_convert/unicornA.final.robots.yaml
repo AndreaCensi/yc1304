@@ -15,42 +15,16 @@
       n: 10 # XXX how is this fixed?
     robot: "${robot}"
 
+########
 
 - id: unicornA_tw1_cf_320_rgb
   desc: "twist, front camera, 320 rgb"
-
-#   code:
-#   - bootstrapping_olympics.library.robots.EquivRobot
-#   - robot: 
-#     - rosstream2boot.library.ROSRobot.from_yaml
-#     - adapter: 
-#       - rosstream2boot.library.ROSRobotAdapter.from_yaml
-#       - obs_adapter: unicornA_cf_320_rgb
-#         cmd_adapter: twist_1_1
-#         sync:
-#           policy: obs-first-topic
-#     cmd_nuisance: []
-#     obs_nuisance: []
-
+ 
 - id: unicornA_tw1_cr_320_rgb
   desc: "twist, right eye camera, 320 rgb"
 
-#   code:
-#   - bootstrapping_olympics.library.robots.EquivRobot
-#   - robot: 
-#     - rosstream2boot.library.ROSRobot.from_yaml
-#     - adapter: 
-#       - rosstream2boot.library.ROSRobotAdapter.from_yaml
-#       - obs_adapter: unicornA_cr_320_rgb
-#         cmd_adapter: twist_1_1
-#         sync:
-#           policy: obs-first-topic
-#     cmd_nuisance: []
-#     obs_nuisance: []
-
 - id: unicornA_tw1_hlhr_sane_s4
   desc: ""
-
 
 - id: unicornA_tw1_hlhr_s4
   desc: "twist, hokuyos not censored, sampled 4x"
@@ -60,7 +34,6 @@
     obs_nuisance: 
     - subsample4
     cmd_nuisance: []
-
 
 - id: unicornA_tw1_hl_s4
   desc: "twist, left hokuyo, sampled 4x"
@@ -80,7 +53,6 @@
     - unicornA_hl_sane_s4
     cmd_nuisance: []
 
-
 - id: unicornA_tw1_hlhr_sanes4_pc128
   desc: "twist, hokuyos censored, sampled 4x"
   code:
@@ -95,3 +67,50 @@
 - id: pc3-unicornA_tw1_cr_320_rgb
 - id: pc3-unicornA_tw1_hlhr_sanes4_pc128
 
+# Field samplers
+- id: unicornA_tw1_fs1
+  desc: "twist, field-sampler equivalent"
+  code:
+  - bootstrapping_olympics.library.robots.EquivRobot
+  - robot: 
+    - rosstream2boot.library.ROSRobot.from_yaml
+    - adapter:
+      - rosstream2boot.ROSRobotAdapter.from_yaml
+      - obs_adapter: unicornA_cr_320
+        cmd_adapter: twist_1_1
+        use_odom_topic: True
+        sync:
+          policy: obs-first-topic
+    obs_nuisance: 
+    - - bootstrapping_olympics.library.nuisances.Normalize
+      - ymin: 0
+        ymax: 1
+    - - bootstrapping_olympics.library.nuisances.Resample
+      - shape: [20, 20]
+    - - bootstrapping_olympics.library.nuisances.Flatten
+      - {}     
+    cmd_nuisance: []
+
+
+- id: unicornA_tr1_fs1
+  desc: "twist, field-sampler equivalent"
+  code:
+  - bootstrapping_olympics.library.robots.EquivRobot
+  - robot: 
+    - rosstream2boot.library.ROSRobot.from_yaml
+    - adapter:
+      - rosstream2boot.ROSRobotAdapter.from_yaml
+      - obs_adapter: unicornA_cr_320
+        cmd_adapter: twist_xy_1
+        use_odom_topic: True
+        sync:
+          policy: obs-first-topic
+    obs_nuisance: 
+    - - bootstrapping_olympics.library.nuisances.Normalize
+      - ymin: 0
+        ymax: 1
+    - - bootstrapping_olympics.library.nuisances.Resample
+      - shape: [20, 20]
+    - - bootstrapping_olympics.library.nuisances.Flatten
+      - {}     
+    cmd_nuisance: []

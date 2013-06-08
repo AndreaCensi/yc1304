@@ -1,6 +1,5 @@
 from . import CampaignCmd
 from quickapp import QuickApp
-from yc1304.s10_servo_field.apps import ServoField
 import warnings
 
 

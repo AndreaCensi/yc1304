@@ -5,51 +5,34 @@ from quickapp_boot import (recipe_agentlearn_by_parallel,
 from rosstream2boot import recipe_episodeready_by_convert2
 from yc1304.exps import good_logs_hokuyos
 from yc1304.s10_servo_field import jobs_servo_field_agents
-from quickapp_boot.recipes.recipes_agent_servo import recipe_agent_servo
-from quickapp.app_utils.subcontexts import iterate_context_names
-from yc1304.exps.exp_utils import jobs_learnp_and_servo
+from quickapp_boot import recipe_agent_servo
+from quickapp import iterate_context_names
 
 
-__all__ = ['Exp30']
+__all__ = ['Exp30c']
 
 
-class Exp30(CampaignCmd, QuickApp):
+class Exp30c(CampaignCmd, QuickApp):
     """ Checking whether servo really works """
     
-    cmd = 'exp30'
+    cmd = 'exp30c'
     
     comment = """ 
         
     """
     
     robots = [
-        'unicornA_tw1_hlhr_sane_s4',
-        'unicornA_tw1_hl_sane_s4',
-        'unicornA_tr1_hlhr_sane_s4',
-#         'unicornA_tw1_cf_strip',
-#         'unicornA_tr1_cf_strip',
+        'unicornA_tw1_cf_strip',
+        'unicornA_tr1_cf_strip',
+        'unicornA_un1_cf_strip',
     ]
 
-    agents = [ 
-        "bdser_er1_i1_ss",
-        "bdser_er1_i1_sr",
-        "bdser_er1_i1_srl",
-        "bdser_er1_i2_ss",
-        "bdser_er1_i2_sr",
-        "bdser_er1_i2_srl",
-        "bdser_er2_i1_sr",
-        "bdser_er2_i1_srl",
-#         "bdser_er3_i2_ss",
-        "bdser_er2_i2_sr",
-        "bdser_er2_i2_srl",
-        "bdser_er3_i1_sr",
-        "bdser_er3_i1_srl",
-        "bdser_er3_i2_ss",
-        "bdser_er3_i2_sr",
-        "bdser_er3_i2_srl",
-        'bdser_er4_i2_ss',
-        'bdser_er4_i2_sr',
-        'bdser_er4_i2_srl',
+    agents = [  
+        'exp14_bdser_s3',
+        'bdse_e1_ss',
+        'bdse_e1_slt',
+        'bdser_e1_i2_slt',  # = exp14_bdser_s3
+        "bdser_e1_i2_ss"
     ]
              
     explogs_test = [
@@ -80,15 +63,24 @@ class Exp30(CampaignCmd, QuickApp):
         pass
     
     def define_jobs_context(self, context):
+        boot_root = self.get_boot_root()
         data_central = self.get_data_central()
 
-        agents = Exp30.agents
-        robots = Exp30.robots
-        explogs_learn = Exp30.explogs_learn
-        explogs_test = Exp30.explogs_test
+        agents = Exp30c.agents
+        robots = Exp30c.robots
+        explogs_learn = Exp30c.explogs_learn
+        explogs_test = Exp30c.explogs_test
         
-        jobs_learnp_and_servo(context, data_central=data_central,
-                              explogs_learn=explogs_learn,
-                              explogs_test=explogs_test, agents=agents, robots=robots)
+        recipe_agentlearn_by_parallel(context, data_central, explogs_learn)
+        recipe_agent_servo(context, create_report=True)
         
-     
+        for id_robot in robots:
+            recipe_episodeready_by_convert2(context, boot_root, id_robot)
+            
+        for c, id_robot in iterate_context_names(context, robots):
+            jobs_servo_field_agents(c, data_central=data_central,
+                                    id_robot=id_robot,
+                                    agents=agents, episodes=explogs_test)
+        
+        
+        jobs_publish_learning_agents_robots(context, boot_root, agents, robots)

@@ -2,8 +2,7 @@ from . import CampaignCmd
 from quickapp import QuickApp
 from rosstream2boot import RS2B
 from yc1304.exps.exp_utils import iterate_context_episodes
-from yc1304.s10_servo_field import ServoField
-
+ 
 
 class Exp09(CampaignCmd, QuickApp):
     """ Let's try the convergence ratio of the lyapunov function """

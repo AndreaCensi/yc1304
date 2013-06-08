@@ -74,8 +74,9 @@ from .exp27 import *
 from .exp28alldiffeos import *
 from .exp29 import *
 from .exp30 import *
+from .exp30c import *
 from .exp31 import *
 from .exp32 import *
-
+from .exp33fs import *
 
 from .exp40sim import *

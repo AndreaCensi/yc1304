@@ -4,7 +4,7 @@ from quickapp_boot import (iterate_context_agents_and_episodes,
     jobs_publish_learning_agents, recipe_agentlearn_by_parallel)
 from rosstream2boot import recipe_episodeready_by_convert2
 from yc1304.exps import good_logs_cf
-from yc1304.s10_servo_field.apps import jobs_servo_field
+from yc1304.s10_servo_field import jobs_servo_field
 import warnings
 
 

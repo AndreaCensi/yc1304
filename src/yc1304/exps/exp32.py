@@ -22,7 +22,7 @@ class Exp32(CampaignCmd, QuickApp):  # @UndefinedVariable
     explogs_convert = explogs_learn
        
     agents = [
-      'exp32_diffeof',
+      'exp32_diffeo',
     ]
     
     def define_options(self, params):

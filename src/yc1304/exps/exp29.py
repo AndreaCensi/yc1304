@@ -8,9 +8,9 @@ from rosstream2boot import recipe_episodeready_by_convert2
 from yc1304.campaign import CampaignCmd
 from yc1304.exps import good_logs_hokuyos
 import numpy as np
-from quickapp.app_utils.subcontexts import iterate_context_names_pair
+from quickapp import iterate_context_names_pair
 import os
-from compmake.utils.safe_pickle import safe_pickle_dump
+from compmake.utils import safe_pickle_dump
  
 __all__ = ['Exp29']
 
@@ -19,7 +19,13 @@ class Exp29(CampaignCmd, QuickApp):  # @UndefinedVariable
      
     cmd = 'exp29'
     
-    robots = ['unicornA_tw1_hl_sane_s4', 'unicornA_tw1_hlhr_sane_s4']
+    robots = [
+              'unicornA_tw1_hl_sane_s4',
+              'unicornA_tw1_hlhr_sane_s4',
+              'unicornA_tw1_cf_strip',
+              'unicornA_tr1_cf_strip',
+              'unicornA_tw1_fs1'
+              ]
     
 #     explog_episode = 'unicornA_base1_2013-04-02-20-37-43'  # 37m, nominal, boxes
     nmaps = ['unicornA_teleop_nmap_2013-05-31-19-51-24',  # figure 8 translation only
@@ -27,7 +33,8 @@ class Exp29(CampaignCmd, QuickApp):  # @UndefinedVariable
              'unicornA_teleop_nmap_2013-06-02-18-25-23',
              'unicornA_teleop_nmap_corner2_2013-06-04-20-29-33',
              'unicornA_teleop_nmap_corner_2013-06-02-20-32-17',
-             'unicornA_teleop_nmap_corner2_2013-06-04-21-05-42']
+             'unicornA_teleop_nmap_corner2_2013-06-04-21-05-42',
+             'unicornA_teleop_nmap_corner3_2013-06-05-21-19-26']
 #     explog_episode = 'unicornA_tran1_2013-04-12-22-29-16'
 #     explog_episode = 'unicornA_tran1_2013-04-11-23-21-36'  # on grid 
     explogs_convert = []
@@ -72,11 +79,12 @@ class Exp29(CampaignCmd, QuickApp):  # @UndefinedVariable
 
 def jobs_navigation_map(context, outdir, data_central, id_robot, id_episode):
     context.needs('episode-ready', id_robot=id_robot, id_episode=id_episode)
-    
+    min_dist = 0.05
     nmap = context.comp(create_navigation_map_from_episode,
                         data_central, id_robot, id_episode,
-                        max_time=10000.0, max_num=200, min_dist=0.05,
-                        min_th_dist=np.deg2rad(5))
+                        max_time=10000.0, max_num=200, min_dist=min_dist,
+                        min_th_dist=np.deg2rad(5),
+                        min_spacing=min_dist)
     filename = os.path.join(outdir, '%s-%s.pickle' % (id_robot, id_episode))
     context.comp(save_map, nmap, filename)
     report = context.comp(report_nmap, nmap)

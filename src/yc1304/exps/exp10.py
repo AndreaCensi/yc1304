@@ -3,8 +3,7 @@ from quickapp import QuickApp
 from quickapp_boot import recipe_agentlearn_by_parallel, jobs_publish_learning
 from rosstream2boot import recipe_episodeready_by_convert2
 from yc1304.exps.exp_utils import iterate_context_episodes
-from yc1304.s10_servo_field.apps import jobs_servo_field
-
+ 
 
 class Exp10(CampaignCmd, QuickApp):
     """ Let's try again with theta """

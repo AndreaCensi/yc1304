@@ -15,6 +15,16 @@
     topic_out: /youbot_safety/in_cmd_vel
     max_lin_vel: 1.0
 
+- id: twist_un_1
+  desc: 'Unicycle dynamics'
+  code:
+  - rosstream2boot.library.TwistUnicycle
+  - topic: /cmd_vel
+    topic_out: /youbot_safety/in_cmd_vel
+    max_lin_vel: 1.0
+    max_ang_vel: 1.0
+
+
 - id: youbot_b3_back
   desc: "Base and third joint, starting looking straight back."
   code:

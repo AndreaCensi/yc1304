@@ -1,3 +1,4 @@
+from bootstrapping_olympics import logger
 
 from .campaign import *
 from .good import *

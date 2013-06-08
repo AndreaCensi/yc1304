@@ -2,7 +2,6 @@ from . import CampaignCmd
 from quickapp import QuickApp
 from rosstream2boot.programs.rs2b import RS2B
 from yc1304.exps.exp_utils import iterate_context_episodes
-from yc1304.s10_servo_field import CreateField
 
 class Exp01(CampaignCmd, QuickApp):
     """ Test create_field """

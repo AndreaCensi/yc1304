@@ -4,8 +4,7 @@ from quickapp import QuickApp
 from yc1304.exps import good_logs_cf
 from yc1304.exps.exp_utils import (iterate_context_episodes,
     iterate_context_explogs)
-from yc1304.s10_servo_field.apps import ServoField
-
+ 
 
 
 class Exp12(CampaignCmd, QuickApp):

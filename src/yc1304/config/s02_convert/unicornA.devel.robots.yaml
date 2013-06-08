@@ -97,9 +97,6 @@
         - resolution: 128
       cmd_nuisance: []
 
-
-
-
 - id: 'exp22_unicornA_ceil'
   desc: 'Camera looking up, differential drive, delta = 3.'
   code:
@@ -120,9 +117,7 @@
             policy: obs-first-topic
       cmd_nuisance: []
       obs_nuisance: []
-
-
-
+ 
 - id: 'exp23_unicornA_hlhr_sane_3'
   desc: 'Population code for the two range-finders'
   code:

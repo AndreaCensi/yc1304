@@ -1,7 +1,6 @@
 from quickapp import QuickApp
 from rosstream2boot.programs.rs2b import RS2B
 from . import CampaignCmd
-from yc1304.s10_servo_field.apps import ServoField
 from yc1304.exps.exp_utils import iterate_context_episodes
 
 

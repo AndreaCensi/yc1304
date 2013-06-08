@@ -167,7 +167,8 @@
         mode: uniform
         grid_max: 10.0
         grid_n: 20
- 
+
+
 - id: "exp18_bdser_s1"
   desc: "BDSE agent robust, servo original"
   code:
@@ -186,6 +187,9 @@
 ##################### exp 30
 # estimator:
 #  er1  BDSEEstimatorRobust robust, rcond=0.0001
+#  er2  antysim T
+#  er3  antysim T + M
+#  er4  antysim T + M + use_P_scaling
 # importance: 
 #  i0 no filtering at all 
 #  i1 does not penalize gradients
@@ -194,6 +198,35 @@
 #  ss   BDSEServoSimple   gain 0.1
 #  sr   BDSEServoRobust   gain 0.1
 #  srl   BDSEServoRobustL1 gain 0.1
+
+
+- id: "bdse_e1_ss"
+  desc: "BDSE agent, servo simple"
+  code:
+  - boot_agents.BDSEAgent
+  - explorer: expsw1
+    estimator: 
+    - boot_agents.BDSEEstimator
+    - rcond: 0.0001
+    servo: 
+    - boot_agents.BDSEServoSimple
+    - gain: 0.1
+
+- id: "bdse_e1_slt"
+  desc: "BDSE agent, servo long term"
+  code:
+  - boot_agents.BDSEAgent
+  - explorer: expsw1
+    estimator: 
+    - boot_agents.BDSEEstimator
+    - rcond: 0.0001
+    servo:
+    - boot_agents.BDSEServoLongTerm
+    - grid:
+        mode: uniform
+        grid_max: 10.0
+        grid_n: 20
+
 
 - id: "bdser_er1_i2_ss"
   desc: "BDSE agent robust, servo simple"
@@ -213,6 +246,34 @@
     - boot_agents.BDSEServoSimple
     - gain: 0.1
  
+
+- id: bdser_e1_i2_slt
+  desc: "BDSE agent robust, servo long term"
+  code:
+  - boot_agents.BDSEAgentRobust
+  - explorer: expsw1
+    estimator:
+    - boot_agents.BDSEEstimatorRobust
+    - rcond: 0.0001
+    importance: *i2
+    servo:
+    - boot_agents.BDSEServoLongTerm
+    - grid:
+        mode: uniform
+        grid_max: 10.0
+        grid_n: 20
+ 
+- id: bdser_e1_i2_ss
+  desc: "BDSE agent robust, servo long term"
+  code:
+  - boot_agents.BDSEAgentRobust
+  - explorer: expsw1
+    estimator:
+    - boot_agents.BDSEEstimatorRobust
+    - rcond: 0.0001
+    importance: *i2
+    servo: *ss
+
 - id: "bdser_er1_i2_sr"
   desc: "BDSE agent robust, servo robust"
   code:
@@ -358,6 +419,40 @@
     estimator: *er2
     importance: *i2
     servo: *ss
+
+
+- id: "bdser_er4_i2_ss"
+  desc: "BDSE agent robust, antisym T and M, servo robust L1"
+  code:
+  - boot_agents.BDSEAgentRobust
+  - explorer: expsw1
+    estimator: &er4 
+    - boot_agents.BDSEEstimatorRobust
+    - rcond: 0.0001
+      antisym_T: true  
+      antisym_M: true  
+      use_P_scaling: true
+    importance: *i2
+    servo: *ss
+
+- id: "bdser_er4_i2_sr"
+  desc: "BDSE agent robust, antisym T and M, servo robust L1"
+  code:
+  - boot_agents.BDSEAgentRobust
+  - explorer: expsw1
+    estimator: *er4 
+    importance: *i2
+    servo: *sr
+
+- id: "bdser_er4_i2_srl"
+  desc: "BDSE agent robust, antisym T and M, servo robust L1"
+  code:
+  - boot_agents.BDSEAgentRobust
+  - explorer: expsw1
+    estimator: *er4 
+    importance: *i2
+    servo: *srl
+
 
 # - id: "exp30_bdser_sn"
 #   desc: "BDSE agent robust, new"

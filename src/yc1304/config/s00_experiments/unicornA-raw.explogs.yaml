@@ -611,6 +611,88 @@
       notes: | 
         no video
 
+
+
+- id: unicornA_teleop_nmap_corner3_2013-06-05-21-19-26
+  desc: "rectangular trajectory, in the slightly similar map"
+  code:
+  - rosstream2boot.ExpLogFromYaml
+  - files:
+      "file:bag": "${DATASETS}/01-youbot-ros-logs-good/unicornA_teleop_nmap_corner3_2013-06-05-21-19-26.bag"
+    annotations:
+      robot: *unicornA_base1
+      motion:
+        agent: andrea  
+      environment: *lab_boxes4 # XXX
+      events:
+        disturbances: []
+      notes: | 
+        we have 2 video files: Canon + Flip Mino
+
+
+- id: unicornA_teleop_nmap_corner3_run_2013-06-05-22-02-03
+  desc: "autonomous run of trajectory with camera in unicornA_teleop_nmap_corner3_2013"
+  code:
+  - rosstream2boot.ExpLogFromYaml
+  - files:
+      "file:bag": "${DATASETS}/01-youbot-ros-logs-good/unicornA_teleop_nmap_corner3_run_2013-06-05-22-02-03.bag"
+    annotations:
+      robot: *unicornA_base1
+      motion:
+        agent: andrea  
+      environment: *lab_boxes4 # XXX
+      events:
+        disturbances: []
+      notes: | 
+        we have 2 video files: Canon + Flip Mino
+        autonomous run of unicornA_teleop_nmap_corner3_2013
+        $ roslaunch boot_servo_demo exp30c_tr1_cf_strip_navigation_map1.launch
+
+
+# - id: unicornA_teleop_nmap_corner3_run_2013-06-05-22-35-51.bag
+#   not sure why this one diverged after a while
+
+- id: unicornA_teleop_nmap_corner3_run_2013-06-05-22-43-23
+  desc: "autonomous run of trajectory with hlhr in unicornA_teleop_nmap_corner3_2013"
+  code:
+  - rosstream2boot.ExpLogFromYaml
+  - files:
+      "file:bag": "${DATASETS}/01-youbot-ros-logs-good/unicornA_teleop_nmap_corner3_run_2013-06-05-22-02-03.bag"
+    annotations:
+      robot: *unicornA_base1
+      motion:
+        agent: andrea  
+      environment: *lab_boxes4 # XXX
+      events:
+        disturbances: []
+      notes: | 
+        we have 2 video files: Canon + Flip Mino
+        autonomous run of unicornA_teleop_nmap_corner3_2013
+        roslaunch boot_servo_demo exp30-tw1_hlhr-map3.launch
+        A few loops, ok.
+
+
+- id: unicornA_teleop_nmap_corner3_run_2013-06-05-23-42-11
+  desc: "autonomous run of trajectory with hl in unicornA_teleop_nmap_corner3_2013"
+  code:
+  - rosstream2boot.ExpLogFromYaml
+  - files:
+      "file:bag": "${DATASETS}/01-youbot-ros-logs-good/unicornA_teleop_nmap_corner3_run_2013-06-05-23-42-11.bag"
+    annotations:
+      robot: *unicornA_base1
+      motion:
+        agent: andrea  
+      environment: *lab_boxes4 # XXX
+      events:
+        disturbances: []
+      notes: | 
+        we have 2 video files: Canon + Flip Mino
+        autonomous run of unicornA_teleop_nmap_corner3_2013
+        roslaunch boot_servo_demo exp30-tw1_hl-map3.launch
+        Two loops, ok.
+
+
+
 ##########################################
 # Template:
 # - id:  
