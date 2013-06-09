@@ -1,0 +1,46 @@
+
+- id: unicornA_servo_fs1_2013-06-08-15-59-53
+  desc: "Servo experiment with field sampler, twist"
+  code:
+  - rosstream2boot.ExpLogFromYaml
+  - files:
+      "file:bag": "${DATASETS}/01-youbot-ros-logs-good/unicornA_servo_fs1_2013-06-08-15-59-53.bag"
+      "file:outside": "${DATASETS}/01-youbot-ros-logs-good/.mp4"
+      "file:outside2": "${DATASETS}/01-youbot-ros-logs-good/.mp4"
+    annotations:
+      robot: &unicornA_base1
+        name: unicorn
+        shape: unicornA
+        profile: base1
+      motion:
+        agent: servo  
+      environment: &lab_boxes4
+        name: vehicles_lab
+        config: boxes4
+      events:
+        disturbances: []
+      notes: | 
+        we have two video streams
+        launch: exp33-tw1_fs1-servo-bdse.launch
+        works well, except that I chose the threshold for stopping too small
+
+
+- id: unicornA_servo_un1_fs1_2013-06-08-17-16-38
+  desc: "Servo experiment with field sampler, unicycle"
+  code:
+  - rosstream2boot.ExpLogFromYaml
+  - files:
+      "file:bag": "${DATASETS}/01-youbot-ros-logs-good/unicornA_servo_un1_fs1_2013-06-08-17-16-38.bag"
+      "file:outside": "${DATASETS}/01-youbot-ros-logs-good/.mp4"
+      "file:outside2": "${DATASETS}/01-youbot-ros-logs-good/unicornA_servo_un1_fs1_2013-06-08-17-16-38.mino.mp4"
+    annotations:
+      robot: *unicornA_base1
+      motion:
+        agent: servo  
+      environment: *lab_boxes4 
+      events:
+        disturbances: []
+      notes: | 
+        we have two video streams
+        launch: exp33-un1_fs1-servo-bdse.launch
+        shows nonconvergence of gradient with unicycle

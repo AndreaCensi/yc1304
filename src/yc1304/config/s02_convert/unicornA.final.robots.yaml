@@ -114,3 +114,27 @@
     - - bootstrapping_olympics.library.nuisances.Flatten
       - {}     
     cmd_nuisance: []
+
+
+- id: unicornA_un1_fs1
+  desc: "twist, field-sampler equivalent"
+  code:
+  - bootstrapping_olympics.library.robots.EquivRobot
+  - robot: 
+    - rosstream2boot.library.ROSRobot.from_yaml
+    - adapter:
+      - rosstream2boot.ROSRobotAdapter.from_yaml
+      - obs_adapter: unicornA_cr_320
+        cmd_adapter: twist_un_1
+        use_odom_topic: True
+        sync:
+          policy: obs-first-topic
+    obs_nuisance: 
+    - - bootstrapping_olympics.library.nuisances.Normalize
+      - ymin: 0
+        ymax: 1
+    - - bootstrapping_olympics.library.nuisances.Resample
+      - shape: [20, 20]
+    - - bootstrapping_olympics.library.nuisances.Flatten
+      - {}     
+    cmd_nuisance: []

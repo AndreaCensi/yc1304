@@ -22,7 +22,8 @@ class Exp33(CampaignCmd, QuickApp):  # @UndefinedVariable
     robots = [
         # 'exp23_unicornA_hlhr_sane_3'
         'unicornA_tw1_fs1',
-        'unicornA_tr1_fs1'
+        'unicornA_tr1_fs1',
+        'unicornA_un1_fs1'
     ]
                      
     explogs_test = [

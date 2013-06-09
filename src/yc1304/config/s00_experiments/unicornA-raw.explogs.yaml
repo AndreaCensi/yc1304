@@ -278,8 +278,8 @@
         motion:
           agent: manual
         environment: &lab_corner
-          name: lab_corner
-          config: default
+          name: vehicles_lab
+          config: lab_corner
         events:
           disturbances: []
         notes: | 
@@ -329,28 +329,6 @@
           babbler has interval [4,4]
           camera didn't save
 
-- id:  unicornA_tran1_2013-04-12-23-34-08
-  desc: manually driven along grid
-  code:
-    - rosstream2boot.ExpLogFromYaml
-    - files:
-        "file:bag": "${DATASETS}/01-youbot-ros-logs-good/unicornA_tran1_2013-04-12-23-34-08.bag"
-        "file:outside": "${DATASETS}/01-youbot-ros-logs-good/unicornA_tran1_2013-04-12-23-34-08.outside.mp4"
-      annotations:
-        robot: *unicornA_tran1
-        motion:
-          agent: babbler  
-        environment: *lab_corner
-        events:
-          disturbances: []
-        notes: | 
-          Manually driven in a grid
-          Note that at the end  I rotate a bit by mistake
-                 23 (0.0, 0.1, 0.0)
-           1 (0.1, 0.0, 0.0)
-          22 (0.0, -0.1, 0.0)
-           2 (-0.1, 0.0, 0.0)
-           8 (0.0, 0.0, 0.0)
 
 - id: unicornA_servocorner_2013-04-16-22-46-46
   desc: Experiments with rotation
@@ -432,8 +410,6 @@
           disturbances: [andrea_panels]
         notes: | 
           xxx
-          
-# /ros-logs/.
 
 
 - id: unicornA_servocorner_laseronly_2013-04-23-21-40-22
@@ -454,244 +430,13 @@
           "laseronly" in the name is wrong
  
 
-# /ros-logs/unicornA_teleop_nmap_2013-05-31-18-55-06.bag. env1 going diagonal
-# /ros-logs/unicornA_teleop_nmap_2013-05-31-18-56-01.bag. env2 going back, but forgot logging on
-
-# /ros-logs/unicornA_teleop_nmap_2013-05-31-19-51-24.bag  env2 good, figure 8 translation only
-# /ros-logs/unicornA_teleop_nmap_2013-05-31-19-54-07.bag  env2 good, with rotation
-
-- id:  unicornA_teleop_nmap_2013-05-31-19-51-24
-  desc: figure 8 translation only
-  code:
-  - rosstream2boot.ExpLogFromYaml
-  - files:
-      "file:bag": "${DATASETS}/01-youbot-ros-logs-good/unicornA_teleop_nmap_2013-05-31-19-51-24.bag"
-    annotations:
-      robot: *unicornA_tran1
-      motion:
-        agent: andrea  
-      environment: &lab_boxes4
-        name: vehicles_lab
-        config: other boxes
-      events:
-        disturbances: []
-      notes: | 
-        no video
-
-- id:  unicornA_teleop_nmap_2013-05-31-19-54-07
-  desc: figure 8 with rotation
-  code:
-  - rosstream2boot.ExpLogFromYaml
-  - files:
-      "file:bag": "${DATASETS}/01-youbot-ros-logs-good/unicornA_teleop_nmap_2013-05-31-19-54-07.bag"
-    annotations:
-      robot: *unicornA_base1
-      motion:
-        agent: andrea  
-      environment: *lab_boxes4
-      events:
-        disturbances: []
-      notes: | 
-        no video
 
 
-- id:  unicornA_lab_grid_2013-06-01-21-00-47
-  desc: grid collected in lab_boxes4
-  code:
-  - rosstream2boot.ExpLogFromYaml
-  - files:
-      "file:bag": "${DATASETS}/01-youbot-ros-logs-good/unicornA_lab_grid_2013-06-01-21-00-47.bag"
-    annotations:
-      robot: *unicornA_base1
-      motion:
-        agent: andrea  
-      environment: *lab_boxes4
-      events:
-        disturbances: []
-      notes: | 
-        no video
-
-- id:  unicornA_lab_grid_2013-06-01-21-04-51
-  desc: another grid collected in lab_boxes4
-  code:
-  - rosstream2boot.ExpLogFromYaml
-  - files:
-      "file:bag": "${DATASETS}/01-youbot-ros-logs-good/unicornA_lab_grid_2013-06-01-21-04-51.bag"
-    annotations:
-      robot: *unicornA_base1
-      motion:
-        agent: andrea  
-      environment: *lab_boxes4
-      events:
-        disturbances: []
-      notes: | 
-        no video
-
-
-- id: unicornA_lab_gridth_2013-06-01-21-11-15
-  desc: pure rotation on theta
-  code:
-  - rosstream2boot.ExpLogFromYaml
-  - files:
-      "file:bag": "${DATASETS}/01-youbot-ros-logs-good/unicornA_lab_gridth_2013-06-01-21-11-15.bag"
-    annotations:
-      robot: *unicornA_base1
-      motion:
-        agent: andrea  
-      environment: *lab_boxes4
-      events:
-        disturbances: []
-      notes: | 
-        no video
-
-- id: unicornA_teleop_nmap_2013-06-02-18-25-23
-  desc: "new map: almost everywhere continuous"
-  code:
-  - rosstream2boot.ExpLogFromYaml
-  - files:
-      "file:bag": "${DATASETS}/01-youbot-ros-logs-good/unicornA_teleop_nmap_2013-06-02-18-25-23.bag"
-    annotations:
-      robot: *unicornA_base1
-      motion:
-        agent: andrea  
-      environment: *lab_boxes4
-      events:
-        disturbances: []
-      notes: | 
-        no video
-
-- id: unicornA_teleop_nmap_corner_2013-06-02-20-32-17
-  desc: "convex environment"
-  code:
-  - rosstream2boot.ExpLogFromYaml
-  - files:
-      "file:bag": "${DATASETS}/01-youbot-ros-logs-good/unicornA_teleop_nmap_corner_2013-06-02-20-32-17.bag"
-    annotations:
-      robot: *unicornA_base1
-      motion:
-        agent: andrea  
-      environment: *lab_boxes4 # XXX
-      events:
-        disturbances: []
-      notes: | 
-        no video
-
-- id: unicornA_teleop_nmap_corner2_2013-06-04-20-29-33
-  desc: "another environment"
-  code:
-  - rosstream2boot.ExpLogFromYaml
-  - files:
-      "file:bag": "${DATASETS}/01-youbot-ros-logs-good/unicornA_teleop_nmap_corner2_2013-06-04-20-29-33.bag"
-    annotations:
-      robot: *unicornA_base1
-      motion:
-        agent: andrea  
-      environment: *lab_boxes4 # XXX
-      events:
-        disturbances: []
-      notes: | 
-        no video
-
-# unicornA_teleop_nmap_corner2_2013-06-04-21-06-31.bag
-
-
-- id: unicornA_teleop_nmap_corner2_2013-06-04-21-05-42
-  desc: "rectangular trajectory"
-  code:
-  - rosstream2boot.ExpLogFromYaml
-  - files:
-      "file:bag": "${DATASETS}/01-youbot-ros-logs-good/unicornA_teleop_nmap_corner2_2013-06-04-21-05-42.bag"
-    annotations:
-      robot: *unicornA_base1
-      motion:
-        agent: andrea  
-      environment: *lab_boxes4 # XXX
-      events:
-        disturbances: []
-      notes: | 
-        no video
+# translation /ros-logs/unicornA_servo_tr1_fs1_2013-06-08-16-50-23.bag.
 
 
 
-- id: unicornA_teleop_nmap_corner3_2013-06-05-21-19-26
-  desc: "rectangular trajectory, in the slightly similar map"
-  code:
-  - rosstream2boot.ExpLogFromYaml
-  - files:
-      "file:bag": "${DATASETS}/01-youbot-ros-logs-good/unicornA_teleop_nmap_corner3_2013-06-05-21-19-26.bag"
-    annotations:
-      robot: *unicornA_base1
-      motion:
-        agent: andrea  
-      environment: *lab_boxes4 # XXX
-      events:
-        disturbances: []
-      notes: | 
-        we have 2 video files: Canon + Flip Mino
-
-
-- id: unicornA_teleop_nmap_corner3_run_2013-06-05-22-02-03
-  desc: "autonomous run of trajectory with camera in unicornA_teleop_nmap_corner3_2013"
-  code:
-  - rosstream2boot.ExpLogFromYaml
-  - files:
-      "file:bag": "${DATASETS}/01-youbot-ros-logs-good/unicornA_teleop_nmap_corner3_run_2013-06-05-22-02-03.bag"
-    annotations:
-      robot: *unicornA_base1
-      motion:
-        agent: andrea  
-      environment: *lab_boxes4 # XXX
-      events:
-        disturbances: []
-      notes: | 
-        we have 2 video files: Canon + Flip Mino
-        autonomous run of unicornA_teleop_nmap_corner3_2013
-        $ roslaunch boot_servo_demo exp30c_tr1_cf_strip_navigation_map1.launch
-
-
-# - id: unicornA_teleop_nmap_corner3_run_2013-06-05-22-35-51.bag
-#   not sure why this one diverged after a while
-
-- id: unicornA_teleop_nmap_corner3_run_2013-06-05-22-43-23
-  desc: "autonomous run of trajectory with hlhr in unicornA_teleop_nmap_corner3_2013"
-  code:
-  - rosstream2boot.ExpLogFromYaml
-  - files:
-      "file:bag": "${DATASETS}/01-youbot-ros-logs-good/unicornA_teleop_nmap_corner3_run_2013-06-05-22-02-03.bag"
-    annotations:
-      robot: *unicornA_base1
-      motion:
-        agent: andrea  
-      environment: *lab_boxes4 # XXX
-      events:
-        disturbances: []
-      notes: | 
-        we have 2 video files: Canon + Flip Mino
-        autonomous run of unicornA_teleop_nmap_corner3_2013
-        roslaunch boot_servo_demo exp30-tw1_hlhr-map3.launch
-        A few loops, ok.
-
-
-- id: unicornA_teleop_nmap_corner3_run_2013-06-05-23-42-11
-  desc: "autonomous run of trajectory with hl in unicornA_teleop_nmap_corner3_2013"
-  code:
-  - rosstream2boot.ExpLogFromYaml
-  - files:
-      "file:bag": "${DATASETS}/01-youbot-ros-logs-good/unicornA_teleop_nmap_corner3_run_2013-06-05-23-42-11.bag"
-    annotations:
-      robot: *unicornA_base1
-      motion:
-        agent: andrea  
-      environment: *lab_boxes4 # XXX
-      events:
-        disturbances: []
-      notes: | 
-        we have 2 video files: Canon + Flip Mino
-        autonomous run of unicornA_teleop_nmap_corner3_2013
-        roslaunch boot_servo_demo exp30-tw1_hl-map3.launch
-        Two loops, ok.
-
-
+ 
 
 ##########################################
 # Template:
