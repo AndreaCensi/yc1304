@@ -2,8 +2,8 @@ from . import CampaignCmd
 from quickapp import QuickApp
 from quickapp_boot import recipe_agentlearn_by_parallel, jobs_publish_learning
 from rosstream2boot import recipe_episodeready_by_convert2
-from yc1304.exps.exp_utils import iterate_context_episodes
- 
+from yc1304.exps.exp_utils import jobs_learnp_and_servo
+  
 
 class Exp10(CampaignCmd, QuickApp):
     """ Let's try again with theta """
@@ -14,8 +14,8 @@ class Exp10(CampaignCmd, QuickApp):
 
     """
 
-    id_agent = 'exp10_bdser1'
-    id_robot = 'exp10_uA_b1_tw_hlhr_s4'
+    agents = ['exp10_bdser1']
+    robots = ['exp10_uA_b1_tw_hlhr_s4']
     
     explogs_learn = [
         'unicornA_base1_2013-04-03-13-30-28',  # :  38m, nominal, ok
@@ -37,26 +37,14 @@ class Exp10(CampaignCmd, QuickApp):
         pass
  
     def define_jobs_context(self, context):
-        boot_root = self.get_boot_root()   
         data_central = self.get_data_central()
-        
-        id_robot = Exp10.id_robot
-        id_agent = Exp10.id_agent
 
-        # conversion 
-        recipe_episodeready_by_convert2(context, boot_root, Exp10.id_robot)
-        
-        # learning
-        recipe_agentlearn_by_parallel(context, data_central, Exp10.explogs_learn)
-        
-        # Everything before needs to be done before we do the rest
-        context.checkpoint('learning')
-        
-        jobs_publish_learning(context, boot_root=boot_root,
-                              id_agent=id_agent, id_robot=id_robot)
+        robots = Exp10.robots
+        agents = Exp10.agents
+        explogs_learn = Exp10.explogs_learn
+        explogs_test = Exp10.explogs_test
 
-        for c, id_episode in iterate_context_episodes(context, Exp10.explogs_test):
-            jobs_servo_field(context=c, id_agent=id_agent, id_robot=id_robot,
-                             id_episode=id_episode)
-            
+        jobs_learnp_and_servo(context, data_central, explogs_learn,
+                                        explogs_test, agents, robots)
+        
 

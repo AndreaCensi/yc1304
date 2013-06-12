@@ -1,9 +1,7 @@
 from . import CampaignCmd
 from quickapp import QuickApp
-from quickapp_boot import  recipe_agentlearn_by_parallel
-from rosstream2boot import get_rs2b_config, recipe_episodeready_by_convert2
-from yc1304.s10_servo_field import jobs_servo_field_agents
-from quickapp_boot.jobs import jobs_publish_learning_agents
+from rosstream2boot.configuration import get_conftools_explogs
+from yc1304.exps.exp_utils import jobs_learnp_and_servo
 
 __all__ = ['Exp18']
 
@@ -16,7 +14,7 @@ class Exp18(CampaignCmd, QuickApp):
         
     """
     
-    id_robot = 'ldr_xt_h_sane'
+    robots = ['ldr_xt_h_sane']
 
     agents = ['exp18_bdser_s1']
              
@@ -26,20 +24,17 @@ class Exp18(CampaignCmd, QuickApp):
         pass
     
     def define_jobs_context(self, context):
-        rs2b_config = get_rs2b_config()
-        
-        all_logs = rs2b_config.explogs.keys()
-        explogs_landroid = [x for x in all_logs if 'logger' in x]
-        
-        boot_root = self.get_boot_root()
         data_central = self.get_data_central()
 
-        recipe_episodeready_by_convert2(context, boot_root, id_robot=Exp18.id_robot)
-        recipe_agentlearn_by_parallel(context, data_central, explogs_landroid)
-        jobs_servo_field_agents(context, id_robot=Exp18.id_robot,
-                         agents=Exp18.agents, episodes=Exp18.explogs_test)
-        jobs_publish_learning_agents(context=context, boot_root=boot_root,
-                                     agents=Exp18.agents, id_robot=Exp18.id_robot)
+        all_logs = get_conftools_explogs().keys()
+        explogs_landroid = [x for x in all_logs if 'logger' in x]
+
+        robots = Exp18.robots
+        agents = Exp18.agents
+        explogs_learn = explogs_landroid
+        explogs_test = Exp18.explogs_test
+
+        jobs_learnp_and_servo(context, data_central, explogs_learn,
+                                        explogs_test, agents, robots)
         
-            
-      
+

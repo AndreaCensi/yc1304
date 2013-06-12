@@ -1,8 +1,7 @@
 from conf_tools.utils import locate_files
-from procgraph.utils.calling_ext_program import system_cmd_result, CmdException
-from procgraph.utils.friendly_paths import friendly_path
-from procgraph.utils.strings import indent
-from procgraph_mplayer.conversions import pg_video_convert, pg_video_info
+from procgraph.utils import (friendly_path, indent, system_cmd_result,
+    CmdException)
+from procgraph_mplayer import pg_video_convert, pg_video_info
 import os
 
 
@@ -126,26 +125,30 @@ def recode_to_mp4(v, v_mp4):
         raise
     
     
-def get_info_for_file(v, index_filename):
+def get_info_for_file(v, index_filename, convert_to_mov=False):
     """ 
         v: video
         index_filename: used to create relative paths
         
     """
-    v_mov = os.path.splitext(v)[0] + '.mov'
-    if not os.path.exists(v_mov):
-        print('Creating Final Cut friendly file:\n<- %s\n-> %s' % (friendly_path(v), friendly_path(v_mov)))
-        pg_video_convert(v, v_mov,
-                         vcodec='prores',
-                         vcodec_params={'profile': 3})
+    if convert_to_mov:
+        v_mov = os.path.splitext(v)[0] + '.mov'
+        if not os.path.exists(v_mov):
+            print('Creating Final Cut friendly file:\n<- %s\n-> %s' % 
+                  (friendly_path(v), friendly_path(v_mov)))
+            pg_video_convert(v, v_mov,
+                             vcodec='prores',
+                             vcodec_params={'profile': 3})
+        T = os.path.getmtime(v)
+        os.utime(v_mov, (T, T))
+    else:
+        v_mov = v
         # convert_to_mov_prores(v, v_mov, profile=2, quiet=False)
     
     #         v_mp4 = os.path.splitext(v)[0] + '.mp4'
     #         if not os.path.exists(v_mp4):
     #             recode_to_mp4(v, v_mp4)
     
-    T = os.path.getmtime(v)
-    os.utime(v_mov, (T, T))
        
     rel_filename = os.path.relpath(v_mov, os.path.dirname(index_filename))
     id_video = os.path.splitext(os.path.basename(v))[0]

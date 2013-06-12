@@ -1,6 +1,6 @@
-from .campaign import CampaignCmd
-from .exps import Exp08, Exp10, Exp14, Exp18
 from quickapp import QuickApp
+from yc1304.campaign import CampaignCmd
+from yc1304.exps import Exp08, Exp10, Exp14, Exp18, Exp29, Exp30, Exp30c, Exp33
 
 class Good(CampaignCmd, QuickApp):  # @UndefinedVariable
     """ The good bits --- those demos that need to keep working. """
@@ -15,4 +15,8 @@ class Good(CampaignCmd, QuickApp):  # @UndefinedVariable
         context.subtask(Exp10, separate_resource_manager=True)
         context.subtask(Exp14, separate_resource_manager=True)
         context.subtask(Exp18, separate_resource_manager=True)
+        context.subtask(Exp29, separate_resource_manager=True)
+        context.subtask(Exp30, separate_resource_manager=True)
+        context.subtask(Exp30c, separate_resource_manager=True)
+        context.subtask(Exp33, separate_resource_manager=True)
         

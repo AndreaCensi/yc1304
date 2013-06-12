@@ -1,14 +1,7 @@
 from conf_tools import GlobalConfig
 from quickapp import QuickApp
-from quickapp_boot import (recipe_agentlearn_by_parallel_concurrent_reps,
-    jobs_publish_learning_agents_robots)
-from rosstream2boot import recipe_episodeready_by_convert2
 from yc1304.campaign import CampaignCmd
-from yc1304.exps import good_logs_hokuyos, good_logs_cf, good_logs_cam_eye
-from quickapp_boot.recipes.recipes_learning_parallel import recipe_agentlearn_by_parallel_concurrent, \
-    recipe_agentlearn_by_parallel
-from yc1304.s10_servo_field.jobs import jobs_servo_field_agents
-from quickapp.app_utils.subcontexts import iterate_context_names
+from yc1304.exps import  good_logs_cam_eye 
 from yc1304.exps.exp_utils import jobs_learnp_and_servo
 
  
@@ -39,25 +32,6 @@ class Exp33(CampaignCmd, QuickApp):  # @UndefinedVariable
     agents = [
         "bdse_e1_ss",
         "bdser_er1_i1_ss",
-#         "bdser_er1_i1_sr",
-#         "bdser_er1_i1_srl",
-#         "bdser_er1_i2_ss",
-# #         "bdser_er1_i2_sr",
-# #         "bdser_er1_i2_srl",
-# #         "bdser_er2_i1_sr",
-# #         "bdser_er2_i1_srl",
-# #         "bdser_er3_i2_ss",
-#         "bdser_er2_i2_sr",
-#         "bdser_er2_i2_srl",
-#         "bdser_er3_i1_sr",
-#         "bdser_er3_i1_srl",
-#         "bdser_er3_i2_ss",
-#         "bdser_er3_i2_sr",
-#         "bdser_er3_i2_srl",
-#         'bdser_er4_i2_ss',
-#         'bdser_er4_i2_sr',
-#         'bdser_er4_i2_srl',
-#         
     ]
     
     def define_options(self, params):

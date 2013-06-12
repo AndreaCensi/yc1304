@@ -18,7 +18,7 @@ __all__ = [
  
 
 def jobs_servo_field(context, data_central, id_agent, id_robot, id_episode,
-                              min_dist, min_th_dist=np.deg2rad(4)):
+                              min_dist=0.08, min_th_dist=np.deg2rad(4)):
     servo_agent = context.get_resource(RM_AGENT_SERVO,
                                        id_agent=id_agent, id_robot=id_robot)
     
@@ -31,12 +31,12 @@ def jobs_servo_field(context, data_central, id_agent, id_robot, id_episode,
     else:
         min_spacing = min_dist
     
-    nmap = context.comp(
-                    create_navigation_map_from_episode, data_central, id_robot, id_episode,
-                                              max_time=1000, max_num=100000,
-                                              min_dist=min_dist, min_th_dist=min_th_dist,
-                                              min_spacing=min_spacing)
-    
+    nmap = context.comp(create_navigation_map_from_episode,
+                        data_central, id_robot, id_episode,
+                        max_time=1000, max_num=100000,
+                        min_dist=min_dist, min_th_dist=min_th_dist,
+                        min_spacing=min_spacing)
+
     _processed = context.comp(process, nmap, id_robot)
     _processed = context.comp(compute_servo_action, _processed, servo_agent)
     processed = context.comp(process_compute_distances, _processed)
@@ -49,9 +49,9 @@ def jobs_servo_field(context, data_central, id_agent, id_robot, id_episode,
     
     for k, v in reports.items(): 
         context.add_report(context.comp(v, processed), k, **keys)
-        
-    context.add_report(context.comp(report_servo_details, servo_agent, processed),
-                       'servo_details', **keys)
+ 
+    r = context.comp(report_servo_details, servo_agent, processed)
+    context.add_report(r, 'servo_details', **keys)
  
 @contract(context=CompmakeContext, data_central=DataCentral,
           id_robot='str', agents='seq(str)',

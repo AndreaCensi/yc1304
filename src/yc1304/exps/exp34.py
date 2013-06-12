@@ -4,37 +4,34 @@ from yc1304.exps import good_logs_hokuyos
 from yc1304.exps.exp_utils import jobs_learnp_and_servo
 
 
-__all__ = ['Exp30c']
+__all__ = ['Exp34']
 
 
-class Exp30c(CampaignCmd, QuickApp):
-    """ Checking whether servo really works """
+class Exp34(CampaignCmd, QuickApp):
+    """ Checking hl + fs1 """
     
-    cmd = 'exp30c'
+    cmd = 'exp34'
     
     comment = """ 
         
     """
     
     robots = [
-        'unicornA_tw1_cf_strip',
-        'unicornA_tr1_cf_strip',
-        'unicornA_un1_cf_strip',
+        'unicornA_tw1_hlfs1'
     ]
 
-    agents = [  
-        'exp14_bdser_s3',
-        'bdse_e1_ss',
-        'bdse_e1_slt',
-        'bdser_e1_i2_slt',  # = exp14_bdser_s3
-        "bdser_e1_i2_ss"
+    agents = [ 
+        "bdse_e1_ss",
+        'stats1'
     ]
              
     explogs_test = [
         'unicornA_tran1_2013-04-12-23-34-08',  # convex environment
         'unicornA_lab_grid_2013-06-01-21-00-47',  # non-convex environment 1
         'unicornA_lab_grid_2013-06-01-21-04-51',  # non-convex environment 2
-        'unicornA_lab_gridth_2013-06-01-21-11-15'  # pure rotation on theta
+        'unicornA_lab_gridth_2013-06-01-21-11-15',  # pure rotation on theta
+        'unicornA_corner3_grid_all0_2013-06-08-19-26-30',
+        'unicornA_corner3_grid_fine_2013-06-08-19-18-55'
     ]
 
     logs_exp10 = [
@@ -60,11 +57,14 @@ class Exp30c(CampaignCmd, QuickApp):
     def define_jobs_context(self, context):
         data_central = self.get_data_central()
 
-        agents = Exp30c.agents
-        robots = Exp30c.robots
-        explogs_learn = Exp30c.explogs_learn
-        explogs_test = Exp30c.explogs_test
-
-        jobs_learnp_and_servo(context, data_central, explogs_learn,
-                                        explogs_test, agents, robots)
+        agents = Exp34.agents
+        robots = Exp34.robots
+        explogs_learn = Exp34.explogs_learn
+        explogs_test = Exp34.explogs_test
+        
+        jobs_learnp_and_servo(context,
+                              data_central=data_central,
+                              explogs_learn=explogs_learn,
+                              explogs_test=explogs_test,
+                              agents=agents, robots=robots)
         

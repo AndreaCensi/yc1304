@@ -1,10 +1,7 @@
 from . import CampaignCmd
 from quickapp import QuickApp
-from quickapp_boot import (iterate_context_agents_and_episodes,
-    jobs_publish_learning_agents, recipe_agentlearn_by_parallel)
-from rosstream2boot import recipe_episodeready_by_convert2
 from yc1304.exps import good_logs_cf
-from yc1304.s10_servo_field import jobs_servo_field
+from yc1304.exps.exp_utils import jobs_learnp_and_servo
 import warnings
 
 
@@ -16,8 +13,7 @@ class Exp14(CampaignCmd, QuickApp):
         
     """
     
-    id_robot = 'exp14_uA_b1_xy_cf_strip'
-    id_adapter = 'uA_b1_xy_cf_strip'
+    robots = ['exp14_uA_b1_xy_cf_strip']
     agents = ['exp14_bdser_s1', 'exp14_bdser_s2', 'exp14_bdser_s3']
     
     warnings.warn('only one log')
@@ -27,28 +23,18 @@ class Exp14(CampaignCmd, QuickApp):
     
     def define_options(self, params):
         pass
-     
+        
     def define_jobs_context(self, context):
-        boot_root = self.get_boot_root()   
         data_central = self.get_data_central()
-        
-        id_robot = Exp14.id_robot
-        agents = Exp14.agents
 
-        # conversion 
-        recipe_episodeready_by_convert2(context, boot_root, id_robot)
+        robots = Exp14.robots
+        agents = Exp14.agents
+        explogs_learn = Exp14.explogs_learn
+        explogs_test = Exp14.explogs_test
+
+        jobs_learnp_and_servo(context, data_central, explogs_learn,
+                                        explogs_test, agents, robots)
         
-        # learning
-        recipe_agentlearn_by_parallel(context, data_central, Exp14.explogs_learn)
-                                     
-        jobs_publish_learning_agents(context, boot_root=boot_root,
-                                    agents=agents, id_robot=id_robot)
-        
-        cases = iterate_context_agents_and_episodes(context, agents,
-                                                    Exp14.explogs_test)
-        for c, id_agent, id_episode in cases:
-            jobs_servo_field(context=c, id_agent=id_agent, id_robot=id_robot,
-                             id_episode=id_episode)
-            
-                    
+
+              
         

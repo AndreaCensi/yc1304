@@ -83,6 +83,8 @@ class FCPXServoMarkers(Block):
         return tm + '\n'
     
     def finish(self):
+        if self.first_timestamp is None:
+            raise Exception('No data read.')
         base = os.path.basename(self.config.out_base)
         proj_name = base
         xml = self.get_project_xml(proj_name)

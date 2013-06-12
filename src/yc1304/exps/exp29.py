@@ -1,21 +1,16 @@
-from boot_navigation import create_navigation_map_from_episode
+from boot_navigation.jobs import jobs_navigation_map
 from conf_tools import GlobalConfig
-from quickapp import QuickApp
-from quickapp_boot import (jobs_publish_learning_agents_robots,
-    recipe_agentlearn_by_parallel)
-from reprep import Report
+from quickapp import QuickApp, iterate_context_names_pair
+from quickapp_boot import recipe_agentlearn_by_parallel
 from rosstream2boot import recipe_episodeready_by_convert2
 from yc1304.campaign import CampaignCmd
 from yc1304.exps import good_logs_hokuyos
-import numpy as np
-from quickapp import iterate_context_names_pair
-import os
-from compmake.utils import safe_pickle_dump
- 
+
+
 __all__ = ['Exp29']
 
 class Exp29(CampaignCmd, QuickApp):  # @UndefinedVariable
-    """ First navigation code  """
+    """ Creates the maps used by exp30, 33  """
      
     cmd = 'exp29'
     
@@ -43,12 +38,6 @@ class Exp29(CampaignCmd, QuickApp):  # @UndefinedVariable
     explogs_learn = list(set(good_logs_hokuyos))
     explogs_convert.extend(explogs_learn)
     
-
-    agents = [
-      'exp08_bdser1',
-#       "bdser_er1_i2_ss",
-#     "bdser_er1_i2_sr",
-    ]
     
     def define_options(self, params):
         pass
@@ -58,7 +47,6 @@ class Exp29(CampaignCmd, QuickApp):  # @UndefinedVariable
         data_central = self.get_data_central()
 
         GlobalConfig.global_load_dir('default')
- 
         
         recipe_agentlearn_by_parallel(context, data_central, Exp29.explogs_learn)
         
@@ -72,33 +60,6 @@ class Exp29(CampaignCmd, QuickApp):  # @UndefinedVariable
                                 data_central=data_central,
                                 id_robot=id_robot,
                                 id_episode=id_episode)
-
-        jobs_publish_learning_agents_robots(context, boot_root,
-                                            Exp29.agents, Exp29.robots)
-        
-
-def jobs_navigation_map(context, outdir, data_central, id_robot, id_episode):
-    context.needs('episode-ready', id_robot=id_robot, id_episode=id_episode)
-    min_dist = 0.05
-    nmap = context.comp(create_navigation_map_from_episode,
-                        data_central, id_robot, id_episode,
-                        max_time=10000.0, max_num=200, min_dist=min_dist,
-                        min_th_dist=np.deg2rad(5),
-                        min_spacing=min_dist)
-    filename = os.path.join(outdir, '%s-%s.pickle' % (id_robot, id_episode))
-    context.comp(save_map, nmap, filename)
-    report = context.comp(report_nmap, nmap)
-    context.add_report(report, 'navmap_report', id_robot=id_robot,
-                       id_episode=id_episode)
-    return nmap
-
-def save_map(nmap, filename):
-    print('Saving to %r' % filename)
-    safe_pickle_dump(nmap, filename)
-    
-def report_nmap(nmap):
-    r = Report()
-    nmap.display(r)        
-    return r
+ 
 
 

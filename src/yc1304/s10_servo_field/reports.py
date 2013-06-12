@@ -1,12 +1,13 @@
+from boot_navigation import plot_arrow_se2_yt, plot_arrow_se2_xt
 from contracts import contract
-from geometry import (linear_angular_from_se2,
-    angle_from_SE2)
+from geometry import (linear_angular_from_se2, angle_from_SE2,
+    se2_project_from_se3, translation_angle_from_SE2, angular_from_se2, SE2)
 from reprep import Report
+from reprep.plot_utils import x_axis_balanced, y_axis_balanced
 import numpy as np
-from geometry.poses import translation_angle_from_SE2, angular_from_se2
-from geometry.poses_embedding import se2_project_from_se3
-from boot_agents.misc_utils.pylab_axis import y_axis_balanced
-from reprep.plot_utils.axes import x_axis_balanced
+from geometry.poses import translation_from_SE2
+from reprep.plot_utils.axes import turn_all_axes_off
+
  
  
 def report_raw_display(processed):
@@ -21,7 +22,7 @@ def report_raw_display(processed):
     with f.plot('sparse_xy', caption=caption) as pylab:
         xy = np.array(xy)
         pylab.plot(xy[:, 0], xy[:, 1], 'k+')
-        pylab.plot(centroid[0], centroid[1], 'gs')
+        pylab.plot(centroid[0], centroid[1], 'go')
         nmap.plot_points(pylab)
         pylab.axis('equal')
 
@@ -50,6 +51,21 @@ def report_distances(processed):
 
     return r 
 
+
+def plot_style_servo_field_xy(pylab):
+    centroid = [0, 0]
+    pylab.plot(centroid[0], centroid[1], 'go')
+    
+    M = 2.0
+    b = 0.1
+    pylab.plot([-M + b, -M + b], [-M + b, -M + 1 + b], 'k-')
+    
+    pylab.axis('equal')
+    pylab.axis((-M, +M, -M, +M))
+    
+    turn_all_axes_off(pylab)
+
+
 @contract(vels='list(se2)')
 def repsec_servo1_generic_vel_field(r, fname, centroid, nmap, vels, normalize=True):
     f = r.figure(cols=2)
@@ -58,20 +74,44 @@ def repsec_servo1_generic_vel_field(r, fname, centroid, nmap, vels, normalize=Tr
 
     has_theta = np.any(omegas != 0)
 
+    figsize = (6, 6)
+
     caption = 'First two components of "%s".' % fname
-    with f.plot('xy_u01_arrows', caption=caption) as pylab:
+    
+    with f.plot('xy_arrows', caption=caption, figsize=figsize) as pylab:
         nmap.plot_points(pylab)
         nmap.plot_vels(pylab, vels, normalize)
-        pylab.axis('equal')
-        pylab.plot(centroid[0], centroid[1], 'gs')
+        plot_style_servo_field_xy(pylab)
+
+    @contract(pose='SE2', returns='>=0')
+    def distance_to_centroid(pose):
+        t = translation_from_SE2(pose)
+        d = np.linalg.norm(t - centroid)
+        return d
+        
+    poses = nmap.get_poses()
+    derivs = vector_field_derivs(SE2, poses, vels, distance_to_centroid)
+    
+    def deriv2color(s):
+        if s == 0:
+            return 'k'
+        if s > 0:
+            return 'r'
+        if s < 0:
+            return 'g'
+        
+    colors = map(deriv2color, derivs)
+
+
+    with f.plot('xy_arrows_colors', caption=caption, figsize=figsize) as pylab:
+        nmap.plot_vels(pylab, vels, normalize, colors=colors)        
+        plot_style_servo_field_xy(pylab)
 
     if has_theta:
         caption = 'Third component of "%s".' % fname
         with f.plot('xy_u_th_sign', caption=caption) as pylab:
-            nmap.plot_points(pylab)
             nmap.plot_scalar_field_sign(pylab, omegas)
-            pylab.plot(centroid[0], centroid[1], 'gs')
-            pylab.axis('equal')
+            plot_style_servo_field_xy(pylab)
 
     f = r.figure()
 
@@ -98,6 +138,26 @@ def repsec_servo1_generic_vel_field(r, fname, centroid, nmap, vels, normalize=Tr
             y_axis_balanced(pylab)
             x_axis_balanced(pylab)
 
+def vector_field_deriv(manifold, tpoint, f, epsilon=0.0001):
+    """ Computes the derivative of a function f at the tangent
+        space tpoint. """
+    manifold.belongs_ts(tpoint)
+    p1, v0 = tpoint
+    # todo: normalize
+    v = epsilon * v0
+    p2 = manifold.expmap((p1, v))
+    f1 = f(p1)
+    f2 = f(p2)
+    delta = f2 - f1
+    return delta / epsilon
+    
+    
+def vector_field_derivs(manifold, poses, vels, f):
+    return [vector_field_deriv(manifold, (pose, manifold.multiply(pose, vel)), f)
+             for pose, vel in zip(poses, vels)]
+    
+
+
 @contract(poses='list(SE2)', vels='list(se2)')
 def plot_poses_vels_theta_omega(pylab, poses, vels):
     thetas = np.array([angle_from_SE2(p) for p in poses])
@@ -111,8 +171,6 @@ def plot_poses_vels_theta_omega(pylab, poses, vels):
 @contract(poses='list(SE2)', vels='list(se2)', normalize='bool')
 def plot_poses_vels_xt(pylab, poses, vels, normalize=True):
     cmd_style = dict(head_width=0.01, head_length=0.01, edgecolor='blue')    
-    from boot_navigation.navigation_map import plot_arrow_se2_xt
-        
     for pose, vel in zip(poses, vels):  
         (x, _), theta = translation_angle_from_SE2(pose)
         omega = angular_from_se2(vel)
@@ -124,7 +182,6 @@ def plot_poses_vels_xt(pylab, poses, vels, normalize=True):
 @contract(poses='list(SE2)', vels='list(se2)', normalize='bool')
 def plot_poses_vels_yt(pylab, poses, vels, normalize=True):
     cmd_style = dict(head_width=0.01, head_length=0.01, edgecolor='blue')    
-    from boot_navigation.navigation_map import plot_arrow_se2_yt
         
     for pose, vel in zip(poses, vels): 
         (_, y), theta = translation_angle_from_SE2(pose)
@@ -146,21 +203,24 @@ def report_servo1(processed):
         commands = [x['u'] for x in servo]
         vels = map(robot.debug_get_vel_from_commands, commands)
         vels = map(se2_project_from_se3, vels)
-        repsec_servo1_generic_vel_field(s, 'u', centroid, nmap, vels, normalize=True)
+        repsec_servo1_generic_vel_field(s, 'u', centroid, nmap, vels,
+                                        normalize=True)
         
     if 'u_raw' in servo[0]:
         with r.subsection('u_raw', robust=True) as s:
             commands = [x['u_raw'] for x in servo]
             vels = map(robot.debug_get_vel_from_commands, commands)
             vels = map(se2_project_from_se3, vels)
-            repsec_servo1_generic_vel_field(s, 'u_raw', centroid, nmap, vels, normalize=True)
+            repsec_servo1_generic_vel_field(s, 'u_raw', centroid, nmap, vels,
+                                            normalize=True)
 
     if 'descent' in servo[0]:
         with r.subsection('descent', robust=True) as s:
             commands = [x['descent'] for x in servo]
             vels = map(robot.debug_get_vel_from_commands, commands)
             vels = map(se2_project_from_se3, vels)
-            repsec_servo1_generic_vel_field(s, 'descent', centroid, nmap, vels, normalize=False)
+            repsec_servo1_generic_vel_field(s, 'descent', centroid, nmap, vels,
+                                            normalize=False)
          
     return r
 

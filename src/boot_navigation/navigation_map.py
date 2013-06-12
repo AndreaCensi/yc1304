@@ -1,7 +1,6 @@
 from bootstrapping_olympics import BootSpec
 from contracts import contract
-from geometry import (translation_angle_from_SE2, se2_from_linear_angular,
-    linear_angular_from_se2, DifferentiableManifold, PointSet, R2)
+from geometry import DifferentiableManifold, PointSet, R2
 import numpy as np
 
 
@@ -33,28 +32,13 @@ class NavigationMap(object):
         return len(self.data)
     
     def display(self, report):
-        f = report.figure()
-        with f.plot('map') as pylab:
-            for bd, pose in self.data:
-                commands = bd['commands']
-                if len(commands) == 3:
-                    x, y, omega = commands
-                else:
-                    x, y = commands
-                    omega = 0
-                vel = se2_from_linear_angular([x, y], omega)
-                plot_arrow_SE2(pylab, pose)
-                plot_arrow_se2(pylab, pose, vel, color='g')
-            pylab.axis('equal')
+        from .reports import display_nmap
+        display_nmap(report, self)
     
     def plot_points(self, pylab):
         xy = np.array(self.get_R2_points())
         pylab.plot(xy[:, 0], xy[:, 1], 'k.')
 
-#     @contract(commands='list(array)')
-#     def plot_commands(self, pylab, commands, normalize=True):
-#         for i in range(len(self.data)):
-#             self.plot_commands_at_index(pylab, i, commands[i], normalize=normalize)
 
     @contract(ss='seq(number)')
     def plot_scalar_field_sign(self, pylab, ss):        
@@ -68,20 +52,20 @@ class NavigationMap(object):
             pylab.plot(p[0], p[1], 'o', markersize=5, **style)
 
     @contract(vels='list(se2)')
-    def plot_vels(self, pylab, vels, normalize=True):
-        for pose, vel in zip(self.get_poses(), vels):
+    def plot_vels(self, pylab, vels, normalize=True, colors=None):
+        from .plots import plot_arrow_se2
+        for i, (pose, vel) in enumerate(zip(self.get_poses(), vels)):
             cmd_style = dict(head_width=0.01, head_length=0.01, edgecolor='blue')
+            if colors is not None:
+                cmd_style['ec'] = colors[i]
             plot_arrow_se2(pylab, pose, vel, normalize=normalize, **cmd_style)
     
     @contract(vel='se2', i='Int')
     def plot_vel_at_index(self, pylab, i, vel):
+        from .plots import plot_arrow_se2
         pose = self.get_pose_at_index(i)
         cmd_style = dict(head_width=0.01, head_length=0.01, edgecolor='blue')
         plot_arrow_se2(pylab, pose, vel, normalize=True, **cmd_style)
-#     def plot_commands_at_index(self, pylab, j, commands, normalize=True):
-#         pose = self.get_pose_at_index(j)
-#         cmd_style = dict(head_width=0.01, head_length=0.01, edgecolor='blue')
-#         plot_arrow_se2(pylab, pose, vel, normalize=normalize, **cmd_style)
 
     def get_poses(self):
         return list(map(self.get_pose_at_index, range(len(self.data))))
@@ -123,7 +107,9 @@ class NavigationMap(object):
         bd, _ = self.data[index]
         return self._censor(bd['observations'])
     
+    @contract(returns='list(array)')
     def get_all_observations(self):
+        """ Returns a list of arrays """
         return map(self.get_observations_at, range(len(self.data)))
     
     def _censor(self, y0):
@@ -146,69 +132,3 @@ class NavigationMap(object):
         pointset = PointSet(R2, points=points)
         return pointset.centroid_index()
 
-
-@contract(pose='SE2')
-def plot_arrow_SE2(pylab, pose, length=0.1, **style):
-    (x, y), theta = translation_angle_from_SE2(pose)
-    pylab.plot(x, y, 'rx')
-    a = np.cos(theta) * length        
-    b = np.sin(theta) * length
-    pylab.arrow(x, y, a, b, **style)
-
-@contract(pose='SE2', vel='se2')  # returns='tuple(x,y,$theta,vx,vy,omega)')
-def get_vxy_world(pose, vel):
-    (x, y), theta = translation_angle_from_SE2(pose)
-    _, omega = linear_angular_from_se2(vel)
-    vel2 = np.dot(pose, vel)
-    vx = vel2[0, 2]
-    vy = vel2[1, 2]
-    return x, y, theta, vx, vy, omega
-
-    
-@contract(pose='SE2', vel='se2')
-def plot_arrow_se2(pylab, pose, vel, normalize=True, length=0.05, **style):
-    """ plots x, y plane """
-    x, y, theta, vx, vy, omega = get_vxy_world(pose, vel)  # @UnusedVariable
-    
-    A, B = x, y
-    a, b, = vx, vy
-    _plot_arrow(pylab, A, B, a, b, normalize, length, **style)
-
-@contract(pose='SE2', vel='se2')
-def plot_arrow_se2_xt(pylab, pose, vel, normalize=True, length=0.05, **style):
-    """ plots x, theta """
-    x, y, theta, vx, vy, omega = get_vxy_world(pose, vel)  # @UnusedVariable
-    theta = np.rad2deg(theta)
-    omega = np.rad2deg(omega)
-    
-    A, B = x, theta
-    a, b = vx, omega
-    _plot_arrow(pylab, A, B, a, b, normalize, length, **style)
-
-@contract(pose='SE2', vel='se2')
-def plot_arrow_se2_yt(pylab, pose, vel, normalize=True, length=0.05, **style):
-    """ plots y, theta """
-
-    x, y, theta, vx, vy, omega = get_vxy_world(pose, vel)  # @UnusedVariable
-    theta = np.rad2deg(theta)
-    omega = np.rad2deg(omega)
-    A, B = y, theta
-    a, b = vy, omega
-    
-    pylab.plot(A, B, 'x')
-    
-    _plot_arrow(pylab, A, B, a, b, normalize, length, **style)
-    
-def _plot_arrow(pylab, x, y, a, b, normalize, length, **style):
-    assert np.isfinite(a)
-    assert np.isfinite(b)
-    assert np.isfinite(x)
-    assert np.isfinite(y)
-    if normalize:
-        vn = np.hypot(a, b)
-        if vn > 0:
-            a = a / vn * length
-            b = b / vn * length 
-    pylab.arrow(x, y, a, b, **style)
-    
-    

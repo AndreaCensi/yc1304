@@ -138,3 +138,16 @@
     - - bootstrapping_olympics.library.nuisances.Flatten
       - {}     
     cmd_nuisance: []
+
+
+- id: unicornA_tw1_hlfs1
+  desc: "Left hokuyo + fs1"
+  code:
+  - rosstream2boot.library.ROSRobot.from_yaml
+  - adapter:
+    - rosstream2boot.ROSRobotAdapter.from_yaml
+    - obs_adapter: unicornA_hlfs1
+      cmd_adapter: twist_1_1
+      use_odom_topic: True
+      sync:
+        policy: obs-first-topic

@@ -2,6 +2,7 @@ from bootstrapping_olympics.programs.manager import DataCentral
 from conf_tools import GlobalConfig
 from quickapp import QuickMultiCmdApp
 from rosstream2boot import ExpLogFromYaml 
+from rosstream2boot.configuration import get_conftools_explogs
 
 class Campaign(QuickMultiCmdApp):
     """ Main campaign program """
@@ -14,7 +15,7 @@ class Campaign(QuickMultiCmdApp):
     def get_config_dirs(self):
         from pkg_resources import resource_filename  # @UnresolvedImport
         config_dir = resource_filename("yc1304", "config")
-        return [config_dir] 
+        return [config_dir, '${DATASETS}'] 
     
     def initial_setup(self):
         config_dirs = self.get_config_dirs()
@@ -23,6 +24,13 @@ class Campaign(QuickMultiCmdApp):
                              
 class CampaignCmd(Campaign.get_sub()):
     
+    def get_explogs_by_tag(self, tag):
+        explogs_library = get_conftools_explogs()
+        for id_explog in explogs_library:
+            explog = explogs_library.instance(id_explog)
+            if tag in explog.get_tags():
+                yield id_explog
+        
     def get_boot_root(self):
         # If there are subtasks (A>B>{C,D}), then the first to call 
         # get_boot_root will establish the boot_root for the subtasks.
@@ -47,9 +55,7 @@ class CampaignCmd(Campaign.get_sub()):
 
     def instance_explog(self, id_explog):
         """ Instances the given explog and checks it is a ExpLogFromYaml """
-        rs2b_config = self.get_rs2b_config()
-        
-        log = rs2b_config.explogs.instance(id_explog)
+        log = get_conftools_explogs().instance(id_explog)
         if not isinstance(log, ExpLogFromYaml):
             self.info('Skipping log %r because not raw log.' % id_explog)
             return

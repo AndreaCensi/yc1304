@@ -78,5 +78,6 @@ from .exp30c import *
 from .exp31 import *
 from .exp32 import *
 from .exp33fs import *
+from .exp34 import *
 
 from .exp40sim import *

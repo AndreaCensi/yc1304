@@ -11,7 +11,8 @@ def process(nmap, id_robot):
     index = nmap.get_R2_centroid_index()
     
     origin = nmap.get_pose_at_index(index)
-    res['nmap'] = nmap.move_origin(origin)
+    nmap = nmap.move_origin(origin)
+    res['nmap'] = nmap
     res['centroid'] = nmap.get_R2_points()[index]
     res['y_goal'] = nmap.get_observations_at(index)
 
@@ -25,13 +26,16 @@ def process_compute_distances(processed):
     centroid = processed['centroid']
     y_goal = processed['y_goal']
     
-    processed['p_distance'] = [R2.distance(p, centroid) for p in nmap.get_R2_points()]  
+    processed['p_distance'] = [R2.distance(p, centroid) 
+                               for p in nmap.get_R2_points()]  
     
     # ... for observations
     y_dist = lambda y0, y1: np.linalg.norm(y0 - y1) 
-    processed['y_distance'] = [y_dist(y, y_goal) for y in nmap.get_all_observations()]
+    processed['y_distance'] = [y_dist(y, y_goal) 
+                               for y in nmap.get_all_observations()]
     
     return processed
+
 
 def compute_servo_action(processed, servo_agent):
     nmap = processed['nmap'] 
@@ -42,6 +46,7 @@ def compute_servo_action(processed, servo_agent):
         servo.append(res)
     processed['servo'] = servo
     return processed
+
 
 def compute_servo_commands(servo_agent, y_goal, bd):
     servo_agent.set_goal_observations(y_goal)
