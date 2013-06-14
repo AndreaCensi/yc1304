@@ -5,8 +5,10 @@ from geometry import (linear_angular_from_se2, angle_from_SE2,
 from reprep import Report
 from reprep.plot_utils import x_axis_balanced, y_axis_balanced
 import numpy as np
-from geometry.poses import translation_from_SE2
-from reprep.plot_utils.axes import turn_all_axes_off
+from geometry import translation_from_SE2
+from reprep.plot_utils import turn_all_axes_off
+import itertools
+from numpy.ma.core import masked_invalid
 
  
  
@@ -52,22 +54,33 @@ def report_distances(processed):
     return r 
 
 
-def plot_style_servo_field_xy(pylab):
+def plot_style_servo_field_xy(pylab, area_graphs):
     centroid = [0, 0]
     pylab.plot(centroid[0], centroid[1], 'go')
     
-    M = 2.0
-    b = 0.1
-    pylab.plot([-M + b, -M + b], [-M + b, -M + 1 + b], 'k-')
     
+    # M = 2.0
+    M = area_graphs
+    
+    b = 0.03
+
+    if False:
+        pylab.plot([-M + b, -M + b], [-M + b, -M + 1 + b], 'k-')
+        pylab.plot([-M + b + 1, -M + b], [-M + b, -M + b], 'k-')
+        
     pylab.axis('equal')
+    
+    if False:
+        N = M - b * 2
+        pylab.plot([-N, N, N, -N, -N], [-N, -N, N, N, -N], 'k--')
     pylab.axis((-M, +M, -M, +M))
     
     turn_all_axes_off(pylab)
 
 
 @contract(vels='list(se2)')
-def repsec_servo1_generic_vel_field(r, fname, centroid, nmap, vels, normalize=True):
+def repsec_servo1_generic_vel_field(r, fname, centroid, nmap, vels,
+                                    area_graphs, normalize=True):
     f = r.figure(cols=2)
     
     omegas = map(angular_from_se2, vels)
@@ -76,12 +89,15 @@ def repsec_servo1_generic_vel_field(r, fname, centroid, nmap, vels, normalize=Tr
 
     figsize = (6, 6)
 
+    arrow_length = nmap.get_average_interpoint_R2_distance() / 2
+    print('arrow length: %s' % arrow_length)
+    
     caption = 'First two components of "%s".' % fname
     
     with f.plot('xy_arrows', caption=caption, figsize=figsize) as pylab:
         nmap.plot_points(pylab)
-        nmap.plot_vels(pylab, vels, normalize)
-        plot_style_servo_field_xy(pylab)
+        nmap.plot_vels(pylab, vels, normalize, length=arrow_length)
+        plot_style_servo_field_xy(pylab, area_graphs=area_graphs)
 
     @contract(pose='SE2', returns='>=0')
     def distance_to_centroid(pose):
@@ -105,14 +121,14 @@ def repsec_servo1_generic_vel_field(r, fname, centroid, nmap, vels, normalize=Tr
 
     with f.plot('xy_arrows_colors', caption=caption, figsize=figsize) as pylab:
         nmap.plot_vels(pylab, vels, normalize, colors=colors)        
-        plot_style_servo_field_xy(pylab)
+        plot_style_servo_field_xy(pylab, area_graphs=area_graphs)
 
     if has_theta:
         caption = 'Third component of "%s".' % fname
         with f.plot('xy_u_th_sign', caption=caption) as pylab:
             nmap.plot_scalar_field_sign(pylab, omegas)
-            plot_style_servo_field_xy(pylab)
-
+            plot_style_servo_field_xy(pylab, area_graphs=area_graphs)
+        
     f = r.figure()
 
     if has_theta:
@@ -138,6 +154,7 @@ def repsec_servo1_generic_vel_field(r, fname, centroid, nmap, vels, normalize=Tr
             y_axis_balanced(pylab)
             x_axis_balanced(pylab)
 
+
 def vector_field_deriv(manifold, tpoint, f, epsilon=0.0001):
     """ Computes the derivative of a function f at the tangent
         space tpoint. """
@@ -155,7 +172,6 @@ def vector_field_deriv(manifold, tpoint, f, epsilon=0.0001):
 def vector_field_derivs(manifold, poses, vels, f):
     return [vector_field_deriv(manifold, (pose, manifold.multiply(pose, vel)), f)
              for pose, vel in zip(poses, vels)]
-    
 
 
 @contract(poses='list(SE2)', vels='list(se2)')
@@ -191,7 +207,64 @@ def plot_poses_vels_yt(pylab, poses, vels, normalize=True):
         plot_arrow_se2_yt(pylab, pose, vel, normalize=normalize, **cmd_style)
 
 
-def report_servo1(processed):
+def report_servo_distances2(servo_agent, processed, area_graphs):
+    r = Report()
+    nmap = processed['nmap']
+    y_goal = processed['y_goal']
+    figparams = dict(figsize=(6, 6))
+    px = []
+    py = []
+    distances = []
+    for i in range(nmap.npoints()):
+        obs = nmap.get_observations_at(i)
+        # d = np.linalg.norm(obs - y_goal)
+        d = servo_agent.get_distance(obs, y_goal)
+        p = nmap.get_R2_point_at_index(i)
+        px.append(p[0])
+        py.append(p[1])
+        distances.append(d)
+    
+    px = np.array(px)
+    py = np.array(py)
+    
+    mx = np.linspace(px.min(), px.max(), 75)
+    my = np.linspace(py.min(), py.max(), 75)
+    XI, YI = np.meshgrid(mx, my)
+    
+    from scipy.interpolate import Rbf
+    rbf = Rbf(px, py, distances, epsilon=0.05)
+    ZI = rbf(XI, YI)
+
+    D = np.zeros(shape=XI.shape)
+    for i, j in itertools.product(range(len(mx)), range(len(my))):
+        D[i, j] = np.min(np.hypot(mx[j] - px, my[i] - py))  # not a bug
+    outside = D > 0.12
+
+    ZI[outside] = np.nan
+    ZI = masked_invalid(ZI)
+    
+    f = r.figure()
+    with f.plot('rbfs', **figparams) as pylab:
+        pylab.gca().set_rasterized(True) 
+        from matplotlib import cm
+        pylab.pcolormesh(XI, YI, ZI, cmap=cm.jet)  # @UndefinedVariable
+        pylab.scatter(px, py, 20, distances, cmap=cm.jet)  # @UndefinedVariable
+        pylab.colorbar()
+        plot_style_servo_field_xy(pylab, area_graphs=area_graphs)
+        
+
+    with f.plot('interpolation', **figparams) as pylab:
+        pylab.gca().set_rasterized(True) 
+        cmap = cm.jet  # @UndefinedVariable
+        cmap.set_bad('w', 0.)
+#         pylab.pcolormesh(XI, YI, ZI, cmap=cm.jet)  # @UndefinedVariable
+        # bug with pcolormesh: black background
+        pylab.pcolormesh(XI, YI, ZI, cmap=cmap, shading='gouraud')  # @UndefinedVariable
+        plot_style_servo_field_xy(pylab, area_graphs=area_graphs)
+        
+    return r
+
+def report_servo1(processed, area_graphs):
     r = Report('servo1')
     
     nmap = processed['nmap']
@@ -204,7 +277,7 @@ def report_servo1(processed):
         vels = map(robot.debug_get_vel_from_commands, commands)
         vels = map(se2_project_from_se3, vels)
         repsec_servo1_generic_vel_field(s, 'u', centroid, nmap, vels,
-                                        normalize=True)
+                                        normalize=True, area_graphs=area_graphs)
         
     if 'u_raw' in servo[0]:
         with r.subsection('u_raw', robust=True) as s:
@@ -212,7 +285,7 @@ def report_servo1(processed):
             vels = map(robot.debug_get_vel_from_commands, commands)
             vels = map(se2_project_from_se3, vels)
             repsec_servo1_generic_vel_field(s, 'u_raw', centroid, nmap, vels,
-                                            normalize=True)
+                                            normalize=True, area_graphs=area_graphs)
 
     if 'descent' in servo[0]:
         with r.subsection('descent', robust=True) as s:
@@ -220,7 +293,7 @@ def report_servo1(processed):
             vels = map(robot.debug_get_vel_from_commands, commands)
             vels = map(se2_project_from_se3, vels)
             repsec_servo1_generic_vel_field(s, 'descent', centroid, nmap, vels,
-                                            normalize=False)
+                                            normalize=False, area_graphs=area_graphs)
          
     return r
 
@@ -242,7 +315,7 @@ def report_servo_details(servo_agent, processed, nsamples=6):
             with f.plot('map') as pylab:
                 nmap.plot_points(pylab)
                 vel = robot.debug_get_vel_from_commands(servo['u'])
-                nmap.plot_vel_at_index(pylab, j, se2_project_from_se3(vel))
+                nmap.plot_vel_at_index(pylab, j, se2_project_from_se3(vel), length=0.05)
 
             with r_i.subsection('query') as rq:
                 servo_agent.display_query(rq, observations=y0, goal=y_goal)

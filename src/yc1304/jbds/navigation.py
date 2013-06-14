@@ -14,6 +14,7 @@ from yc1304.s00_videos.make_videos import MakeVideos2
 from yc1304.s00_videos.make_videos_servo import jobs_video_servo_multi
 import itertools
 import numpy as np
+from reprep.graphics.filter_colormap import filter_colormap
 
 
 __all__ = ['JBDSServoVisualization', 'JBDSNavigationVisualization']
@@ -49,6 +50,9 @@ class JBDSNavigationVisualization(CampaignCmd, QuickApp):
         pass
     
     def define_jobs_context(self, context):
+        rm = context.get_report_manager()
+        rm.set_html_resources_prefix('jbds-nav')
+
         logs = set(self.get_explogs_by_tag('navigation'))
         logs = list(logs)
         assert len(logs) >= 4
@@ -104,11 +108,13 @@ def poses_from_episode(data_central, id_robot, id_episode):
 
     return poses
 
+
 @contract(poses='list[N](SE2)', returns='list[N](SE2)')
 def align(poses):
     start = poses[0]
     poses2 = [SE2.multiply(SE2.inverse(start), p) for p in poses]
     return poses2
+
 
 @contract(returns=Report, poses='list(SE2)')
 def report_trajectory(poses, poses_nmap):
@@ -156,6 +162,7 @@ def report_trajectory(poses, poses_nmap):
         
     return r
 
+
 def plot_poses_xy(pylab, poses, color='k-'):
     xy = np.array(map(translation_from_SE2, poses))
     assert xy.shape[1] == 2
@@ -186,10 +193,21 @@ def report_nmap_distances(nmap, nmap_distances):
     
     assert len(timestamps) == nmoments
     
-    f = r.figure()
+    f = r.figure(cols=1)
     GREEN = [0, 1, 0]
     RED = [1, 0, 0]
-    f.data_rgb('alldists', scale(alldists, min_color=GREEN, max_color=RED))
+    
+    alldists_rgb1 = scale(alldists, min_color=GREEN, max_color=RED)
+    f.data_rgb('alldists', alldists_rgb1)
+    alldists_rgb2 = filter_colormap(alldists,
+                   cmap='jet',
+                   min_value=None, max_value=None,
+                   nan_color=[1, 0.6, 0.6],
+                   inf_color=[0.6, 1, 0.6],
+                   flat_color=[0.5, 0.5, 0.5])
+    
+    f.data_rgb('alldists2', alldists_rgb2)
+    
     f.data_rgb('observations', _nmapobslist_to_rgb(allobs))
     
     waypoints = range(0, nwaypoints, 5)

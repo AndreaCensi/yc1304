@@ -27,7 +27,7 @@ def display_nmap(report, nmap):
                 omega = 0
             vel = se2_from_linear_angular([x, y], omega)
             plot_arrow_SE2(pylab, pose)
-            plot_arrow_se2(pylab, pose, vel, color='g')
+            plot_arrow_se2(pylab, pose, vel, length=0.04, color='g')
         pylab.axis('equal')
         
 

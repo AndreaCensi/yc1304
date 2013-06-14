@@ -102,6 +102,16 @@
     sync:
       policy: obs-first-topic
 
+- id: unicornA_tr1_hl_sane_s4
+  desc: "One Hokuyos, xy translation"
+  code:
+  - rosstream2boot.ROSRobotAdapter.from_yaml
+  - obs_adapter: unicornA_hl_sane_s4
+    cmd_adapter: twist_xy_1
+    use_odom_topic: True
+    sync:
+      policy: obs-first-topic
+
 
 - id: unicornA_tw1_cf_strip
   desc: "Grayscale 1D frontal camera, base1"

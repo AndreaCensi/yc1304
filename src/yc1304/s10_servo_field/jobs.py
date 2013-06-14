@@ -9,6 +9,7 @@ from quickapp import CompmakeContext
 from quickapp_boot import (iterate_context_agents_and_episodes, RM_EPISODE_READY,
     RM_AGENT_SERVO)
 import numpy as np
+from yc1304.s10_servo_field.reports import report_servo_distances2
 
 
 __all__ = [ 
@@ -18,7 +19,8 @@ __all__ = [
  
 
 def jobs_servo_field(context, data_central, id_agent, id_robot, id_episode,
-                              min_dist=0.08, min_th_dist=np.deg2rad(4)):
+                              min_dist=0.08, min_th_dist=np.deg2rad(4),
+                              area_graphs=2.0):
     servo_agent = context.get_resource(RM_AGENT_SERVO,
                                        id_agent=id_agent, id_robot=id_robot)
     
@@ -42,16 +44,23 @@ def jobs_servo_field(context, data_central, id_agent, id_robot, id_episode,
     processed = context.comp(process_compute_distances, _processed)
     
     keys = dict(id_robot=id_robot, id_episode=id_episode, id_agent=id_agent)
-    
-    reports = {'distances': report_distances,
-               'servo1': report_servo1,
-               'raw_display': report_raw_display}
-    
-    for k, v in reports.items(): 
-        context.add_report(context.comp(v, processed), k, **keys)
+ 
+    r = context.comp(report_distances, processed)
+    context.add_report(r, 'distances', **keys)
+
+    r = context.comp(report_servo1, processed, area_graphs=area_graphs)
+    context.add_report(r, 'servo1', **keys)
+
+    r = context.comp(report_raw_display, processed)
+    context.add_report(r, 'raw_display', **keys)
  
     r = context.comp(report_servo_details, servo_agent, processed)
     context.add_report(r, 'servo_details', **keys)
+ 
+    r = context.comp(report_servo_distances2, servo_agent, processed,
+                     area_graphs=area_graphs)
+    context.add_report(r, 'distances2', **keys)
+ 
  
 @contract(context=CompmakeContext, data_central=DataCentral,
           id_robot='str', agents='seq(str)',

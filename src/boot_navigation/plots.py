@@ -21,7 +21,7 @@ def get_vxy_world(pose, vel):
 
     
 @contract(pose='SE2', vel='se2')
-def plot_arrow_se2(pylab, pose, vel, normalize=True, length=0.05, **style):
+def plot_arrow_se2(pylab, pose, vel, length, normalize=True, **style):
     """ plots x, y plane """
     x, y, theta, vx, vy, omega = get_vxy_world(pose, vel)  # @UnusedVariable
     

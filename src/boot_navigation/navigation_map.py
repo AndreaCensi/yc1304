@@ -52,20 +52,27 @@ class NavigationMap(object):
             pylab.plot(p[0], p[1], 'o', markersize=5, **style)
 
     @contract(vels='list(se2)')
-    def plot_vels(self, pylab, vels, normalize=True, colors=None):
+    def plot_vels(self, pylab, vels, normalize=True, colors=None, length=0.05):
         from .plots import plot_arrow_se2
         for i, (pose, vel) in enumerate(zip(self.get_poses(), vels)):
-            cmd_style = dict(head_width=0.01, head_length=0.01, edgecolor='blue')
+            head_width = length / 3
+            head_length = length / 5
+#             cmd_style = dict(head_width=head_width, head_length=head_length)
+            cmd_style = {}
             if colors is not None:
-                cmd_style['ec'] = colors[i]
-            plot_arrow_se2(pylab, pose, vel, normalize=normalize, **cmd_style)
+                cmd_style['facecolor'] = colors[i]
+                cmd_style['edgecolor'] = colors[i]
+                
+            plot_arrow_se2(pylab, pose, vel, length=length, normalize=normalize, **cmd_style)
     
     @contract(vel='se2', i='Int')
-    def plot_vel_at_index(self, pylab, i, vel):
+    def plot_vel_at_index(self, pylab, i, vel, length):
         from .plots import plot_arrow_se2
         pose = self.get_pose_at_index(i)
-        cmd_style = dict(head_width=0.01, head_length=0.01, edgecolor='blue')
-        plot_arrow_se2(pylab, pose, vel, normalize=True, **cmd_style)
+        head_width = length / 3
+        head_length = length / 5
+        cmd_style = dict(head_width=head_width, head_length=head_length, fc='blue')
+        plot_arrow_se2(pylab, pose, vel, length=length, normalize=True, **cmd_style)
 
     def get_poses(self):
         return list(map(self.get_pose_at_index, range(len(self.data))))
@@ -132,3 +139,14 @@ class NavigationMap(object):
         pointset = PointSet(R2, points=points)
         return pointset.centroid_index()
 
+    def get_R2_point_at_index(self, i):
+        return self.manifold.project_to(R2, self.get_pose_at_index(i))
+
+    def get_average_interpoint_R2_distance(self):
+        """ """
+        points = self.get_R2_points()
+        dists = []
+        for i in range(len(points) - 1):
+            d = R2.distance(points[i], points[i + 1])
+            dists.append(d)
+        return np.median(dists)
