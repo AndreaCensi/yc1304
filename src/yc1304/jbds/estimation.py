@@ -1,18 +1,18 @@
-from contracts import contract
-from quickapp import iterate_context_names, iterate_context_names_pair, QuickApp
-from quickapp.report_manager import basename_from_key
-from quickapp_boot import recipe_agentlearn_by_parallel, recipe_agent_servo, \
-    RM_AGENT_LEARN
-from reprep import Report
-from reprep.report_utils import StoreResults
+from boot_reports.latex.jbds.jobs import job_tex_report
+from conf_tools import GlobalConfig
+from quickapp import iterate_context_names, QuickApp
+from quickapp_boot import recipe_agentlearn_by_parallel, recipe_agent_servo
+from quickapp_boot.jobs.jobs_simulation import (
+    recipe_episodeready_by_simulation_tranches)
 from rosstream2boot import recipe_episodeready_by_convert2
 from yc1304.campaign import CampaignCmd
+from yc1304.exps.exp40sim import episode_id_exploration
+from yc1304.jbds.estimation_summaries import (job_report_learn,
+    iterate_context_combinations, jobs_report_summary_servo_xy,
+    report_summary_servo_theta)
 from yc1304.s10_servo_field.jobs import jobs_servo_field
 import numpy as np
-from reprep_quickapp import ReportProxy
-from yc1304.exps.exp40sim import episode_id_exploration
-from quickapp_boot.jobs.jobs_simulation import recipe_episodeready_by_simulation
-from conf_tools.master import GlobalConfig
+import os
 
 __all__ = ['JBDSEstimation']
 
@@ -46,34 +46,53 @@ class JBDSEstimation(CampaignCmd, QuickApp):
 
     real_robots = [
         'unicornA_tr1_hl_sane_s4',
+        'unicornA_tw1_hl_sane_s4',
         'unicornA_tr1_hlhr_sane_s4',
+        'unicornA_tw1_hlhr_sane_s4',
         'unicornA_tr1_cf_strip',
-        'unicornA_tr1_fs1'
+        'unicornA_tw1_cf_strip',
+        'unicornA_tr1_fs1',
+        'unicornA_tw1_fs1',
     ]
 
     combs_estimation = [
-        ('Se0Vrb1ro', 'bdser_er4_i2_sr', []),
-         ('unicornA_tr1_hl_sane_s4', 'bdser_er4_i2_sr', []),
-         ('unicornA_tr1_hlhr_sane_s4', 'bdser_er4_i2_sr', []),
-         ('Se0Vrb1co', 'bdse_e1_ss', []),
-         ('unicornA_tr1_cf_strip', 'bdse_e1_ss', []),
-         ('Yfl1Se0Vrb1fsq1', 'bdse_e1_ss', []),
-         ('unicornA_tr1_fs1', 'bdse_e1_ss', []),
+         ('Se0Vrb1ro', 'bdser_er4_i2_sr'),
+         ('unicornA_tw1_hl_sane_s4', 'bdser_er4_i2_sr'),
+         ('unicornA_tw1_hlhr_sane_s4', 'bdser_er4_i2_sr'),
+         ('Se0Vrb1co', 'bdse_e1_ss'),
+         ('unicornA_tw1_cf_strip', 'bdse_e1_ss'),
+         ('Yfl1Se0Vrb1fsq1', 'bdse_e1_ss'),
+         ('unicornA_tw1_fs1', 'bdse_e1_ss'),
     ]
     
-    combs_servo = [
-         ('unicornA_tr1_hl_sane_s4', 'bdser_er4_i2_sr', []),
-         ('unicornA_tw1_hl_sane_s4', 'bdser_er4_i2_sr', []),
-         ('unicornA_tr1_hl_sane_s4', 'bdser_er4_i2_srl', []),
-         ('unicornA_tw1_hl_sane_s4', 'bdser_er4_i2_srl', []),
-         ('unicornA_tr1_hlhr_sane_s4', 'bdser_er4_i2_sr', []),
-         ('unicornA_tr1_hlhr_sane_s4', 'bdser_er4_i2_srl', []),
-         ('unicornA_tr1_cf_strip', 'bdser_e1_i2_ss', []),
-         ('unicornA_tr1_cf_strip', 'bdser_e1_i2_slt', []),
-         ('unicornA_tr1_fs1', 'bdse_e1_ss', []),
-         ('unicornA_tr1_fs1', 'bdser_er1_i1_ss', []),
-         ('unicornA_tr1_fs1', 'bdser_er1_i1_srl', []),
+    
+    combs_servo_xy = [
+         ('unicornA_tr1_hl_sane_s4', 'bdser_er4_i2_sr'),
+         ('unicornA_tw1_hl_sane_s4', 'bdser_er4_i2_sr'),
+         ('unicornA_tr1_hl_sane_s4', 'bdser_er4_i2_srl'),
+         ('unicornA_tw1_hl_sane_s4', 'bdser_er4_i2_srl'),
+         ('unicornA_tr1_hlhr_sane_s4', 'bdser_er4_i2_sr'),
+         ('unicornA_tr1_hlhr_sane_s4', 'bdser_er4_i2_srl'),
+         ('unicornA_tr1_cf_strip', 'bdser_e1_i2_ss'),
+         ('unicornA_tr1_cf_strip', 'bdser_e1_i2_slt'),
+         ('unicornA_tr1_fs1', 'bdse_e1_ss'),
+         ('unicornA_tr1_fs1', 'bdser_er1_i1_ss'),
+         ('unicornA_tr1_fs1', 'bdser_er1_i1_srl'),
     ]
+
+    combs_servo_th = [
+         ('unicornA_tw1_hl_sane_s4', 'bdser_er4_i2_sr'),
+         ('unicornA_tw1_hl_sane_s4', 'bdser_er4_i2_srl'),
+         ('unicornA_tw1_hlhr_sane_s4', 'bdser_er4_i2_sr'),
+         ('unicornA_tw1_hlhr_sane_s4', 'bdser_er4_i2_srl'),
+         ('unicornA_tw1_cf_strip', 'bdser_e1_i2_ss'),
+         ('unicornA_tw1_cf_strip', 'bdser_e1_i2_slt'),
+         ('unicornA_tw1_fs1', 'bdse_e1_ss'),
+         ('unicornA_tw1_fs1', 'bdser_er1_i1_ss'),
+         ('unicornA_tw1_fs1', 'bdser_er1_i1_srl'),
+    ]
+    
+    combs_servo = list(set(combs_servo_xy + combs_servo_th))
     
     class ExplogsTest():
         def __init__(self, id_episode, params={}):
@@ -122,20 +141,31 @@ class JBDSEstimation(CampaignCmd, QuickApp):
         
         jobs_learn_simulations(context, data_central,
                                simulated_robots=JBDSEstimation.simulated_robots,
-                               num_sim_episodes=5,
-                               max_episode_len=5,
+                               num_sim_episodes=1000,
+                               max_episode_len=30,
+                               episodes_per_tranche=50,
                                explorer='expsw1')
         
         r = job_report_learn(context, JBDSEstimation.combs_estimation)
         context.add_report(r, 'learn_global')
  
+        jobs_tex(context, JBDSEstimation.combs_estimation)
+ 
         jobs_servo(context, data_central,
                    combinations=JBDSEstimation.combs_servo,
-                   explogs_test=JBDSEstimation.grids_xy)
-        jobs_servo_reports(context,
+                   explogs_test=JBDSEstimation.grids)
+        
+        jobs_report_summary_servo_xy(context,
                            combinations=JBDSEstimation.combs_servo,
                            explogs_test=JBDSEstimation.grids_xy)
 
+        r = report_summary_servo_theta(context,
+                                   combinations=JBDSEstimation.combs_servo_th,
+                                   explogs_test=JBDSEstimation.grids_th)
+                                    
+        context.add_report(r, 'servo_theta_global')
+
+        
 
 def jobs_learn_real(context, data_central, real_robots, explogs_learn):
     for id_robot in real_robots:
@@ -147,170 +177,42 @@ def jobs_learn_real(context, data_central, real_robots, explogs_learn):
     for id_robot in real_robots:
         recipe_episodeready_by_convert2(context, boot_root, id_robot)    
 
+def jobs_tex(context, combinations):
+    output_dir = os.path.join(context.get_output_dir(), 'tex')
+    for c, id_robot, id_agent in iterate_context_combinations(context, combinations):
+        job_tex_report(c, output_dir, id_agent=id_agent, id_robot=id_robot)
 
-def job_report_learn(context, combs):
-    rp = ReportProxy(context)
-    for id_robot, id_agent, _ in combs:
-        context.needs(RM_AGENT_LEARN, id_robot=id_robot, id_agent=id_agent)
-        
-        f = rp.figure('%s-%s-model' % (id_robot, id_agent), cols=8,
-                      caption='%s, %s' % (id_robot, id_agent))
-        
-        key = dict(report_type='agent_report', id_robot=id_robot, id_agent=id_agent)
-        
-        s = 'bds-%s-' % basename_from_key(dict(id_agent=id_agent, id_robot=id_robot))
-        add = lambda n, nid: f.sub(rp.add_child_from_other(n, s + nid, **key), caption=nid)
-        
-        add('estimator/model/M/slices/0/normalized/png', 'M0')
-        add('estimator/model/M/slices/1/normalized/png', 'M1')
-        add('estimator/model/M/slices/2/normalized/png', 'M2')
-        add('estimator/model/N/slices/0/figure1/plot_scaled', 'N0')
-        add('estimator/model/N/slices/1/figure1/plot_scaled', 'N1')
-        add('estimator/model/N/slices/2/figure1/plot_scaled', 'N2')
-        
-        f = rp.figure('%s-%s-learn' % (id_robot, id_agent), cols=8,
-                      caption='%s, %s' % (id_robot, id_agent))
-        
-        add('estimator/tensors/T/slices/0/normalized/png', 'T0')
-        add('estimator/tensors/T/slices/1/normalized/png', 'T1')
-        add('estimator/tensors/T/slices/2/normalized/png', 'T2')
-        add('estimator/tensors/U/slices/0/figure1/plot_scaled', 'U0')
-        add('estimator/tensors/U/slices/1/figure1/plot_scaled', 'U1')
-        add('estimator/tensors/U/slices/2/figure1/plot_scaled', 'U2')
-                
-        add('estimator/tensors/P/posneg', 'P')
-        
-    return rp.get_job()
 
-@contract(explogs_test='seq(str)', arrows=StoreResults, interps=StoreResults,
-           returns=Report)
-def report_distances2_global(combs, explogs_test, arrows, interps):
-    r = Report()
-    figs = {}
-    
-    def get_fig(id_robot):
-        if not id_robot in figs:
-            figs[id_robot] = r.figure(cols=len(explogs_test), caption=id_robot)
-        return figs[id_robot]
-    
-    for id_robot, id_agent, _ in combs:
-
-        for id_episode in explogs_test:
-            key = dict(id_robot=id_robot, id_agent=id_agent, id_episode=id_episode)
-            interp = interps[key]
-            interp.nid = basename_from_key(key) + '-interp'
-            interp.caption = '%s, %s' % (id_robot, id_agent)
-            r.add_child(interp)
-            get_fig(id_robot).sub(interp)
-
-        for id_episode in explogs_test:
-            key = dict(id_robot=id_robot, id_agent=id_agent, id_episode=id_episode)
-            arrow = arrows[key]
-            arrow.nid = basename_from_key(key) + '-vf'
-            arrow.caption = '%s, %s' % (id_robot, id_agent)
-            r.add_child(arrow)
-            get_fig(id_robot).sub(arrow)
-
-    return r
 
 def jobs_learn_simulations(context, data_central, simulated_robots, num_sim_episodes,
-                           max_episode_len, explorer):        
+                           max_episode_len, explorer, episodes_per_tranche=50):        
     sim_episodes = [episode_id_exploration(explorer, i) for i in range(num_sim_episodes)]
 
     for id_robot in simulated_robots:
-        recipe_episodeready_by_simulation(context, data_central, id_robot,
-                                          explorer, max_episode_len)
+        # recipe_episodeready_by_simulation(context, data_central, id_robot,
+        #                                   explorer, max_episode_len)
+
+        recipe_episodeready_by_simulation_tranches(context, data_central, id_robot,
+                                                   explorer, max_episode_len,
+                                                   sim_episodes, episodes_per_tranche=50)
 
         recipe_agentlearn_by_parallel(context, data_central,
                                       only_robots=[id_robot],
-                                      episodes=sim_episodes)
+                                      episodes=sim_episodes,
+                                      episodes_per_tranche=episodes_per_tranche)
 
 
 def jobs_servo(context, data_central, combinations, explogs_test):
-    robots = set()
-    agents = set()
-    robots_agents = set()  # (robot, agent) tuple
-    for robot, agent, _ in combinations:
-        robots.add(robot)
-        agents.add(agent)
-        robots_agents.add((robot, agent))
-    robots = sorted(list(robots))
-    agents = sorted(list(agents))         
     
     recipe_agent_servo(context, create_report=True)
 
-
-    for c, id_robot, id_agent in iterate_context_names_pair(context, robots, agents):
-        if not (id_robot, id_agent) in robots_agents:
-            continue
-        
+    for c, id_robot, id_agent in iterate_context_combinations(context, combinations):        
         for cc, e in iterate_context_names(c, explogs_test):
             jobs_servo_field(cc, data_central=data_central,
                                 id_robot=id_robot,
                                 id_agent=id_agent,
                                 id_episode=e.id_episode,
                                 **e.params)
-
-
-
-def jobs_servo_reports(context, combinations, explogs_test):
-    
-    parts = StoreResults()
-    for id_robot, id_agent, _ in combinations:
-        for e in explogs_test:
-            key = dict(id_robot=id_robot, id_agent=id_agent, id_episode=e.id_episode)
-            job_id = 'part-' + basename_from_key(key)
-            arrows = context.comp(get_node, 'xy_arrows_colors',
-                                      context.get_report('servo1', **key),
-                                      job_id=job_id)
-            parts[key] = arrows 
-    
-    r = context.comp(report_servo1_global, combinations,
-                     map(str, explogs_test), parts)
-    context.add_report(r, 'servo1_global')
-    
-    interps = StoreResults()
-    for id_robot, id_agent, _ in combinations:
-        for e in explogs_test:
-            key = dict(id_robot=id_robot, id_agent=id_agent, id_episode=e.id_episode)
-            job_id = 'interpolation-' + basename_from_key(key)
-            field = context.comp(get_node, 'interpolation',
-                                 context.get_report('distances2', **key),
-                                 job_id=job_id)
-            interps[key] = field 
-            
-    r = context.comp(report_distances2_global, combinations,
-                     map(str, explogs_test), parts, interps)
-    context.add_report(r, 'distances2_global')
- 
- 
- 
-
-@contract(explogs_test='seq(str)', parts=StoreResults, returns=Report)
-def report_servo1_global(combs, explogs_test, parts):
-    r = Report()
-    figs = {}
-    
-    def get_fig(id_robot):
-        if not id_robot in figs:
-            figs[id_robot] = r.figure(cols=len(explogs_test), caption=id_robot)
-        return figs[id_robot]
-    
-    for id_robot, id_agent, _ in combs:
-        for id_episode in explogs_test:
-            key = dict(id_robot=id_robot, id_agent=id_agent, id_episode=id_episode)
-            part = parts[key]
-            part.nid = basename_from_key(key)
-            part.caption = '%s, %s' % (id_robot, id_agent)
-            r.add_child(part)
-            get_fig(id_robot).sub(part)
-
-    return r
-
-@contract(url=str, r=Report, returns=Report)
-def get_node(url, r):
-    return r.resolve_url(url)
-
 
 
 

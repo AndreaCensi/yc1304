@@ -80,7 +80,7 @@ def plot_style_servo_field_xy(pylab, area_graphs):
 
 @contract(vels='list(se2)')
 def repsec_servo1_generic_vel_field(r, fname, centroid, nmap, vels,
-                                    area_graphs, normalize=True):
+                                        area_graphs, normalize=True):
     f = r.figure(cols=2)
     
     omegas = map(angular_from_se2, vels)
@@ -133,7 +133,7 @@ def repsec_servo1_generic_vel_field(r, fname, centroid, nmap, vels,
 
     if has_theta:
         poses = nmap.get_poses()
-        with f.plot('tw', caption=caption) as pylab:
+        with f.plot('yt', caption=caption) as pylab:
             plot_poses_vels_yt(pylab, poses, vels, normalize=True)
             pylab.xlabel('y (m)')
             pylab.ylabel('theta (deg)')
@@ -147,7 +147,7 @@ def repsec_servo1_generic_vel_field(r, fname, centroid, nmap, vels,
             y_axis_balanced(pylab)
             x_axis_balanced(pylab)
 
-        with f.plot('yt', caption=caption) as pylab:
+        with f.plot('tw', caption=caption) as pylab:
             plot_poses_vels_theta_omega(pylab, poses, vels)
             pylab.xlabel('theta (deg)')
             pylab.ylabel('omega')

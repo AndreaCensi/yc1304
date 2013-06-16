@@ -5,11 +5,14 @@ from bootstrapping_olympics.programs.manager.meat.simulate import (
 from conf_tools.master import GlobalConfig
 from contracts import contract
 from quickapp import QuickApp
-from quickapp.app_utils.subcontexts import iterate_context_names
+from quickapp.app_utils.subcontexts import (iterate_context_names,
+    iterate_context_names_pair)
 from quickapp_boot.jobs.jobs_publish import jobs_publish_learning_agents_robots
 from quickapp_boot.jobs.jobs_simulation import recipe_episodeready_by_simulation
 from quickapp_boot.recipes.recipes_learning_parallel import (
     recipe_agentlearn_by_parallel)
+import os
+from boot_reports.latex.jbds.jobs import job_tex_report
 
 
 __all__ = ['Exp40']
@@ -34,8 +37,8 @@ class Exp40(CampaignCmd, QuickApp):
 #         'Se0Vci1cc',
 #         'Se0Vci1rc',
         'Se0Vrb1ro',
-        'Se0Vrb1co',
-        'Yfl1Se0Vrb1fsq1',
+#         'Se0Vrb1co',
+#         'Yfl1Se0Vrb1fsq1',
         # Different environment
         # Se1Vt1cc,
 #         'Se1Vci1cc',
@@ -77,7 +80,19 @@ class Exp40(CampaignCmd, QuickApp):
         jobs_publish_learning_agents_robots(context, boot_root, agents, robots)
 
  
+        output_dir = os.path.join(context.get_output_dir(), 'tex')
+        
+        for c, id_agent, id_robot in iterate_context_names_pair(context, agents, robots):
+            job_tex_report(c, output_dir, id_agent=id_agent, id_robot=id_robot)
+            
+
 
 @contract(id_agent='str', K='int')
 def episode_id_exploration(id_agent, K):
     return 'ep_expl_%s_%05d' % (id_agent, K)
+
+
+
+
+
+

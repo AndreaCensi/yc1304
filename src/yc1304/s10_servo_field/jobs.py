@@ -24,7 +24,7 @@ def jobs_servo_field(context, data_central, id_agent, id_robot, id_episode,
     servo_agent = context.get_resource(RM_AGENT_SERVO,
                                        id_agent=id_agent, id_robot=id_robot)
     
-    context.needs(RM_EPISODE_READY, id_robot=id_robot, id_episode=id_episode)
+    
     
     mainly_theta = 'gridth' in id_episode
     if mainly_theta:
@@ -33,11 +33,13 @@ def jobs_servo_field(context, data_central, id_agent, id_robot, id_episode,
     else:
         min_spacing = min_dist
     
+    extra_dep = context.get_resource(RM_EPISODE_READY, id_robot=id_robot, id_episode=id_episode)
     nmap = context.comp(create_navigation_map_from_episode,
                         data_central, id_robot, id_episode,
                         max_time=1000, max_num=100000,
                         min_dist=min_dist, min_th_dist=min_th_dist,
-                        min_spacing=min_spacing)
+                        min_spacing=min_spacing,
+                        extra_dep=[extra_dep])
 
     _processed = context.comp(process, nmap, id_robot)
     _processed = context.comp(compute_servo_action, _processed, servo_agent)
