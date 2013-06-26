@@ -1,45 +1,23 @@
+from .servo_reconstruct import reconstruct_servo_state
 from boot_navigation import RP_NAVIGATION_MAP, recipe_navigation_map1
 from boot_navigation.reports import _nmapobslist_to_rgb
 from contracts import contract
 from geometry import SE2, SE2_from_SE3, translation_from_SE2
 from quickapp import QuickApp
 from quickapp_boot import RM_EPISODE_READY
-from reprep import Report, scale
+from reprep import Report, scale, filter_colormap
 from reprep.plot_utils import turn_off_all_axes
 from rosstream2boot import (get_conftools_explogs,
     recipe_episodeready_by_convert2)
 from yc1304.campaign import CampaignCmd
 from yc1304.exps.exp_utils import iterate_context_explogs
-from yc1304.s00_videos.make_videos import MakeVideos2
-from yc1304.s00_videos.make_videos_servo import jobs_video_servo_multi
 import itertools
 import numpy as np
-from reprep.graphics.filter_colormap import filter_colormap
+import os
 
+__all__ = ['JBDSNavigationVisualization']
 
-__all__ = ['JBDSServoVisualization', 'JBDSNavigationVisualization']
-
-
-class JBDSServoVisualization(CampaignCmd, QuickApp): 
-    
-    """ Visualization of the servo logs for JBDS """
-    cmd = 'jbds-videos-servo'
-    
-    
-    def define_options(self, options):
-        pass
-    
-    def define_jobs_context(self, context):
-        logs = (set(self.get_explogs_by_tag('servo')) & 
-                set(self.get_explogs_by_tag('fieldsampler')))
-        assert len(logs) >= 4
-        
-        for c, id_explog in iterate_context_explogs(context, logs):
-            jobs_video_servo_multi(c, id_explog)
-    
-            c.subtask(MakeVideos2, id_explog=id_explog,
-                      add_job_prefix='videos', add_outdir='')
-            
+ 
             
 class JBDSNavigationVisualization(CampaignCmd, QuickApp): 
     
@@ -67,15 +45,27 @@ class JBDSNavigationVisualization(CampaignCmd, QuickApp):
             annotation_navigation = explog.get_annotations()['navigation'] 
             id_explog_map = annotation_navigation['map']
             id_robot = annotation_navigation['robot']
-            
+#             if not 'params' in annotation_navigation:
+#                 self.error('incomplete %r' % id_explog)
+#                 continue
+            navigation_params = annotation_navigation['params']
+                    
             nmap = c.get_resource(RP_NAVIGATION_MAP,
                                   id_episode=id_explog_map,
                                   id_robot=id_robot)
             
-            c.needs(RM_EPISODE_READY, id_robot=id_robot, id_episode=id_explog)
+            out_base = os.path.join(c.get_output_dir(), '%s' % id_explog)
+            c.comp_config(reconstruct_servo_state, id_explog, id_robot, nmap,
+                          out_base=out_base,
+                          navigation_params=navigation_params,
+                          job_id='reconstruct')        
+            
+            extra_dep = [c.get_resource(RM_EPISODE_READY, id_robot=id_robot,
+                                        id_episode=id_explog)]
             nmap_dist = c.comp_config(nmap_distances, data_central,
-                                            id_episode=id_explog,
-                                            id_robot=id_robot, nmap=nmap)
+                                                id_episode=id_explog,
+                                                id_robot=id_robot, nmap=nmap,
+                                                extra_dep=extra_dep)
             
             report_keys = dict(id_robot=id_robot, id_episode=id_explog,
                                id_episode_map=id_explog_map)
@@ -90,8 +80,8 @@ class JBDSNavigationVisualization(CampaignCmd, QuickApp):
              
             r = c.comp(report_trajectory, poses, poses0)
             c.add_report(r, 'trajectory', **report_keys)
-            
-            
+
+    
 @contract(returns='list(SE2)')
 def poses_from_episode(data_central, id_robot, id_episode):
     """ Returns a list of poses """

@@ -35,7 +35,10 @@ class FCPXServoMarkers(Block):
             self.info('first timestamp: %s' % timestamp)
             self.first_timestamp = timestamp
             
-        state = self.input.state.data
+        if isinstance(self.input.state, str):
+            state = self.input.state
+        else:
+            state = self.input.state.data
         assert state in [STATE_WAIT, STATE_SERVOING]
         
         if self.servo_state == STATE_WAIT and state == STATE_SERVOING:
