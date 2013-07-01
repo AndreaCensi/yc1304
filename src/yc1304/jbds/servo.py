@@ -3,7 +3,6 @@ from quickapp import QuickApp
 from rosstream2boot import get_conftools_explogs
 from yc1304.campaign import CampaignCmd
 from yc1304.exps.exp_utils import iterate_context_explogs
-from yc1304.s00_videos.make_videos import MakeVideos2
 import os
 
 __all__ = ['JBDSServoVisualization']
@@ -21,6 +20,7 @@ class JBDSServoVisualization(CampaignCmd, QuickApp):
     def define_jobs_context(self, context):
         logs = (set(self.get_explogs_by_tag('servo')) & 
                 set(self.get_explogs_by_tag('fieldsampler')))
+        
         assert len(logs) >= 4
         
         for c, id_explog in iterate_context_explogs(context, logs):
@@ -37,8 +37,8 @@ class JBDSServoVisualization(CampaignCmd, QuickApp):
             c.comp_config(reconstruct_servo_state_nomap,
                           id_explog, id_robot, out_base, goal_at=goal_at)
             
-            c.subtask(MakeVideos2, id_explog=id_explog,
-                      add_job_prefix='videos', add_outdir='')
+            # c.subtask(MakeVideos2, id_explog=id_explog,
+            #          add_job_prefix='videos', add_outdir='')
             
             
             

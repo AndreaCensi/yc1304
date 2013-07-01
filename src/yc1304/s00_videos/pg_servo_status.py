@@ -63,11 +63,12 @@ class ServoStatus(Block):
         else:
             raise ValueError(self.config.style)
         
-        self.plot_anim.plot('y', sensels, y, y_style)
         self.plot_anim.plot('y_goal', sensels, y_goal, y_goal_style)
+        self.plot_anim.plot('y', sensels, y, y_style)
         
         n = y.size
-        pylab.axis((-1, n, y_min - M, y_max + M))
+        border = n / 100.0
+        pylab.axis((-border, n - 1 + border, y_min - M, y_max + M))
         turn_off_all_axes(pylab)
     
         # state = self.input.state.data
@@ -149,6 +150,7 @@ class ServoError(Block):
             self.y_goals.append(self.y_goal)
     
         self.servo_state = state
+        self.timestamp = timestamp
         
     def get_relative_times(self):
         T = np.array(self.timestamps)
@@ -210,7 +212,9 @@ class ServoError(Block):
             if es.size > 0:
                 y_axis_set(pylab, -0.1, np.max(es) * 1.3)
 
-#        self.plot_anim.text('clock', 0.7 * T, 1.2, '%5.2f' % self.time_since_start)
+        # s = '%s %s' % (self.servo_state, self.timestamp)
+        # self.plot_anim.text('status', 0.7 * T, 1.2, s)
+        # self.plot_anim.text('clock', 0.7 * T, 1.2, '%5.2f' % self.time_since_start)
         self.plot_anim.plot('error', ts, es, 'k-')
         
         if es.size > 0:

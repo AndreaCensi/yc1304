@@ -2,13 +2,14 @@ from bootstrapping_olympics.configuration.master import get_conftools_robots
 from bootstrapping_olympics.misc.interaction import iterate_robot_observations
 from compmake.utils.describe import describe_type
 from procgraph.block_utils.iterator_generator import IteratorGenerator
-from procgraph.core.block import Block
-from procgraph.core.registrar_other import register_model_spec
-from procgraph.scripts.pgmain import pg
+from procgraph import Block
+from procgraph import register_model_spec
+from procgraph.scripts import pg
 from rosstream2boot.configuration import get_conftools_explogs
 from rosstream2boot.library.ros_robot import ROSRobot
 from yc1304.s00_videos.pg_fcpx_servo_markers import STATE_WAIT, STATE_SERVOING
 import numpy as np
+from contracts import contract
 
 
 def reconstruct_servo_state(id_explog, id_robot, nmap, out_base,
@@ -30,8 +31,7 @@ def reconstruct_servo_state(id_explog, id_robot, nmap, out_base,
             timestamp = obs.timestamp
             observations = obs.observations
             commands = obs.commands
-          
-          
+           
             if servo_state != STATE_SERVOING and np.linalg.norm(commands) == 0:
                 servo_state = STATE_WAIT
             else:
@@ -49,12 +49,14 @@ def reconstruct_servo_state(id_explog, id_robot, nmap, out_base,
     pg('read_reconstructed_data',
        config=dict(iterator=iterator, out_base=out_base))
 
+
 def reconstruct_servo_state_nomap(id_explog, id_robot, out_base, goal_at):
     """ reconstruct the servo state for navigation logs """
     explog = get_conftools_explogs().instance(id_explog)
     bag = explog.get_bagfile()
-    times = reconstruct(bag, topic='/youbot_safety/in_cmd_vel')
-    print times
+    # get a list of state transitions
+    transitions = reconstruct(bag, topic='/youbot_safety/in_cmd_vel')
+    print(transitions)
     
     robot = get_conftools_robots().instance(id_robot)
     orig_robot = robot.get_inner_components()[-1]    
@@ -66,6 +68,7 @@ def reconstruct_servo_state_nomap(id_explog, id_robot, out_base, goal_at):
     def read_data():
         goal = None
         t0 = None
+        servo_state = STATE_WAIT
         for obs in iterate_robot_observations(robot, sleep=0):
             timestamp = obs.timestamp
             if t0 is None:
@@ -78,12 +81,19 @@ def reconstruct_servo_state_nomap(id_explog, id_robot, out_base, goal_at):
                 
             commands = obs.commands
             
-            if np.linalg.norm(commands) == 0:
-                servo_state = STATE_WAIT
-            else:
-                servo_state = STATE_SERVOING
+            # if still have transitions
+            if transitions:
+                next_transition = transitions[0][0]
+                if timestamp > next_transition:
+                    servo_state = transitions[0][1]
+                    transitions.pop(0)
             
-            n = np.sum(commands != 0)
+#             if np.linalg.norm(commands) == 0:
+#                 servo_state = STATE_WAIT
+#             else:
+#                 servo_state = STATE_SERVOING
+#             
+#             n = np.sum(commands != 0)
             # print "%20s" % servo_state + "n: %5s " % n + ",".join('%+10.6f' % s for s in commands)
                             
             # goal = controller.get_current_goal()
@@ -156,7 +166,8 @@ class NavigationController():
         d_next = self.get_distance(y, self.nmap.get_observations_at(index_next))
         ratio = d_next / d_cur
         if False:
-            print('ratio: %1.4f <= %1.4f  d_next: %1.4f < %1.4f' % (ratio, self.ratio_threshold,
+            print('ratio: %1.4f <= %1.4f  d_next: %1.4f < %1.4f' % 
+                  (ratio, self.ratio_threshold,
                                                                 d_next, self.d_next_threshold))
         if (d_next < self.ratio_threshold * d_cur and d_next < self.d_next_threshold) or \
             d_next < self.d_next_threshold_alone:
@@ -176,10 +187,22 @@ class NavigationController():
         r = 50
         return self.nmap.get_closest_point_around(y, i, r, self.get_distance)
 
-     
+
+
+@contract(returns='list(tuple(float, str))')
 def reconstruct(bag, topic='/youbot_safety/in_cmd_vel'):
+    """ 
+        Returns a list of state transitions (time, state) for 
+        when servoing started or stopped.
+        
+        It looks for intervals in the command sequence.
+        
+        (For some runs I had forgotten to log this information originally.)
+    """
     import rosbag     
     t0 = None
+    cur_state = STATE_WAIT
+    transitions = []
     for topic, msg, t in rosbag.Bag(bag).read_messages(topics=[topic]):
         if t0 is None:
             t0 = t
@@ -187,10 +210,30 @@ def reconstruct(bag, topic='/youbot_safety/in_cmd_vel'):
         delta = (t - t0).to_sec()
         linear = msg.linear
         angular = msg.angular
+        
+        nonzero = np.linalg.norm([linear.x, linear.y, angular.z]) > 0
+        
         if delta > 1.2:
-            print '-' * 50 
-        print('delta %s %s %s %s %s %s %s' % (delta, linear.x, linear.y, linear.z, angular.x, angular.y, angular.z))
-        # print topic, msg, t
+            transition = True
+        else:
+            transition = False
+            
+        if transition:
+            print('-' * 50)
+        
+            if cur_state == STATE_WAIT and nonzero:
+                cur_state = STATE_SERVOING
+                transitions.append((t.to_sec(), cur_state))
+                print('new state: %s' % cur_state)
+            else:
+                cur_state = STATE_WAIT
+                transitions.append((t.to_sec(), cur_state))
+            
+                print('new state: %s' % cur_state)
+        print('%s delta %s %s %s %s %s %s %s' % 
+              (cur_state, delta, linear.x, linear.y, linear.z,
+                angular.x, angular.y, angular.z))
         t0 = t 
         
+    return transitions
     

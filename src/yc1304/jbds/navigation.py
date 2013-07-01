@@ -72,11 +72,17 @@ class JBDSNavigationVisualization(CampaignCmd, QuickApp):
             r = c.comp(report_nmap_distances, nmap, nmap_dist)
             c.add_report(r, 'nmap_distances', **report_keys)
             
+            ep = c.get_resource(RM_EPISODE_READY,
+                                id_episode=id_explog, id_robot=id_robot)
             poses = c.comp_config(poses_from_episode, data_central=data_central,
-                                  id_robot=id_robot, id_episode=id_explog)
+                                  id_robot=id_robot, id_episode=id_explog,
+                                  extra_dep=[ep])
             
+            ep0 = c.get_resource(RM_EPISODE_READY,
+                                 id_episode=id_explog_map, id_robot=id_robot)
             poses0 = c.comp_config(poses_from_episode, data_central=data_central,
-                                  id_robot=id_robot, id_episode=id_explog_map)
+                                  id_robot=id_robot, id_episode=id_explog_map,
+                                  extra_dep=[ep0])
              
             r = c.comp(report_trajectory, poses, poses0)
             c.add_report(r, 'trajectory', **report_keys)

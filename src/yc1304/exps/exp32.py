@@ -4,7 +4,7 @@ from quickapp_boot import (recipe_agentlearn_by_parallel_concurrent_reps,
     jobs_publish_learning_agents_robots)
 from rosstream2boot import recipe_episodeready_by_convert2
 from yc1304.campaign import CampaignCmd
-from yc1304.exps import good_logs_hokuyos, good_logs_cf, good_logs_cam_eye
+from yc1304.exps import good_logs_cam_eye
  
 __all__ = ['Exp32']
 

@@ -6,7 +6,9 @@ from rosstream2boot import recipe_episodeready_by_convert2
 from yc1304.campaign import CampaignCmd
 from yc1304.exps import good_logs_hokuyos, good_logs_cf
  
+ 
 __all__ = ['Exp27']
+
 
 class Exp27(CampaignCmd, QuickApp):  # @UndefinedVariable
     """ Trying camera  """

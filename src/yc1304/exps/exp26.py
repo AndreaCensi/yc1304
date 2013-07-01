@@ -6,10 +6,12 @@ from rosstream2boot import recipe_episodeready_by_convert2
 from yc1304.campaign import CampaignCmd
 from yc1304.exps import good_logs_hokuyos, good_logs_cf
  
+ 
 __all__ = ['Exp26']
 
+
 class Exp26(CampaignCmd, QuickApp):  # @UndefinedVariable
-    """ Changing the error function to "sim"  """
+    """ Changing the error function to "sim"  """ 
      
     cmd = 'exp26'
     
