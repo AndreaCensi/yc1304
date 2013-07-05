@@ -1,9 +1,8 @@
 from boot_reports.latex.jbds.jobs import job_tex_report
 from conf_tools import GlobalConfig
 from quickapp import iterate_context_names, QuickApp
-from quickapp_boot import recipe_agentlearn_by_parallel, recipe_agent_servo
-from quickapp_boot.jobs.jobs_simulation import (
-    recipe_episodeready_by_simulation_tranches)
+from quickapp_boot import (recipe_episodeready_by_simulation_tranches,
+    recipe_agentlearn_by_parallel, recipe_agent_servo)
 from rosstream2boot import recipe_episodeready_by_convert2
 from yc1304.campaign import CampaignCmd
 from yc1304.exps.exp40sim import episode_id_exploration

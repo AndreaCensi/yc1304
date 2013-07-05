@@ -218,8 +218,8 @@ def report_nmap_distances(nmap, nmap_distances):
             
     return r
     
-    
-@contract(returns='list( tuple(float, array[M]) )')                
+# not sure why
+# @contract(returns='list( tuple(float, array[M]) )')                
 def nmap_distances(data_central, id_episode, id_robot, nmap):
     """ 
         Computes the distance of each observation in the log

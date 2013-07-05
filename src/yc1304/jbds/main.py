@@ -3,6 +3,7 @@ from yc1304.campaign import CampaignCmd
 from .servo import JBDSServoVisualization
 from .navigation import JBDSNavigationVisualization
 from .estimation import JBDSEstimation
+from .estimation_fraction import JBDSEstimationFraction
 
 __all__ = ['JBDS']
 
@@ -15,7 +16,9 @@ class JBDS(CampaignCmd, QuickApp):  # @UndefinedVariable
     
     def define_jobs_context(self, context):
         # these were the ones with defined launch files
-        context.subtask(JBDSEstimation, separate_resource_manager=True)
-        context.subtask(JBDSNavigationVisualization, separate_resource_manager=True)
-        context.subtask(JBDSServoVisualization, separate_resource_manager=True)
+        separate = dict(separate_resource_manager=True, separate_report_manager=True)
+        context.subtask(JBDSEstimation, **separate)
+        context.subtask(JBDSEstimationFraction, **separate)
+        context.subtask(JBDSNavigationVisualization, **separate)
+        context.subtask(JBDSServoVisualization, **separate)
         
