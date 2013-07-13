@@ -1,0 +1,6 @@
+
+- id: exp42_stats
+  desc: Some quick tests
+  code:
+  - boot_agents.EstStatsTh
+  - beta: 1 # XXX

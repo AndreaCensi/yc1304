@@ -49,7 +49,7 @@ class JBDSEstimationFraction(CampaignCmd, QuickApp):
     
     for robot, agent in JBDSEstimation.combs_servo_xy:
         if not robot in robots:
-            print('skipping %s' % robot)
+            # print('skipping %s' % robot)
             continue
         
         for p in patterns:

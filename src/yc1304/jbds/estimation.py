@@ -190,7 +190,7 @@ def jobs_learn_simulations(context, data_central, simulated_robots, num_sim_epis
     for id_robot in simulated_robots:
         # recipe_episodeready_by_simulation(context, data_central, id_robot,
         #                                   explorer, max_episode_len)
-
+                                               
         recipe_episodeready_by_simulation_tranches(context, data_central, id_robot,
                                                    explorer, max_episode_len,
                                                    sim_episodes, episodes_per_tranche=50)

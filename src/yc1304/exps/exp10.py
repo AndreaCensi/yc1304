@@ -1,7 +1,5 @@
 from . import CampaignCmd
 from quickapp import QuickApp
-from quickapp_boot import recipe_agentlearn_by_parallel, jobs_publish_learning
-from rosstream2boot import recipe_episodeready_by_convert2
 from yc1304.exps.exp_utils import jobs_learnp_and_servo
   
 

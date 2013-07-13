@@ -17,7 +17,7 @@ class Exp15(CampaignCmd, QuickApp):
     
     agents = ['exp15_bdser_s1']
     
-    warnings.warn('only one log')
+    # warnings.warn('only one log')
          
     explogs_learn = ['logger_2011-07-27-11-03-04']
     explogs_test = []

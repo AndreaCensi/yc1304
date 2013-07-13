@@ -5,7 +5,7 @@ from quickapp_boot import (jobs_publish_learning_agents_robots,
 from rosstream2boot import recipe_episodeready_by_convert2
 from yc1304.campaign import CampaignCmd
 from yc1304.exps import good_logs_cf
-from diffeo2dds_learn.programs.devel.save_video import video_visualize_diffeo_stream1_robot
+
 from quickapp.app_utils.subcontexts import iterate_context_names
 import os
  
@@ -46,7 +46,8 @@ class Exp23(CampaignCmd, QuickApp):  # @UndefinedVariable
                                                 Exp23.explogs_learn,
                                                 only_agents=['stats2'])
         
-
+        from diffeo2dds_learn.programs.devel.save_video import video_visualize_diffeo_stream1_robot
+        
         for c, id_robot in iterate_context_names(context, Exp23.robots):
             out = os.path.join(context.get_output_dir(),
                                'videos', '%s-diffeo_stream1.mp4' % id_robot)

@@ -16,7 +16,7 @@ class Exp14(CampaignCmd, QuickApp):
     robots = ['exp14_uA_b1_xy_cf_strip']
     agents = ['exp14_bdser_s1', 'exp14_bdser_s2', 'exp14_bdser_s3']
     
-    warnings.warn('only one log')
+    # warnings.warn('only one log')
          
     explogs_learn = good_logs_cf
     explogs_test = ['unicornA_tran1_2013-04-12-23-34-08']

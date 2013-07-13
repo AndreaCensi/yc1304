@@ -81,23 +81,24 @@ def job_report_learn(context, combs):
         
         s = 'bds-%s-' % basename_from_key(dict(id_agent=id_agent, id_robot=id_robot))
         add = lambda n, nid: f.sub(rp.add_child_from_other(n, s + nid, **key), caption=nid)
+        addif = lambda n, nid: f.sub(rp.add_child_from_other(n, s + nid, strict=False, **key), caption=nid)
         
         add('estimator/model/M/slices/0/normalized/png', 'M0')
         add('estimator/model/M/slices/1/normalized/png', 'M1')
-        add('estimator/model/M/slices/2/normalized/png', 'M2')
+        addif('estimator/model/M/slices/2/normalized/png', 'M2')
         add('estimator/model/N/slices/0/figure1/plot_scaled', 'N0')
         add('estimator/model/N/slices/1/figure1/plot_scaled', 'N1')
-        add('estimator/model/N/slices/2/figure1/plot_scaled', 'N2')
+        addif('estimator/model/N/slices/2/figure1/plot_scaled', 'N2')
         
         f = rp.figure('%s-%s-learn' % (id_robot, id_agent), cols=8,
                       caption='%s, %s' % (id_robot, id_agent))
         
         add('estimator/tensors/T/slices/0/normalized/png', 'T0')
         add('estimator/tensors/T/slices/1/normalized/png', 'T1')
-        add('estimator/tensors/T/slices/2/normalized/png', 'T2')
+        addif('estimator/tensors/T/slices/2/normalized/png', 'T2')
         add('estimator/tensors/U/slices/0/figure1/plot_scaled', 'U0')
         add('estimator/tensors/U/slices/1/figure1/plot_scaled', 'U1')
-        add('estimator/tensors/U/slices/2/figure1/plot_scaled', 'U2')
+        addif('estimator/tensors/U/slices/2/figure1/plot_scaled', 'U2')
                 
         add('estimator/tensors/P/posneg', 'P')
         
