@@ -4,3 +4,10 @@
   code:
   - boot_agents.EstStatsTh
   - beta: 1 # XXX
+
+- id: exp42_cond30
+  desc: "Estimates the conditional distribution"
+  code:
+  - boot_agents.EstConditionalDistribution
+  - index: 30
+    beta: 1

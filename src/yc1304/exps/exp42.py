@@ -1,15 +1,15 @@
 from .exp40sim import episode_id_exploration
-from conf_tools.master import GlobalConfig
+from conf_tools import GlobalConfig
 from quickapp import QuickApp
-from quickapp_boot import (jobs_publish_learning_agents_robots,
-    recipe_agentlearn_by_parallel)
-from quickapp_boot.jobs.jobs_simulation import (
-    recipe_episodeready_by_simulation_tranches)
+from quickapp_boot import (recipe_episodeready_by_simulation_tranches,
+    jobs_publish_learning_agents_robots, recipe_agentlearn_by_parallel)
 from rosstream2boot import recipe_episodeready_by_convert2
 from yc1304.campaign import CampaignCmd
 from yc1304.exps import good_logs_hokuyos
  
+ 
 __all__ = ['Exp42']
+
 
 class Exp42(CampaignCmd, QuickApp): 
      
@@ -32,6 +32,7 @@ class Exp42(CampaignCmd, QuickApp):
     agents = [
       'bdse_e1_ss',
       'exp42_stats',
+      'exp42_cond30',
       'stats1'
     ]
     
