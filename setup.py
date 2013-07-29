@@ -27,7 +27,16 @@ setup(name='yc1304',
         # 'Topic :: Software Development :: Documentation',
         # 'Topic :: Software Development :: Testing'
       ],
-
+      
+      install_requires=[
+        'ConfTools>=1.0,<2',
+        'PyContracts>=1.2,<2',
+        'PyYAML',
+        'python-cjson',
+        'PyGeometry',
+        'quickapp',
+        'BootOlympics'
+      ],
       entry_points={
      'console_scripts': [
        'yc = yc1304.campaign:main',
@@ -38,7 +47,6 @@ setup(name='yc1304',
       # download_url='http://github.com/AndreaCensi/boot_servo_demo/tarball/%s' % version,
       package_dir={'': 'src'},
       packages=find_packages('src'),
-      install_requires=[],
       tests_require=['nose']
 )
 
