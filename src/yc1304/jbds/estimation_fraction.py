@@ -61,7 +61,7 @@ class JBDSEstimationFraction(CampaignCmd, QuickApp):
 #      
         
     grids_xy = JBDSEstimation.grids_xy
-    explogs_learn = JBDSEstimation.explogs_learn
+    unicorn_explogs_learn = JBDSEstimation.unicorn_explogs_learn
     
 
     def define_options(self, options):
@@ -74,7 +74,7 @@ class JBDSEstimationFraction(CampaignCmd, QuickApp):
         
         jobs_learn_real(context, data_central,
                         real_robots=JBDSEstimationFraction.robots,
-                        explogs_learn=JBDSEstimationFraction.explogs_learn)
+                        explogs_learn=JBDSEstimationFraction.unicorn_explogs_learn)
          
         r = job_report_learn(context, JBDSEstimationFraction.combs_servo_xy)
         context.add_report(r, 'learn_global')
