@@ -6,6 +6,8 @@
     cmd_adapter: landroid_tracks
     sync:
       policy: obs-first-topic
+    use_odom_topic: False
+    use_tf: False
 
 
 - id: ldr_tt_h_sane
@@ -16,3 +18,5 @@
     cmd_adapter: landroid_tracks
     sync:
       policy: obs-first-topic
+    use_odom_topic: False
+    use_tf: False

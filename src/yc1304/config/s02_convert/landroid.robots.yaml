@@ -1,6 +1,6 @@
 
 - id: 'ldr_xt_h_sane'
-  desc: 'Landroid with x,theta commands'
+  desc: 'Landroid with x,theta commands, excluding occlusions'
   code:
   - bootstrapping_olympics.library.robots.EquivRobot
   - robot: 
@@ -9,6 +9,25 @@
     cmd_nuisance: 'swap'
     obs_nuisance: 'landroid_hokuyo_sane'
 
+- id: 'ldr_xt_h'
+  desc: 'Landroid with x,theta commands'
+  code:
+  - bootstrapping_olympics.library.robots.EquivRobot
+  - robot: 
+    - rosstream2boot.library.ROSRobot.from_yaml
+    - adapter: ldr_tt_h
+    cmd_nuisance: 'swap'
+    obs_nuisance: []
+
+- id: 'ldr_tt_h'
+  desc: 'Landroid with tracks commands'
+  code:
+  - bootstrapping_olympics.library.robots.EquivRobot
+  - robot: 
+    - rosstream2boot.library.ROSRobot.from_yaml
+    - adapter: ldr_tt_h
+    cmd_nuisance: []
+    obs_nuisance: []
 
 
 - id: 'ldr21'

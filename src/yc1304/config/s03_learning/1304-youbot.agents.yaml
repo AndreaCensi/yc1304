@@ -199,6 +199,17 @@
 #  sr   BDSEServoRobust   gain 0.1
 #  srl   BDSEServoRobustL1 gain 0.1
 
+- id: "bdse_e0_ss"
+  desc: "BDSE agent, servo simple, no r-cond"
+  code:
+  - boot_agents.BDSEAgent
+  - explorer: expsw1
+    estimator: 
+    - boot_agents.BDSEEstimator
+    - rcond: 0
+    servo: 
+    - boot_agents.BDSEServoSimple
+    - gain: 0.1
 
 - id: "bdse_e1_ss"
   desc: "BDSE agent, servo simple"
@@ -389,7 +400,7 @@
   code:
   - boot_agents.BDSEAgentRobust
   - explorer: expsw1
-    estimator: *er2
+    estimator: *er3
     importance: *i1
     servo: *srl
 
@@ -398,7 +409,7 @@
   code:
   - boot_agents.BDSEAgentRobust
   - explorer: expsw1
-    estimator: *er2
+    estimator: *er3
     importance: *i2
     servo: *srl
 
@@ -407,7 +418,7 @@
   code:
   - boot_agents.BDSEAgentRobust
   - explorer: expsw1
-    estimator: *er2
+    estimator: *er3
     importance: *i2
     servo: *sr
 
@@ -416,7 +427,7 @@
   code:
   - boot_agents.BDSEAgentRobust
   - explorer: expsw1
-    estimator: *er2
+    estimator: *er3
     importance: *i2
     servo: *ss
 
