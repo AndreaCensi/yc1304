@@ -1,8 +1,7 @@
+from .estimation import JBDSEstimation, jobs_learn_real, jobs_servo
+from .estimation_summaries import job_report_learn, jobs_report_summary_servo_xy
 from quickapp import QuickApp
 from yc1304.campaign import CampaignCmd
-from yc1304.jbds.estimation import JBDSEstimation, jobs_learn_real, jobs_servo 
-from yc1304.jbds.estimation_summaries import (job_report_learn,
-    jobs_report_summary_servo_xy)
 
 
 __all__ = ['JBDSEstimationFraction']
@@ -14,37 +13,36 @@ class JBDSEstimationFraction(CampaignCmd, QuickApp):
     cmd = 'jbds-estimation-fraction'
     
     patterns = [
+#         "%s_f00001",
+#         "%s_f00002",
+        "%s_f00003",
+        "%s_f00004",
+        "%s_f00005",
+        "%s_f00007",
+        "%s_f0001",
+        "%s_f0002",
+        "%s_f0003",
         "%s_f001",
         "%s_f002",
         "%s_f003",
+        "%s_f0031",
+        "%s_f0032",
+        "%s_f0033",
+        "%s_f0034",
+        "%s_f0035",
+        "%s_f0036",
+        "%s_f0037",
+        "%s_f0038",
+        "%s_f0039",
         "%s_f004",
         "%s_f005",
-#         "%s_f006",
-#         "%s_f007",
-#         "%s_f008",
-#         "%s_f009",
         "%s_f010",
-#         "%s_f020",
-#         "%s_f030",
-#         "%s_f040",
-        "%s_f050",
-#         "%s_f060",
-#         "%s_f070",
-#         "%s_f080",
-#         "%s_f090",
         "%s_f100",
-#         "%s_f200",
-#         "%s_f300",
-#         "%s_f400",
         "%s_f500",
-#         "%s_f600",
-#         "%s_f700",
-#         "%s_f800",
-#         "%s_f900",
         "%s_f990"          
     ] 
     
-    robots = ['unicornA_tr1_hlhr_sane_s4', 'unicornA_tr1_fs1']
+    robots = ['unicornA_tr1_hlhr_sane_s4']  # , 'unicornA_tr1_fs1']
     combs_servo_xy = []
     
     for robot, agent in JBDSEstimation.combs_servo_xy:

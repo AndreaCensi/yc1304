@@ -4,7 +4,7 @@ from quickapp.report_manager import basename_from_key
 from quickapp_boot import RM_AGENT_LEARN
 from reprep import Report
 from reprep.report_utils import StoreResults
-from reprep_quickapp import ReportProxy
+from reprep_quickapp import ReportProxy, get_node
 
         
 def report_summary_servo_theta(context, combinations, explogs_test):
@@ -171,9 +171,5 @@ def jobs_report_summary_servo_xy(context, combinations, explogs_test):
     r = context.comp(report_distances2_global, combinations,
                      map(str, explogs_test), parts, interps)
     context.add_report(r, 'distances2_global')
- 
-
-@contract(url=str, r=Report, returns=Report)
-def get_node(url, r):
-    return r.resolve_url(url)
+  
 

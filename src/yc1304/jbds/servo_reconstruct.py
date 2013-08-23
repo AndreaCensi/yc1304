@@ -1,15 +1,12 @@
-from bootstrapping_olympics.configuration.master import get_conftools_robots
+from bootstrapping_olympics import get_conftools_robots
 from bootstrapping_olympics.misc.interaction import iterate_robot_observations
-from compmake.utils.describe import describe_type
-from procgraph.block_utils.iterator_generator import IteratorGenerator
-from procgraph import Block
-from procgraph import register_model_spec
-from procgraph.scripts import pg
-from rosstream2boot.configuration import get_conftools_explogs
-from rosstream2boot.library.ros_robot import ROSRobot
+from contracts import contract, describe_type
+from procgraph import Block, pg, register_model_spec
+from procgraph.block_utils import IteratorGenerator
+from rosstream2boot import get_conftools_explogs
+from rosstream2boot.library import ROSRobot
 from yc1304.s00_videos.pg_fcpx_servo_markers import STATE_WAIT, STATE_SERVOING
 import numpy as np
-from contracts import contract
 
 
 def reconstruct_servo_state(id_explog, id_robot, nmap, out_base,

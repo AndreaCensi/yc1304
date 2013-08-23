@@ -16,6 +16,7 @@ from yc1304.exps.exp40sim import episode_id_exploration
 from yc1304.s10_servo_field import jobs_servo_field
 import numpy as np
 import os
+from yc1304.jbds.video_learning import jobs_learn_real_videos
 
 __all__ = ['JBDSEstimation']
 
@@ -179,6 +180,11 @@ class JBDSEstimation(CampaignCmd, QuickApp):
         jobs_learn_real(context, data_central,
                         real_robots=JBDSEstimation.unicorn_robots,
                         explogs_learn=JBDSEstimation.unicorn_explogs_learn)
+ 
+        jobs_learn_real_videos(context=context,
+                               data_central=data_central,
+                               combinations=JBDSEstimation.combs_servo_xy,
+                               episodes=JBDSEstimation.unicorn_explogs_learn)
 
         # landroid
 
@@ -209,15 +215,16 @@ class JBDSEstimation(CampaignCmd, QuickApp):
                    explogs_test=JBDSEstimation.grids)
         
         jobs_report_summary_servo_xy(context,
-                           combinations=JBDSEstimation.combs_servo,
-                           explogs_test=JBDSEstimation.grids_xy)
+                                     combinations=JBDSEstimation.combs_servo,
+                                     explogs_test=JBDSEstimation.grids_xy)
 
         r = report_summary_servo_theta(context,
-                                   combinations=JBDSEstimation.combs_servo_th,
-                                   explogs_test=JBDSEstimation.grids_th)
+                                       combinations=JBDSEstimation.combs_servo_th,
+                                       explogs_test=JBDSEstimation.grids_th)
                                     
         context.add_report(r, 'servo_theta_global')
 
+        
         
 @contract(context=CompmakeContext, data_central=DataCentral)
 def jobs_learn_real(context, data_central, real_robots, explogs_learn):
