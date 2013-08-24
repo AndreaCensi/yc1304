@@ -17,7 +17,7 @@ def jobs_learn_real_video(context, data_central, id_agent, id_robot, episodes, m
     procgraph_code = [model, {}]
     plugin = ProcgraphBridge(procgraph_code,
                              procgraph_extra_modules=['procgraph_bdse'],
-                             suffix='v')
+                             suffix=model)
     
     deps = [context.get_resource(RM_EPISODE_READY, id_robot=id_robot, id_episode=e) 
             for e in episodes]

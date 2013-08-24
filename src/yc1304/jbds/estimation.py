@@ -8,15 +8,16 @@ from conf_tools import GlobalConfig
 from contracts import contract
 from quickapp import CompmakeContext, iterate_context_names, QuickApp
 from quickapp_boot import (recipe_episodeready_by_simulation_tranches,
-    recipe_agentlearn_by_parallel, recipe_agent_servo)
+    recipe_agentlearn_by_parallel, recipe_agent_servo, RM_AGENT_LEARN)
 from rosstream2boot import (get_conftools_explogs,
     recipe_episodeready_by_convert2)
 from yc1304.campaign import CampaignCmd
 from yc1304.exps.exp40sim import episode_id_exploration
+from yc1304.jbds.video_learning import jobs_learn_real_videos
 from yc1304.s10_servo_field import jobs_servo_field
 import numpy as np
 import os
-from yc1304.jbds.video_learning import jobs_learn_real_videos
+
 
 __all__ = ['JBDSEstimation']
 
@@ -249,8 +250,10 @@ def jobs_prediction(context, data_central, combinations):
         cdelta = context.child('int%d' % (i + 1), extra_report_keys=dict(mean_interval=interval))
          
         for c, id_robot, id_agent in iterate_context_combinations(cdelta, combinations):
+            learn = context.get_resource(RM_AGENT_LEARN, id_agent=id_agent, id_robot=id_robot)
             stats = c.comp_config(task_predict, data_central, id_agent, id_robot,
-                                  from_start_command=from_start_command, interval_min=interval_min, interval_max=interval_max)
+                                  from_start_command=from_start_command, interval_min=interval_min, interval_max=interval_max,
+                                  extra_dep=[learn])
             r = c.comp(report_task_predict, stats)
             c.add_report(r, 'task_predict', id_agent=id_agent, id_robot=id_robot)
 
