@@ -136,6 +136,29 @@ class JBDSEstimation(CampaignCmd, QuickApp):
     ]
     
     combs_servo = list(set(combs_servo_xy + combs_servo_th))
+
+    # sorry, in a hurry -- should be comb_estimation
+    combs_video_learn = [
+         ('unicornA_tr1_hl_sane_s4', 'bdser_er4_i2_sr'),
+         ('unicornA_tw1_hl_sane_s4', 'bdser_er4_i2_sr'),
+         ('unicornA_tr1_hl_sane_s4', 'bdser_er4_i2_srl'),
+         ('unicornA_tw1_hl_sane_s4', 'bdser_er4_i2_srl'),
+         ('unicornA_tr1_hlhr_sane_s4', 'bdser_er4_i2_sr'),
+         ('unicornA_tr1_hlhr_sane_s4', 'bdser_er4_i2_srl'),
+         ('unicornA_tw1_hlhr_sane_s4', 'bdser_er4_i2_sr'),
+         ('unicornA_tw1_hlhr_sane_s4', 'bdser_er4_i2_srl'),
+         ('unicornA_tr1_cf_strip', 'bdser_e1_i2_ss'),
+         ('unicornA_tr1_cf_strip', 'bdser_e1_i2_slt'),
+         ('unicornA_tr1_fs1', 'bdse_e1_ss'),
+         ('unicornA_tr1_fs1', 'bdser_er1_i1_ss'),
+         ('unicornA_tr1_fs1', 'bdser_er1_i1_srl'),
+         ('unicornA_tw1_cf_strip', 'bdser_e1_i2_ss'),
+         ('unicornA_tw1_cf_strip', 'bdser_e1_i2_slt'),
+         ('unicornA_tw1_fs1', 'bdse_e1_ss'),
+         ('unicornA_tw1_fs1', 'bdser_er1_i1_ss'),
+         ('unicornA_tw1_fs1', 'bdser_er1_i1_srl'),
+    ]
+
     
     class ExplogsTest():
         def __init__(self, id_episode, params={}):
@@ -184,7 +207,8 @@ class JBDSEstimation(CampaignCmd, QuickApp):
  
         jobs_learn_real_videos(context=context,
                                data_central=data_central,
-                               combinations=JBDSEstimation.combs_servo_xy,
+                                combinations=JBDSEstimation.combs_video_learn,
+                               # combinations=JBDSEstimation.combs_servo_xy,
                                episodes=JBDSEstimation.unicorn_explogs_learn)
 
         # landroid
