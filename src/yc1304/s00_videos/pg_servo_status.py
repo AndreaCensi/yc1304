@@ -4,8 +4,8 @@ from procgraph_mpl import PlotGeneric
 from contracts import contract
 from reprep.plot_utils.spines import turn_off_all_axes
 from procgraph_mpl.plot_anim import PlotAnim
-from procgraph.core.registrar_other import simple_block
-from procgraph_images.solid import solid
+from procgraph import simple_block
+from procgraph_images import solid
 from reprep.plot_utils import x_axis_set, y_axis_set
 
 
