@@ -1,4 +1,4 @@
-from conf_tools.master import GlobalConfig
+from conf_tools import GlobalConfig
 from procgraph import pg
 from quickapp import QuickApp
 from rosstream2boot import ExpLogFromYaml, get_rs2b_config

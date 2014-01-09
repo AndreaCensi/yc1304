@@ -1,7 +1,7 @@
 from conf_tools.utils import locate_files
-from procgraph.utils import (friendly_path, indent, system_cmd_result,
-    CmdException)
+from procgraph.utils import friendly_path, indent
 from procgraph_mplayer import pg_video_convert, pg_video_info
+from system_cmd import system_cmd_result, CmdException
 import os
 
 
