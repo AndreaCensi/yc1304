@@ -1,11 +1,13 @@
-from .estimation_summaries import (job_report_learn, iterate_context_combinations,
-    jobs_report_summary_servo_xy, report_summary_servo_theta)
+import os
+
+from contracts import contract
+
 from boot_reports.latex.jbds import job_tex_report
 from bootstrapping_olympics.programs.manager import DataCentral
 from bootstrapping_olympics.programs.manager.meat.predict import (
     report_task_predict, task_predict)
 from conf_tools import GlobalConfig
-from contracts import contract
+import numpy as np
 from quickapp import CompmakeContext, iterate_context_names, QuickApp
 from quickapp_boot import (recipe_episodeready_by_simulation_tranches,
     recipe_agentlearn_by_parallel, recipe_agent_servo, RM_AGENT_LEARN)
@@ -15,8 +17,9 @@ from yc1304.campaign import CampaignCmd
 from yc1304.exps.exp40sim import episode_id_exploration
 from yc1304.jbds.video_learning import jobs_learn_real_videos
 from yc1304.s10_servo_field import jobs_servo_field
-import numpy as np
-import os
+
+from .estimation_summaries import (job_report_learn, iterate_context_combinations,
+    jobs_report_summary_servo_xy, report_summary_servo_theta)
 
 
 __all__ = ['JBDSEstimation']
