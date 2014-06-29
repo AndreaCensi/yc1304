@@ -1,7 +1,10 @@
-from bootstrapping_olympics import (RepresentationNuisance, check_streamels_2D,
-    check_streamels_range, NuisanceNotInvertible, make_streamels_1D_float)
 from contracts import contract
+
+from bootstrapping_olympics import (RepresentationNuisance,
+     NuisanceNotInvertible)
 import numpy as np
+from streamels import check_streamels_range, make_streamels_1D_float, check_streamels_2D
+
 
 __all__ = ['VertAverage', 'VertAverageFraction']
 

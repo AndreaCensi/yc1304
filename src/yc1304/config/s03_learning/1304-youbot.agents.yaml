@@ -206,7 +206,7 @@
   - explorer: expsw1
     estimator: 
     - boot_agents.BDSEEstimator
-    - rcond: 0
+    - rcond: 0.00000001
     servo: 
     - boot_agents.BDSEServoSimple
     - gain: 0.1
