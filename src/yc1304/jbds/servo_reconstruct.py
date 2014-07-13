@@ -197,7 +197,7 @@ def reconstruct(bag, topic='/youbot_safety/in_cmd_vel'):
         
         (For some runs I had forgotten to log this information originally.)
     """
-    import rosbag     
+    import rosbag  # @UnresolvedImport     
     t0 = None
     cur_state = STATE_WAIT
     transitions = []
