@@ -11,7 +11,7 @@ long_description = ""
 
 setup(name='yc1304',
       author="Andrea Censi",
-      author_email="andrea@cds.caltech.edu",
+      author_email="censi@mit.edu",
       url='http://github.com/AndreaCensi/boot_servo_demo',
       
       description=description,
