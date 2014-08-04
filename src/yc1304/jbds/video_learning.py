@@ -1,5 +1,5 @@
 from bootstrapping_olympics.programs.manager.meat.log_learn import learn_log
-from procgraph_boot.procgraph_bridge import ProcgraphBridge
+from procgraph_boot.old_procgraph_bridge import ProcgraphBridge
 from quickapp_boot import RM_EPISODE_READY
 
 

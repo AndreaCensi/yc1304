@@ -1,6 +1,6 @@
 from . import CampaignCmd
 from boot_agents.bdse.agent.servo import myexp, BDSEServoLongTerm
-from bootstrapping_olympics.programs.manager import load_agent_state
+from bootstrapping_olympics.programs.manager.meat import load_agent_state
 from quickapp import QuickApp
 from reprep import Report
 from yc1304.exps import good_logs_cf
@@ -79,7 +79,7 @@ class Exp13(CampaignCmd, QuickApp):
 
 def report_prediction2(data_central, id_agent, id_robot, exp=myexp): 
     set_boot_config(data_central.get_bo_config())
-    agent, state = load_agent_state(data_central, id_agent, id_robot,
+    agent, state = load_agent_state_imp(data_central, id_agent, id_robot,
                                     reset_state=False, raise_if_no_state=True)
     model = agent.estimator.get_model()
     warnings.warn('does not work anymore')
@@ -90,7 +90,7 @@ def report_prediction2(data_central, id_agent, id_robot, exp=myexp):
     
 def report_prediction(data_central, id_agent, id_robot, exp=myexp): 
     set_boot_config(data_central.get_bo_config())
-    agent, state = load_agent_state(data_central, id_agent, id_robot,
+    agent, state = load_agent_state_imp(data_central, id_agent, id_robot,
                                     reset_state=False, raise_if_no_state=True)
     
     r = Report('report-pred')
