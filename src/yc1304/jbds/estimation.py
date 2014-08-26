@@ -3,9 +3,6 @@ import os
 from contracts import contract
 
 from boot_reports.latex.jbds import job_tex_report
-from bootstrapping_olympics.programs.manager import DataCentral
-from bootstrapping_olympics.programs.manager.meat.predict import (
-    report_task_predict, task_predict)
 from conf_tools import GlobalConfig
 import numpy as np
 from quickapp import CompmakeContext, iterate_context_names, QuickApp
@@ -20,6 +17,8 @@ from yc1304.s10_servo_field import jobs_servo_field
 
 from .estimation_summaries import (job_report_learn, iterate_context_combinations,
     jobs_report_summary_servo_xy, report_summary_servo_theta)
+from boot_manager.logs.data_central import DataCentral
+from boot_manager.meat.predict import task_predict, report_task_predict
 
 
 __all__ = ['JBDSEstimation']

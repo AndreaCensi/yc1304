@@ -3,7 +3,7 @@ from .compute_actions import (compute_servo_action, process_compute_distances,
 from .reports import (report_distances, report_servo1, report_servo_details,
     report_raw_display)
 from boot_navigation import create_navigation_map_from_episode
-from bootstrapping_olympics.programs.manager import DataCentral
+from boot_manager import DataCentral
 from contracts import contract
 from quickapp import CompmakeContext
 from quickapp_boot import (iterate_context_agents_and_episodes, RM_EPISODE_READY,

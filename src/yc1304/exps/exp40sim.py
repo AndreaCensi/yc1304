@@ -1,13 +1,8 @@
 from . import CampaignCmd
 from boot_reports.latex.jbds.jobs import job_tex_report
-from bootstrapping_olympics.programs.manager.batch import default_expl_videos
-from bootstrapping_olympics.programs.manager.meat.simulate import (
-    simulate_agent_robot)
 from conf_tools import GlobalConfig
 from contracts import contract
-from quickapp import QuickApp
-from quickapp.app_utils.subcontexts import (iterate_context_names,
-    iterate_context_names_pair)
+from quickapp import QuickApp, iterate_context_names_pair
 from quickapp_boot.jobs.jobs_publish import jobs_publish_learning_agents_robots
 from quickapp_boot.jobs.jobs_simulation import recipe_episodeready_by_simulation
 from quickapp_boot.recipes.recipes_learning_parallel import (

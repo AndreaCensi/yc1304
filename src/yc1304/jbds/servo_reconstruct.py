@@ -1,7 +1,6 @@
 from contracts import contract, describe_type
 
 from bootstrapping_olympics import get_conftools_robots
-from bootstrapping_olympics.misc.interaction import iterate_robot_observations
 import numpy as np
 from procgraph import Block, pg, register_model_spec
 from procgraph.block_utils import IteratorGenerator

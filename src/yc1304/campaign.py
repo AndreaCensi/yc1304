@@ -1,8 +1,7 @@
-from bootstrapping_olympics.programs.manager import DataCentral
+from boot_manager import DataCentral
 from conf_tools import GlobalConfig
 from quickapp import QuickMultiCmdApp
-from rosstream2boot import ExpLogFromYaml 
-from rosstream2boot.configuration import get_conftools_explogs
+from rosstream2boot import ExpLogFromYaml, get_conftools_explogs
 
 class Campaign(QuickMultiCmdApp):
     """ Main campaign program """

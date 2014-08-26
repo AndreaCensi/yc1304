@@ -1,6 +1,6 @@
 from .create_navigation_map import create_navigation_map_from_episode
+from boot_manager import DataCentral
 from boot_navigation import RP_NAVIGATION_MAP
-from bootstrapping_olympics.programs.manager import DataCentral
 from bootstrapping_olympics.utils import safe_pickle_dump
 from contracts import contract
 from quickapp import CompmakeContext

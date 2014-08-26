@@ -1,6 +1,4 @@
 from . import CampaignCmd
-from boot_agents.bdse.agent.servo import myexp, BDSEServoLongTerm
-from bootstrapping_olympics.programs.manager.meat import load_agent_state
 from quickapp import QuickApp
 from reprep import Report
 from yc1304.exps import good_logs_cf
@@ -9,6 +7,7 @@ from yc1304.exps.exp_utils import (iterate_context_episodes,
 import itertools
 import numpy as np
 import warnings
+from boot_agents_bdse.servo.bdse_servo_long_term import myexp
 
 
 class Exp13(CampaignCmd, QuickApp):
