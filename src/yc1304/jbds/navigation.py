@@ -5,9 +5,9 @@ from contracts import contract
 from geometry import SE2, SE2_from_SE3, translation_from_SE2
 from quickapp import QuickApp
 from quickapp_boot import RM_EPISODE_READY
-from reprep import Report, scale, filter_colormap
+from reprep import Report, filter_colormap, scale
 from reprep.plot_utils import turn_off_all_axes
-from rosstream2boot import (get_conftools_explogs,
+from rosstream2boot import (get_conftools_explogs, 
     recipe_episodeready_by_convert2)
 from yc1304.campaign import CampaignCmd
 from yc1304.exps.exp_utils import iterate_context_explogs
