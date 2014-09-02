@@ -3,11 +3,11 @@
   desc: Some quick tests
   code:
   - boot_agents_stats.EstStatsTh
-  - beta: 1 # XXX
+  - {}
 
 - id: exp42_cond30
   desc: "Estimates the conditional distribution"
   code:
   - boot_agents_stats.EstConditionalDistribution
   - index: 30
-    beta: 1
+  
